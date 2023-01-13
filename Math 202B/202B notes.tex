@@ -1,0 +1,154 @@
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\usepackage[document]{ragged2e}
+\usepackage{amsmath}
+\pagestyle{fancy}{
+	\fancyhead[L]{Winter 2023}
+	\fancyhead[C]{202B - Complex Analysis}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+\newcommand{\bigt}{\bigtriangleup}
+\DeclareMathOperator{\ind}{ind}
+\DeclareMathOperator{\res}{res}
+\DeclareMathOperator{\supp}{supp}
+
+
+
+\title{220B}
+\author{John White}
+\date{Winter 2022}
+
+\begin{document}
+
+\section*{Lecture 1}
+
+\subsection*{\underline{Foundational problems}}
+
+\begin{enumerate}
+
+\item \underline{Interpolation:} given a set of points $a_j$, can we get an analytic $f$ such that $f(a_j) = c_j$ for some fixed $c_j$?
+
+\item \underline{Approximation:} Given an analytif $f$, can we describe $f = \lim_mh_m$ as the limit of a sequence of functions $h_m$?
+
+\item \underline{Value distribution:} studying sets of the form $\{\lambda \mid f(\lambda) = c\}$. This is discrete in general. 
+
+\end{enumerate}
+
+Let $\Omega\subseteq\C$ be open. We denote by $\mc{O}(\Omega)$ the set of analytic functions $f:\Omega\to\C$. 
+
+How can we topologize this? 
+
+Let $\Omega$ be the unit disk, and let $f \in \mc{O}(\Omega)$. Consider $f = \frac{1}{z - 1}$. The sup of the modulus of this blows up on $\Omega$. So, the sup norm of the modulus will not work. 
+
+We will do it as follows. 
+
+\defn
+
+Let $K \subseteq \Omega$ be compact. We define
+\[
+\norm{f}_{\oo, K} = \sup_{z\in K}|f(z)| < \oo
+\]
+
+\defn We say that a sequence $f_n \in \ms{O}(\Omega), f_n \to f$ (uniformly on compact sets) if for every compact $K \subseteq \Omega$, $\norm{f - f_n}_{\oo, K} \to 0$. 
+
+\thm (Weirstrass)
+
+This notion of convergence induces a topology which is metrizable, and this metric is complete. 
+\proof
+\qed
+
+Suppose $K_j \subseteq K_{j + 1} \subseteq K_{j + 1} \cdots\subset\subset \Omega$, and the union of the $K_j$ is $\Omega$.
+
+\lem Let $f_n \in \mc{O}(\Omega)$. Then $f_n \to f$ uniformly on compact sets, i.e. $\norm{f - f_n}_{\Omega, K_j}\to0$, if and only if it converges with respect to the following metric. 
+
+\defn For $f, g \in \mc{O}(\Omega)$, define
+\[
+\sigma(f, g) = \sum_{j=1}^{\oo} \frac{\norm{f - g}_{\oo, K_j}}{1 + \norm{f - g}_{\oo, K_j}}
+\]
+
+\proof
+
+We will not prove that this is a metric. Let $f_n \in \mc{O}(\Omega)$. Let $h:\Omega\to \C$, with $d(f_n, h) \to 0$. Then $h$ is analytic by the Cauchy formula. To see this, let $a\in\Omega$, and consider $\bar{B_\delta(a)}\subseteq\Omega$ for some $\delta>0$. Then 
+\[
+f_n(z) = \frac{1}{2\pi i}\int_{|\zeta - a| = \delta}\frac{f_n(\zeta)}{\zeta - z}\,d\zeta
+\]
+We may pass the limit inside and get 
+\[
+h(z) = \frac{1}{2\pi i}\int_{|\zeta - a| = \delta}\frac{h(\zeta)}{\zeta - z}\,d\zeta
+\]
+meaning that $h$ is analytic. 
+
+Now, suppose that $f_n$ is a Cauchy sequence with respect to $\sigma$. So for all $j$, $f_n$ is Cauchy on $(C(K_j), \norm{\cdot}_{\oo})$. 
+
+We now review the Cauchy-Riemann equations. We write $z = x + iy\in\C$. $\bar{\del} = \frac{\del}{\del\bar{z}} = \frac{1}{2}(\frac{\del}{\del x} + i\frac{\del}{\del y})$
+
+Recall for a $1$-form $\phi\,dz$, we define
+\[
+d(\phi dz) = d\phi\wedge dz = \del\phi dz \wedge dz + \bar{\del}\phi d\bar{z}\wedge dz
+\]
+Also, we say $dA = dx \wedge dz = \frac{1}{2i}d\bar{z}\wedge dz$ (area measure)
+
+\thm Let $\phi \in C^{(\ell)}(\Omega)$. Then $\bar{\del}(\phi) = 0 \iff \phi \in \mc{O}(\Omega) \iff d(\phi dz) = 0$ (that is it is a closed form).  
+
+\cor $\ker(\bar{\del}:C^{(1)}(\Omega)\to C(\Omega)) = \mc{O}(\Omega)$
+
+\thm (Cauchy, Cauchy-Paupeir (sp?))
+
+Suppose $\Omega\subset\subset \C$ be precompact (meaning the closure is compact), with $\del\Omega$ piecewise smooth, and let $\phi\in C^{(1)}(\bar{\Omega})$. Then for any $z \in \Omega$, we have
+
+\[
+\phi(z) = \frac{1}{2\pi i}\int_{\del\Omega}\frac{\phi(\zeta)}{\zeta - z}\,d\zeta - \frac{1}{\pi}\int\frac{(\bar{\del}\phi)(\zeta)}{\zeta - z}\,dA(\zeta)
+\]
+
+\proof
+
+First, $\frac{\bar{\del}\phi(\zeta)}{\zeta - z}$ is $dA$-integrable because, if we write $\zeta - z = re^{i\theta}$, then $dA(\zeta) = rdr\wedge d\theta$. So we have
+
+\[
+\frac{\bar{\del}\phi(\zeta)}{\zeta - z}dA(\zeta) = \frac{\bar{\del}\phi(z + re^{i\theta})}{re^{i\theta}}rdr\wedge d\theta
+\]
+
+Let $\varepsilon>0$. Denote by $\Omega_\varepsilon = \Omega\setminus B_{\varepsilon}(z)$. If we take the differential 1-form $\omega = \frac{\phi(\zeta)}{\zeta - z}d\zeta$. We have 
+
+\[
+d\omega = \frac{\bar{\del}\phi(\zeta)}{\zeta - z}d\bar{\zeta}\wedge d\zeta
+\]
+Now, we use Stoke's theorem, which tells us $\int_{\del\Omega_\varepsilon}\omega = \int_{\Omega_\varepsilon}d\omega$. So we get
+\[
+\int_{\del\Omega}\frac{\phi(\zeta)}{\zeta - z}\,d\zeta - \int_{\del B_{\varepsilon}(z)}\frac{\phi(\zeta)}{\zeta - z}\,d\zeta = \int_{\Omega_\varepsilon}\frac{(\bar{\del}\phi)(\zeta)}{\zeta - z}\,d\bar{\zeta}\wedge d\zeta
+\]
+As we let $\varepsilon\to 0$, 
+\[
+\int_{\del\Omega}\frac{\phi(\zeta)}{\zeta - z}\,d\zeta - \underbrace{\int_{-\pi}^{\pi}\frac{\phi(z + \varepsilon e^{i\theta})}{\varepsilon e^{i\theta}}\varepsilon ie^{i\theta}\,d\theta}_{2\pi i \phi(z)} = \int_{\Omega}\frac{(\bar{\del}\phi)(\zeta)}{\zeta - z}\,d\bar{\zeta}\wedge d\zeta
+\]
+
+\defn Let $\mu$ be a measure on $\C$. We define the \underline{Cauchy transform $C\mu$} by
+\[
+u(\zeta) = (C\mu)(\zeta) \eqdef \int\frac{d\mu(z)}{z - \zeta}
+\]
+The \underline{support of $\mu$} is the smallest closed set $L_1$ with the property that $\mu(\psi) = 0$ if $\supp(\psi) \cap L_1 = \varnothing$
+
+
+\thm (H\"ormander)
+
+Let $\mu$ be a Radon measure, with compact support. Then $u(\zeta)$ is analytic on the complement of $\supp(\mu)$. Further, if $\mu = \frac{1}{2\pi i }\phi(z)dz\wedge d\bar{z}$, and $\phi\in C^{(k)}$ on an open set $\omega$, then $u \in C^{(k)}$ on $\omega$ and $\bar{\del}u = \phi$ on $\omega$. 
+
+\proof
+
+\qed
+
+Let $L$ be compact. Then $C(L)^* = \mc{M}(L)$ is a collection of Radon measures $\mu$, such that $\phi\mapsto\mu(\phi)$ is linear and continuous with respect to the sup norm.
+
+\exm Let $L = [0, 1]$, $\mu(\phi) = \sum_{n=1}^{\oo}\phi(\frac{1}{n})3^{-n}$. Then $\supp(\mu) = \{\frac{1}{n} \mid n \in \N\} \cup\{0\}$. 
+
+\end{document}
