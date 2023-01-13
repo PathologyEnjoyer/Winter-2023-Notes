@@ -1,0 +1,255 @@
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\usepackage[document]{ragged2e}
+\usepackage{epsfig}
+
+\pagestyle{fancy}{
+	\fancyhead[L]{Fall 2022}
+	\fancyhead[C]{220B - Rings}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+\newcommand{\pmat}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}}
+\DeclareMathOperator{\Perm}{Perm}
+
+\title{220A - Groups}
+\author{John White}
+\date{Fall 2022}
+
+
+\begin{document}
+
+\section*{Lecture 1}
+
+\subsection*{\underline{Rings:}}
+
+\defn
+
+A \underline{ring} $R$ is an abelian group $(R, +)$ together with multiplication
+
+\begin{align*}
+R\times R & \mapsto R \\
+(r, s) & \mapsto r\cdot s \\ 
+\end{align*}
+such that
+\begin{enumerate}
+\item $r_1\cdot(r_2\cdot r_3) = (r_1\cdot r_2)\cdot r_3$ for all $r_1, r_2, r_3 \in R$. In other words, multiplication is \textit{associative}.
+\item $r_1 \cdot(r_2 + r_3) = r_1\cdot r_2 + r_1\cdot r_3$ for all $r_1, r_2, r_3 \in R$. That is, $\cdot$ \textit{distributes} over $+$. 
+\item There is an element $1 \in R$ such that $1\cdot r = r \cdot 1 = r$ for all $r \in R$. This is \textit{multiplicative identity}. 
+\end{enumerate}
+
+\rem
+\begin{itemize}
+\item The multiplication is \textit{not} assumed to be commutative. If it is, we say $R$ is a \textit{commutative ring}. 
+\item The above definition (including 3) is sometimes called \textit{ring with identity}. An object which satisfies all of these except 3 is sometimes called a \textit{rng} (pronounced ``rung"). 
+\end{itemize}
+
+\exm
+
+\begin{enumerate}
+\item The integers $\Z$ with the usual addition and multiplication.
+ 
+\item For any $n \in \N, n \geq 1$, $\Z/n\Z$ is a ring under the operations 
+\begin{align*}
++:& \Z/n\Z\times\Z/n\Z \mapsto\Z/n\Z \\
+& (\bar{a}, \bar{b})\mapsto\bar{a + b} \\
+\times:&\Z/n\Z\times\Z/n\Z\mapsto\Z/n\Z \\
+& (\bar{a}, \bar{b}) \mapsto\bar{ab} \\
+\end{align*}
+
+\item $\Q, \R, \C$ are all rings (in fact they are fields). 
+
+\item The set of $n\times n$ matrices with entries in a ring $R$. 
+
+\item $R[x]$, the ring of all polynomials with coefficients in a ring $R$ 
+\item Let $G$ be an abelian group, and let 
+\[
+R = \{\text{all group homomorphisms }G\to G\}
+\]
+Define, for all $\phi,\psi\in R$, for all $g \in G$, 
+\begin{align*}
+(\phi + \psi)(g) & = \phi(g) + \psi(g) \\
+(\phi\cdot\psi(g) & = \phi(\psi(g)) \\
+\end{align*}
+$1 = \Id_G$. 
+
+Exercise: Check that $R$ is a ring. 
+
+\item Let $X$ be any set, and let $R = \mc{P}(X)$, the power set of $X$. Define, for all $E, F \in R$, 
+\begin{align*}
+E + F & = E\bigtriangleup F \\
+E \cdot F & = E \cap F \\
+\end{align*}
+$1 = X$
+Exercise: Check $R$ is a (commutative) ring.
+
+\end{enumerate}
+
+\defn
+
+Let $R$ and $S$ be rings. A \underline{ring homomorphism} is a map $f:R\to S$ such that for all $r_1, r_2 \in R$, 
+\begin{align*}
+f(r + s) & = f(r) + f(s) \\
+f(r\cdot s) & = f(r)\cdot f(s) \\
+f(1_R) & = 1_S \\
+\end{align*}
+
+\exm The quotient map $\phi:\Z\to\Z/n\Z$ given by $a\mapsto\bar{a}$ is a ring homomorphism. 
+
+Let $R$ be a ring. 
+
+\defn A subset $S\subseteq R$ is a \underline{subring} if $S$ is an additive subgroup of $R$, is closed under multiplication, and contains $1$. 
+
+\defn
+
+\begin{enumerate}
+
+\item
+
+A subset $I \subseteq R$ is a \underline{left ideal} of $R$ if $I$ is an additive subgroup of $R$ such that $R \cdot I \subseteq I$, i.e. for all $r \in R, s \in I$, $rs \in I$. 
+
+A subset $I \subseteq R$ is a \underline{right ideal} of $R$ if $I$ is an additive subgroup of $R$ such that $I \cdot R \subseteq I$, i.e. for all $s \in I, r \in R$, $sr \in I$. 
+
+An \underline{ideal} is both a left and right ideal (a ``two-sided" ideal). 
+
+\item Suppose $I$ is an ideal. Then the \underline{quotient} 
+\[
+R/I \eqdef \{\bar{r} = r + I: r \in R\}
+\]
+inherits an addition and multiplication from $R:$ 
+
+\begin{align*}
+(r + I) + (r' + I) & = (r + r' + I) \\
+(r + I)\cdot(r' + I) & = (r\cdot r' + I)\\
+\end{align*}
+making it a ring with identity $1 + I$. This is called the \underline{quotient ring} or \underline{residue class}. Note that the quotient map
+\begin{align*}
+\pi:R\to R/I \\
+r\mapsto\bar{r} = r + I \\
+\end{align*}
+is a ring homomorphism. 
+
+
+\end{enumerate}
+
+Two Exercises: 
+
+\begin{enumerate}
+\item (``Correspondence Theorem")
+
+Let $R$ be a ring, $I\subseteq R$ an ideal, and $\phi:R\to R/I$ the quotient map. Then there is a bijective orderpreserving correspondence between $\{J \subset R, J$ is an ideal, $I \subseteq J \subseteq R\}$ and ideals of $R/I$, which sends $J$ to $\bar{J} = \phi(J) = (I + J)/I$. 
+
+\item (``First Isomorphism Theorem")
+
+Let $\phi:R\to S$ be a ring homomorphism. Then 
+\begin{itemize}
+\item $\ker(\phi) = \{r\in R: \phi(R) = 1_S\}\subset R$ is an ideal of $R$.
+\item $\Im(\phi) = \{s \in S: \exists r \in R s.t. s = \phi(r)\}$ is an ideal of $S$.
+\item $\phi$ induces a ring isomorphism (i.e. a bijective ring homomorphism whose inverse is also a ring homomorphism) 
+\[
+R/\ker(\phi) \to \Im(\phi)
+\]
+given by
+\[
+\bar{r}\mapsto\phi(r)
+\]
+
+\end{itemize}
+
+\end{enumerate}
+
+\section*{Lecture 2, 1/11/23} 
+
+\defn 
+\begin{enumerate}
+
+\item
+
+A \underline{zero divisor} in a ring $R$ is an element $x \in R$ such that there exists a $y \in R, y\neq0$, such that $xy = yx = 0$. 
+
+\underline{Examples:}
+
+$\bar{2} \in \Z/6\Z$ is a zero divisor. 0 is \underline{always} a zero divisor unless $R = \{0\}$. 
+
+\item A nonzero commutative ring $R$ without nonzero zero divisors is called an \underline{integral domain}. 
+
+\underline{Examples:} $\Z$, all polynomial rings, $\Z/p\Z$ where $p$ is prime are all integral domains. 
+
+\item An element $r \in R$ is \underline{nilpotent} if $r^n = 0$ for some $n > 0$. 
+
+\underline{Note:} $r$ nilpotent $\implies r$ a zero divisor. The converse is false (e.g. $\bar{2}\in\Z/6\Z$)
+
+\item An element $R \in R$ is \underline{a unit} (or \underline{invertible}) if there exists an $s \in R$ such that $rs = sr = 1$. 
+
+\underline{Examples:} $\bar{5} \in \Z/6\Z$. A matrix $A \in M_{n\times n}(R)$ with entries in a ring $R$ is a unit in the matrix ring if and only if $\det(A)$ is a unit in $R$.
+
+Note that $R^\times$, denoting the units, is a multiplicative group. 
+
+\item Let $x \in R$ The multiples $r\cdot x$ (or $x \cdot r$) form a left (or right) ideal, denoted \underline{$Rx$} (or \underline{$xR$}). If $R$ is commutative, we write \underline{$(x)$} for $Rx = xR$. 
+
+\item A \underline{field} is a nonzero commutative ring $R$ in which every nonzero element is a unit. 
+
+Note: Since being a unit implies \underline{not} being a zero divisor, all fields are integral domains. The converse does not hold, and $\Z$ is a witness to its failure. 
+
+\end{enumerate}
+
+\prop
+
+Let $R$ be a nonzero commutative ring. Then the following are equivalent: 
+
+\begin{enumerate}
+\item $R$ is a field. 
+\item The only ideals are $\{0\}$ and $R$.
+\item Every ring homomorphism $R\to S$ with $S \neq\{0\}$ is injective
+\end{enumerate}
+
+\proof
+
+\begin{itemize}
+\item[$1\to2$] Suppose $R$ is a field. Let $I$ be a nonzero ideal. Then there exists $x \in I$ nonzero. Since $R$ is a field, $x$ is a unit. Thus $R = (x) \subseteq I$. So $I = R$. 
+
+\item[$2\to3$]For $S \neq\{0\}$, let $\phi:R\to S$ be a ring homomorphism. Then $\ker(\phi)\subseteq R$ is a proper ideal (since $\phi(1)=1\neq0$). By 2, $\ker(\phi) = \{0\}$, so $\phi$ is injective. 
+
+\item[$3\to1$] Let $x \in R$ be nonzero. We want to show that $X$ is a unit. Consider the quotient map $\phi:R\to R/(x)$. Notice $\ker(\phi) = (x) \neq\{0\}$, i.e. $\phi$ is not injective. By 3, $R/(x) \cong \{0\}$, so $(x) = R$, i.e. $x \in R^\times$. 
+\end{itemize}
+
+\defn
+
+Let $R$ be a commutative ring. 
+
+\begin{enumerate}
+\item An ideal $I$ is a \underline{prime ideal} if it is a proper ideal and for all $r, s \in R$, $rs \in I$ if and only if $r \in I, s \in I$, or both.
+
+Note $p \in \N$ is prime if and only if for all $a, b \in \Z$, $p\mid ab$ implies $p \mid a$, $p \mid b$, or both. 
+
+Equivalently, $ab \in (p)$ implies $a \in (p), b\in(p)$, or both.  
+
+\item An ideal $I\subset R$ is a \underline{maximal ideal} if $I$ is proper and, if $J$ is an ideal such that $I \subset J \subset R$, then $J = I$ or $J = R$. 
+\end{enumerate}
+
+\prop Let $R$ be a commutatie ring and $I$ a proper ideal. Then $R/I$ is an integral domin if and only if $I$ is a prime ideal. 
+
+\proof
+
+\subsection*{$=>$} Let $r, s \in R$ such that $rs \in I$. We want to show that $r \in I$ or $s \in I$. Then the elements $\bar{r},\bar{s} \in R/I$ are such that $\bar{r}\cdot\bar{s} = \bar{rs} = \bar{0}$. Since $R/I$ is an integral domain, either $\bar{r} = \bar{0}$ or $\bar{s} = \bar{0}$, or both. In other words, either $r \in I$, or $s \in I$. 
+
+\subsection*{$<=$} Since $I\neq R$, the ring $R/I$ is nonzero. Choose $\bar{r},\bar{s} \in R/I$ such that $\bar{r}\cdot\bar{s} =\bar{0}$. We want to show that either $\bar{r} = \bar{0}, \bar{s} = \bar{0}$, or both . Since $\bar{rs} = \bar{r}\cdot\bar{s}=\bar{0}$, $rs \in I$. Since $I$ is a prime ideal, either $r \in I$ or $s \in I$, or both. So $\bar{r} = \bar{0}, \bar{s} = \bar{0}$, or both. Thus, $R/I$ is an integral domain. 
+
+\qed
+
+
+
+
+
+
+
+\end{document}
