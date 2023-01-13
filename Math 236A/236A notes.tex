@@ -1,0 +1,125 @@
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\usepackage[document]{ragged2e}
+\usepackage{epsfig}
+
+\pagestyle{fancy}{
+	\fancyhead[L]{Winter 2023}
+	\fancyhead[C]{236A}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+\newcommand{\pmat}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}}
+\newcommand{\fin}{``\in"}
+\DeclareMathOperator{\Perm}{Perm}
+
+\title{236A - Homological Algebra}
+\author{John White}
+\date{Winter 2023}
+
+
+\begin{document}
+
+\section*{Lecture 3}
+
+\subsection*{\underline{Chapter I: Categories and functors}}
+
+There is a definition page on the Gaucho that has all the most basic definitions - objects, morphisms, compositions, etc. 
+
+If $f \in \Hom_C(A, B)$, we often write $\begin{tikzcd} A\ar[r, "f"] & B \end{tikzcd}$ even if $f$ is not literally a map. 
+
+\exm
+
+\begin{enumerate}
+
+\item The category of all sets, $\Set$. The object class consists of all sets, and the morphisms are just set maps. 
+
+\item The category of all topological spaces, $\Top$. The object class consists of all topological spaces, and the morphisms are continuous functions. 
+
+\item The category of all groups, $\Grp$. The object class consists of all groups, and the morphisms are group homomorphisms. 
+
+\item Let $(P, \leq)$ be a partially ordered set with a relation $\leq$ which is reflexive, antisymmetric,  and transitive. Then we can make $P$ into a category, whose objects are the elements of $p$, and for $u, s \in P$, $\Hom_P(u, s) = \begin{cases} (u, s) & u \leq s \\ \varnothing & u\not\leq s \\ \end{cases}$. We define the composition $(s, t)(u, s) \eqdef (u, t)$. 
+
+\item The opposite category of a category $C$, $C^\op$. 
+
+\item Let $R$ be a ring. $R$-Mod is the category of left $R$ modules. $R$-mod is the finitely generated $R$-modules, and similarly for Mod-$R$ and mod-$R$, which are the right $R$-modules.
+
+\item $R$-comp. The object class consists of complexes of left $R$-modules.
+
+Let $\mathbb{A}, \mathbb{A}'$ be objects of $R$-comp. Note: it is problematic to say ``$\mathbb{A}, \mathbb{A}' \in R$-comp, as $R$-comp is not a set!
+
+Say $\mathbb{A} = \begin{tikzcd} \cdots\ar[r] &A_{n + 1} \ar[r, "d_{n + 1}"] & A_n \ar[r, "d_n"] & A_{n - 1} \ar[r]& \cdots \end{tikzcd}$, and similarly for $\mathbb{A}'$. An element of $\Hom_{R-comp}(\mathbb{A},\mathbb{A}')$ will be a sequence of $R$-module homomorphisms $f_n:A_n\to A'_n$ which make the following diagram commute:
+
+\[
+\begin{tikzcd}
+\cdots \ar[r] \ar[d] & A_{n} \ar[d, "f_n"'] \ar[r, "d_{n}"] & A_{n - 1} \ar[r] \ar[d, "f_{n - 1}"] & \ar[d]\cdots  \\
+\cdots \ar[r] & A'_n \ar[r, "d'_n"'] & A'_{n - 1} \ar[r] & \cdots \\
+\end{tikzcd}
+\]
+
+\item The category of rings Ring, whose obejcts are rings and whose morphisms are ring homomorphisms. 
+
+\item The category of $\Z$-modules is usually denoted $\Ab$. This is also the category of Abelian groups, and is the prototypical example of an Abelian category.
+
+\end{enumerate}
+
+\defn A category $\mc{C}$ is called \underline{pre-additive} if for all $A, B$ objects of $\mc{C}$, the set $\Hom_{\mc{C}}(A, B)$ is an additive Abelian group (additive means we use the symbol ``$+$") such that for all eligible morphisms $f, g, h, k$, 
+\begin{align*}
+h(f + g) & = hf + hg \\
+(f + g)k & = fk + gk \\
+\end{align*}
+where ``elibigle" means that these expressions make sense and are well-defined. 
+
+\exm
+
+\begin{enumerate}
+
+\item $R$-mod (in particular $\Ab$)
+
+\item $R$-comp
+
+\item Ring fails to be pre-additive, because the identity morphisms add to be something which is not the identity morphism. 
+
+\end{enumerate}
+
+\defn
+
+Let $\mc{C}, \mc{D}$ be categories. A \underline{functor} $F:\mc{C}\to\mc{D}$ consists of an assignment $F_0:\Obj(\mc{C})\to\Obj(\mc{D})$, and for each pair of objects $A, B ``\in" \Obj(\mc{C})$, a map (this actually is a map because we assume hom-sets are in fact sets). $F_{A, B}:\Hom_{\mc{C}}(A, B) \to \Hom_{\mc{D}}(F(A), F(B))$ such that, for all eligible morphisms $f, g$, and all $A \fin \mc{C}$
+\begin{enumerate}[label=(\alph*)]
+
+\item $F(\Id_A) = \Id_{F(A)}$
+\item $F(f\circ g) = F(f)\circ F(g)$
+
+\end{enumerate}
+
+\exm
+
+\begin{enumerate}
+
+\item Let $\mc{C}$ be a category. Then we have the identity functor $\Id_{\mc{C}}$, which assigns $\Id_{\mc{C}}(A) = A$, and $\Id_{\mc{A}}(f) = f$ for any eligible $A \fin\Obj(\mc{D})$ and morphisms $f$. 
+
+\item Functors $\pi_n:\Top\to\Grp$ which sends $X\mapsto\pi_n(X)$
+
+\item $\mathbb{S}:\Top\to\Z$-comp, which sends $X\mapsto \mathbb{S}(X)$, which is a complex
+\[
+\begin{tikzcd}
+\cdots \ar[r]&   S_{n + 1}(X)  \ar[r, "\del_{n + 1}"] &  S_n(X) \ar[r, "\del_n"]& S_{n - 1}(X) \ar[r, "\del_{n - 1}"] &\cdots \ar[r] &\ar[r,"\del_0"] S_0(x) & 0\\ 
+\end{tikzcd}
+\]
+Let $\phi:X\to Y$ be continuous for $X, Y \fin \Top$. Then $\mathbb{S}(\phi)_n:S_n(X)\to S_n(Y)$ is given by $\sigma\mapsto\phi\circ\sigma$, and we can extend this for $\sigma$ an $n$-simplex of $X$. 
+
+\end{enumerate}
+
+
+
+
+\end{document}
