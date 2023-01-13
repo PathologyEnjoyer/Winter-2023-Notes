@@ -1,0 +1,132 @@
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\DeclareMathOperator{\cl}{cl}
+\usepackage[document]{ragged2e}
+\usepackage{amsmath}
+\pagestyle{fancy}{
+	\fancyhead[L]{Winter 2023}
+	\fancyhead[C]{221B - Cell Complexes}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+
+\title{221B - Cell Complexes}
+\author{John White}
+\date{Winter 2023}
+
+
+\begin{document}
+
+\section*{Lecture 1}
+
+We will be using Hatcher's Algebraic Topology. The topology sequence is usually something like 
+\begin{align*}
+A & \text{Topological Spaces} \\
+B & \text{Cell Complexes} \\
+C & \text{Manifolds} \\
+\end{align*}
+
+\thm (BIG Theorem)
+
+Given a ``reasonably nice" space, there is a bijection between connected covers of a space and subgroups of the fundamental group. 
+
+\subsection*{\underline{Categories:}}
+
+Algebraic structures that are much flabbier than a group. They consist of 
+\begin{itemize}
+\item A collection of arrows
+\item A partial binary operation on these arrows
+\item Objects, which arrows go between
+\end{itemize}
+We also want a composition law. That is, for objects and arrows
+\[
+\begin{tikzcd}
+A \ar[r, "f"] & B \ar[r, "g"] & C 
+\end{tikzcd}
+\]
+there is an arrow $\begin{tikzcd} A \ar[r, "g \circ f"]&  C \end{tikzcd}$. We want this composition to be associative, that is $(f \circ g) \circ h = f \circ (g \circ h)$, and we want objects to have identity arrows. 
+
+Not all functions have inverses. Using sets and functions as an example, we have described the category Set. 
+
+Here are some more examples of categories: 
+\exm
+
+\begin{itemize}
+\item Groups and group homomorphisms (Grp)
+\item Topological spaces and continuous functions (Top)
+\item etc. 
+\end{itemize}
+
+We can make the following new category. 
+
+\defn
+
+We denote by $\Top^*$ the \underline{category of based topological spaces}, whose objects are pairs $(X, x_0)$, where $X$ is a topological space and $x_0 \in X$, and whose morphisms are continuous functions $f:(X,x_0)\to(Y, y_0)$ such that $f(x_0) = y_0$. 
+
+\subsection*{Goal:}
+
+Our goal is to get a functor from Top to Grp. The fundamental group functor $\pi_1$ will go from $\Top^*$ to Grp.
+
+\section*{Lecture 2}
+
+\subsection*{\underline{Topology review:}}
+
+\defn 
+
+A \underline{topological space} is a set $X$ along with a collection of subsets of $X$ called ``open sets," such that $X, \varnothing$ are open, and the arbitrary union and finite intersection of open sets are open. 
+
+Notice the following diagram commutes using the product topology
+
+\[
+\begin{tikzcd}
+&\ar[ld, "f"'] \ar[d, dotted, "\exists !"]Z \ar[rd, "g"] &  \\
+X  &\ar[l, "P_X"'] X\times Y \ar[r, "P_Y"] & Y\\
+\end{tikzcd}
+\]
+
+And in general 
+
+\[
+\begin{tikzcd}
+Z \ar[d, dotted, "\exists !"']  \ar[rd, "f_\alpha"] & \\
+\prod_{\alpha\in A}X_\alpha \ar[r, "P_\alpha"]& X_\alpha\\
+\end{tikzcd}
+\]
+Maps are continuous; functions are not. 
+
+\lem (Gluing lemma)
+
+Suppose $f:A\to Y$, $g:B\to Y$ are continuous, and $f(x) = g(x)$ for all $x \in A \cap B$. Then $f\cup g: A \cup B \to Y$ is continuous. This only holds as long as $A, B \subseteq X$ are closed. 
+
+\subsection*{\underline{Same Shape, Same Map}}
+(maps up to wriggling things around a bit)
+
+\defn Two maps are \underline{homotopic} if there exists a parametrized map $f_t:X\to Y$ such that $f_0 = f, f_1 = g$ for $f, g:X \to Y$. Equivalently, and more precisely, if there exists a map $F:X\times[0,1]\to Y$ such that $F(x, 0) = f(x), F(x, 1) = g(x)$ for all $x \in X$. 
+
+$X, Y$ topological spaces are said to have the same shape if there exist maps $f:X\to Y, g:Y\to X$ such that $g\circ f\simeq \Id_X$ and $f\circ g \simeq \Id_Y$. We may say that $X, Y$ have the same \underline{homotopy type}
+
+\defn
+
+A \underline{deformation retraction} from $X \to A\subseteq X$ is a map from $X \times I \to X$ such that, for all $x \in A$, and $s, t \in I$,
+\begin{align*}
+f_0(x) &= x \\
+f_1(x) &\in A \\
+f_t(x) &= f_s(x) \\
+\end{align*}
+
+
+
+
+
+
+
+\end{document}
