@@ -19,8 +19,16 @@
 	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
 }
 \newcommand{\pmat}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}}
+\newcommand{\A}{\mathbb{A}}
 \newcommand{\fin}{``\in"}
 \DeclareMathOperator{\Perm}{Perm}
+\newcommand{\Rmod}{R-\text{mod}}
+
+\newcommand{\exactlon}[5]{
+		\begin{tikzcd}
+			0\ar[r]&#1\ar[r,"#2"]& #3 \ar[r,"#4"]& #5 \ar[r]&0
+		\end{tikzcd}
+}
 
 \title{236A - Homological Algebra}
 \author{John White}
@@ -29,7 +37,176 @@
 
 \begin{document}
 
-\section*{Lecture 3}
+\section*{Lecture 1, 1/11/13}
+
+Homological algebra is the study of complexes of $R$-modules, where $R$ is a ring with identity $1\neq0$. Notationally, $R$-mod is the category of all left $R$-modules, and $R$-mod is the category of all finitely generated $R$-modules. 
+
+\defn
+
+Let $A_n\fin R$-mod for $n\in\Z$ and $d_n\in\Hom_R(A_n, A_{n - 1})$ such that $d_{n - 1}\circ d_n = 0$ for all $n \in\Z$. Then the sequence
+\[
+\begin{tikzcd}
+\cdots\ar[r, "d_{n + 2}"]& A_{n + 1}\ar[r, "d_{n + 1}"] & A_n \ar[r, "d_n"] & A_{n - 1} \ar[r, "d_{n - 1}"] & \cdots\\
+\end{tikzcd}
+\]
+is called a \underline{complex of $R$-modules}, assuming $\im(d_n) \subseteq \ker(d_{n - 1})$. The sequence
+\[
+\begin{tikzcd}
+0\ar[r]&A_m\ar[r]&A_{m - 1}\ar[r]&\cdots\ar[r]&A_{n + 1}\ar[r]&A_n\ar[r]&0 \\
+\end{tikzcd}
+\]
+will occur more frequently. A complex $\A$ is an \underline{exact sequence} if $\im(d_n) = \ker(d_{n - 1})$ for all $n \in \Z$. This is called a \underline{short exact sequence} if there are no more than 3 non-zero terms. Given a complex $\A$, the \underline{nth homology modules} (or groups, in some cases) of $\A$ is
+\[
+H_n(\A) = \frac{\ker(d_{n -1})}{\im(d_n)}
+\]
+
+\rem
+
+Given a short exact sequence (hereby abbv. as SES) 
+\[
+\begin{tikzcd}
+0\ar[r]&A\ar[r,"f"]&B\ar[r,"g"]&C\ar[r]&0
+\end{tikzcd}
+\]
+$f$ is a mono and $g$ is an epi, so $C\simeq B/\im(f)$. If $A, B$ are known, but not $f$, then infinitely many $C$ are available to complete the short exact sequence.
+
+\exm 
+
+Let $R = k$, a field, and take $A = B = k^{(\N)} = \oplus_{i\in\N}k$.
+
+\begin{itemize}
+\item[(i)] $\begin{tikzcd} 0\ar[r]&A\ar[r, "\Id"]&B\ar[r]&0 \end{tikzcd}$ is a SES.
+\item[(ii)] Define $f:A\to B$ by 
+
+\begin{align*}
+f(b_i) & = b_{2i} \text{ for }i\in \N \\
+g(b_0) & = \begin{cases} 0 & i\text{ even } \\ b_{\tau(i)} & i\text{ odd } \end{cases}
+\end{align*}
+
+Where $\tau:(2\N-1)\to\N$ is a bijection. If $A = B = C = \kappa^{(\N)}$, then 
+\[
+\exactshort{A}{f}{B}{g}{C}
+\]
+is a SES. 
+\item[(iii)] Let $R = \Z$. Then 
+\[
+\exactshort{3\Z}{\iota}{\Z}{\bar{-}}{\Z/3\Z}
+\]
+is a SES. 
+\item[(iv)] Let $R = \Z$. The sequence 
+\[
+\exactshort{\overbrace{6\Z}^{A_1}}{\iota}{\overbrace{\Z}^{A_0}}{\bar{-}}{\overbrace{\Z/3\Z}^{A_{-1}}}
+\]
+is a complex which is not exact. In fact, $H_0(\A) = \overbrace{3\Z}^{\ker(g)}/\underbrace{6\Z}_{\im(f)} \cong \Z/2\Z$. 
+
+\item[(v)] Let $R = \kappa[x, y]$, $\kappa$ a field. Let $f$ be the inclusion $(x)\hookrightarrow R[x, y]$. The sequence
+\[
+\exactshort{(x)}{f}{R}{g}{\kappa[y]}
+\]
+where
+\[
+g\left(\sum_{i, j = 0}^{\text{finite}}a_{ij}x^iy^j\right) = \sum_{j > 0}^{\text{finite}}a_{\sigma_j}y^j
+\]
+is exact. 
+
+\item[(vi)] Let $R = \kappa[x, y]$. Define $\A$ as
+\[
+\exactshort{\overbrace{(x)}^{A_1}}{f}{\overbrace{R}^{A_0}}{g}{\overbrace{\underbrace{\kappa}_{=R/(x, y)}}^{A_{-1}}}
+\]
+where 
+\[
+g\left(\sum_{i, j = 0}^{\text{finite}}a_{ij}x^iy^j\right) = a_{\oo}
+\]
+then $\ker(g) = (x, y)$ and $\im(f) = (x)$, so $\A$ is not exact. In fact, 
+\begin{align*}
+H_0(\A) & = (x, y)/(x) \\
+		  & \simeq (y) \\
+		  & \simeq R \\
+\end{align*}
+
+
+\end{itemize}
+
+Note: If $R$ is an integral domain and $x\in R\setminus\{0\}$, then $(x)\simeq R$ (as $R$-modules, \underline{not} as rings!), with isomorphism $r\mapsto rx$. 
+
+Typical questions addressed by homological algebra: 
+
+\begin{itemize}
+\item[(i)] Suppose
+\[\A:
+\begin{tikzcd}
+\cdots\ar[r]&A_{n + 1}\ar[r, "d_{n + 1}"]&A_n\ar[r,"d_n"]&A_{n - 1}\ar[r]&\cdots \\
+\end{tikzcd}
+\]
+is an exact sequence in $R$-mod and $F:\Rmod\to S-\text{mod}$ is a functor. Is the sequence
+\[
+\begin{tikzcd}
+\cdots\ar[r]&F(A_{n + 1})\ar[r, "F(d_{n + 1})"] &F(A_n)\ar[r,"F(d_n)"] &F(A_{n - 1})\ar[r] &\cdots
+\end{tikzcd}
+\]
+exact? $F(\A)$ is a complex when $F$ is additive, but it may or may not be exact. 
+
+\item[(ii)] Given $A, C\fin \Rmod$, characterize all modules $B$ such that there exists an exact sequence
+\[
+\exactshort{A}{}{B}{}{C}
+\]
+As an example, $R =\Z, A = C = \A/p\Z$, $p$ prime, then
+\[
+\exactshort{\Z/p\Z}{f}{\Z/p\Z\oplus\Z/p\Z}{g}{\Z/p\Z}
+\]
+with $f:x\mapsto(x,0)$ and $g:(x,y)\mapsto y$ is a SES. Alternatively, we could take $f:x + p\Z\mapsto px + p^2\Z$ and $g:y + p^2\Z\mapsto y + p\Z$ to make 
+\[
+\exactshort{\Z/p\Z}{f}{\Z/p^2\Z}{g}{\Z/p\Z}
+\]
+a SES. These are the only possibilities in this case! In general, though, there are infinitely many possibilities for $B$. Why is this interesting? If $R$ is an artinian ring and $M\fin\Rmod$, then there are only finitely many simple $s_1,\dots,s_n\fin\Rmod$ up to isomorphism. Moreover, for $M\fin\Rmod$, there is a chain
+\[
+M = M_0\supset M_1 \supset \cdots \supset M_{\ell} = 0
+\]
+such that $M_i/M_{i + 1}$ is simple for all $i<\ell$. If the answer to question $(ii)$ is known, then all objects in $\Rmod$ of fixed length $\ell$ are known up to isomorphism! Simply proved by induction.
+\end{itemize}
+
+\subsection*{\underline{Algebraic Topology}}
+
+\defn
+The \underline{standard $n$-simplex} $\bigtriangleup_n$ in $\R^n$ is the convex hull of $v_0, v_1, \dots, v_n$, where $v_0 = 0$ and $v_i = (0, \dots, 0, \overbrace{1}^{i}, 0, \dots, 0)$ (so the standard basis). 
+
+An \underline{oriented simplex} is $(\bigtriangleup_x, [\pi])$, where $[\pi]$ is an equivalence class of permutations of $\{0, \dots, n\}$, where $\pi\sim\pi'\iff \sgn(\pi)=\sgn(\pi')$. We write
+\[
+(\bigtriangleup_x, \pi) = [v_{\pi(0)}, v_{\pi(1)},\dots,v_{\pi(n)}
+\]
+and identify $\bigtriangleup_n$ with $[0, 1, \dots, n]$. The ngative is $-[w_0, \dots, w_n]$. 
+
+\defn
+
+Let $X$ be a topological space. An \underline{$n$-simplex in $X$} is a continuous map
+\[
+\sigma:\bigtriangleup_n\to X
+\]
+The \underline{group of $n$-chains of $X$}, $S_n(x)$, is the free abelian group having as basis the $n$-simplices in $X$. The \underline{singular chain complex of $X$} is
+\[
+\begin{tikzcd} 
+\cdots\ar[r]&S_n(X)\ar[r,"\del_n"] &S_{n -1}(X)\ar[r, "\del_{n - 1}"] &\cdots\ar[r] &S_0(X)\ar[r] &0
+\end{tikzcd}
+\]
+denoted $\mbb{S}$, where $\del_n:S_n(X)\to S_{n - 1}(X)$ is the \underline{$n$th boundary map}, which can be defined if we define $\del_n(\sigma)$ for all $n$-simplices $\sigma$ in $X$ (i.e. in the basis of $S_n(X)$). Consider the map
+\begin{align*}
+\tau_i:\R^{n - 1} & \to \R^n \\
+(a_1, \dots, a_{n - 1})&\mapsto(a_1, \dots, a_{i - 1}, 0, a_{i + 1}, \dots, a_n) \\
+\end{align*}
+For $i \in \{0, \dots, n\}$. Then $\tau_i$ is continuous and $\tau_i(\bigtriangleup_{n - 1}) = \bigtriangleup_n$. Define
+\[
+\del_n(\sigma) = \sum_{i = 0}^n(-1)^i\sigma(\tau_i)
+\]
+
+\thm $\del_{n - 1}\circ\del_n = 0$ for all $n \in \N$, i.e. $\mbb{S}$ is a complex in $\Z$-mod. 
+
+\defn
+
+The \underline{group of $n$-cycles} is $Z_n(X) = \ker(\del_{n - 1})$, and the \underline{group of $n$-boundaries} is $B_n = \im(\del_n)$. 
+
+The \underline{$n$th homology group} is $H_n(X) = Z_n(X)/B_n(X)$.
+
+\section*{Lecture 2, 1/13/23}
 
 \subsection*{\underline{Chapter I: Categories and functors}}
 
