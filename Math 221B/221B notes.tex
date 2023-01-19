@@ -18,6 +18,7 @@
      \renewcommand{\headrulewidth}{0pt}
 	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
 }
+\DeclareMathOperator{\rel}{rel}
 
 \title{221B - Cell Complexes}
 \author{John White}
@@ -118,10 +119,112 @@ $X, Y$ topological spaces are said to have the same shape if there exist maps $f
 
 A \underline{deformation retraction} from $X \to A\subseteq X$ is a map from $X \times I \to X$ such that, for all $x \in A$, and $s, t \in I$,
 \begin{align*}
-f_0(x) &= x \\
-f_1(x) &\in A \\
-f_t(x) &= f_s(x) \\
+f_0(x) &= x&\forall x \in X \\
+f_1(x) &\in A&\forall x \in X \\
+f_t(x) &= f_s(x)& \forall x \in A \\
 \end{align*}
+
+\section*{Lecture 3, 1/13/23}
+
+\defn
+
+Let $X$ be a topological space. A \underline{retraction} is a map $r:X\to X$ such that $r \circ r = r$. That is, $r(r(x)) = r(x)$ for any $x \in X$. 
+
+Let $A = r(X)$. Then $r|_A = \Id_A$. 
+
+\defn
+
+Let $F:X\times I\to Y$. We say $f_0 \simeq f_1 \rel A\subseteq X$ are \underline{homotopic relative to $A$} if, for any $x \in A$, $f_t(x)$ is independent of $t$. That is, for any $s, t \in I$, $f_s(x) = f_t(x)$ for any $x \in A$. 
+
+
+For any map $f:X\to Y$, there exists a space $Z \simeq Y$ via $g:Y \to Z$ such that $g \circ f:X\to Z$ is injective. That is, in the following diagram, we have a bijection between homotopy classes of maps $f$ and homotopy classes of maps $g\circ f$, and we can do this in a way that rigs $g \circ f$ to be injective. 
+\[
+\begin{tikzcd}
+X \ar[r, "f"] \ar[rd, "g\circ f"'] & Y \ar[d, "g"] \\
+& Z \\
+\end{tikzcd}
+\]
+
+\defn
+
+Given a map $f:X\to Y$ we can construct the \underline{Mapping Cylinder} $M_f$ by setting $M_f = X \times I \coprod Y/\sim$, where $(x, 0) \sim f(x)$. 
+
+The visual intuition should be taking the disjoint union of $X$ and $Y$, and tieing a string between $x$ and $f(x)$ for each point. 
+
+\claim 
+$X \hookrightarrow M_f, Y \hookrightarrow M_f$, and the latter is in fact a homotopy equivalence. Further, the injection $X \hookrightarrow M_f$ is homotopic to $f(X) \hookrightarrow M_f$. 
+\proof
+You can construct a homotopy which ``squishes" the cylinder down to $f(X)$. 
+
+\qed
+
+\defn
+
+A space $X$ is \underline{contractible} if it has the homotopy type of a point. A map is \underline{null-homotopic} if it is homotopic to a constant map. So $X$ is contractible if the identity is null-homotopic. 
+
+Now he's drawing an example. The example is Bing's House with 2 rooms, which I will not reproduce here. But the point is that it's contractible, but not obviously so. 
+
+\subsection*{\underline{Cell Complexes}}
+
+Cell complexes are topological spaces which are built up inductively out of closed balls in Euclidean space. We write $\mathbb{D}^n := \{\vec{x} \in \R^n \mid \norm{\vec{x}} \leq 1 \}$, and $e^n := \{\vec{x}\in\R^n \mid \norm{\vec{x}} < 1\}$. We can see that $e^n = \operatorname{int}\mathbb{D}^n$, and $\del\mathbb{D}^n = \mathbb{S}^{n - 1}$. 
+
+\subsubsection*{\underline{Base step}}
+
+Start with some collection of points $X^0$, the $0$-skeleton, with the discrete topology.
+
+\subsubsection*{\underline{Inductive step}}
+
+Let $X^{n - 1}$ be the $n - 1$ skeleton, which has already been build and defined. Select some collection of $n$-dimensional balls $\{\mathbb{D}^n\}_{\alpha\in A}$, and some continuous ``attaching map" $\varphi_\alpha:\del\mathbb{D}^n_\alpha\to X^{n - 1}$. Then 
+\[
+(X^n = X^{n - 1}\coprod_{\alpha\in A}\mathbb{D}^n )/(x \sim\varphi_\alpha(x)\forall x \in \del\mathbb{D}^n)
+\]
+
+\section*{Lecture 4, 1/18/23}
+
+A space $X$ is a \underline{cell complex} if it has been constructed using the above inductive procedure. If $n = \oo$, we use the weak topology, in which the open sets are the sets which are open when intersected with each $X^n$. 
+
+For every $\mbb{D}^n_\alpha$ and corresponding ``attaching map $\varphi_\alpha:\del\mbb{D}^n_\alpha\to X^{n - 1}$, there is a subset of $X^n$ homeomorphic to $\operatorname{int}(\mbb{D}^n_\alpha)$, via the composition
+\[
+\operatorname{int}(\mbb{D}^n_\alpha) \hookrightarrow \mbb{D}^n_\alpha \hookrightarrow X^{n - 1}\coprod_{\alpha}\mbb{D}^n_\alpha \to X^n
+\]
+which we call $\Phi_\alpha:\mbb{D}^n_\alpha\to X^{n - 1}$. So the attaching map $\phi_\alpha:\del\mbb{D}^n_\alpha\to X^{n - 1}$ extends to a ``characteristic map" $\Phi_\alpha$.
+
+We will now see many examples of things. 
+
+\exm
+
+If you stop after constructing $X^1$, it's a graph. 
+
+\exm
+
+$\mbb{S}^n$ has a cell structure with one $e_0$ and one $e_n$. 
+
+\exm
+
+Consider $\RP^2$. This can be expressed as $(\R^3\setminus\{0\})/(\vec{x}\sim\lambda\vec{x}, \lambda\neq0)$. We can replace $2$ with any $n$ and get $\RP^n$. Indeed, we can replace $\R$ with $\C$, $\mbb{H}$, or indeed any field. 
+
+\underline{Homogenous coordinates}
+
+For $(x, y, z)\neq(0,0,0)$, we have $[x, y, z]\eqdef\{(\lambda x, \lambda y, \lambda z) \mid \lambda \neq0\}$. For example, $[1,2,3]=[2,4,6]$. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
