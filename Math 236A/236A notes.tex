@@ -39,7 +39,9 @@
 
 \section*{Lecture 1, 1/11/13}
 
-Homological algebra is the study of complexes of $R$-modules, where $R$ is a ring with identity $1\neq0$. Notationally, $R$-mod is the category of all left $R$-modules, and $R$-mod is the category of all finitely generated $R$-modules. 
+\subsection*{\underline{Section 1: Vocabulary and easy definitions}}
+
+Homological algebra is the study of complexes of $R$-modules, where $R$ is a ring with identity $1\neq0$. Notationally, $R$-Mod is the category of all left $R$-modules, and $R$-mod is the category of all finitely generated $R$-modules. 
 
 \defn
 
@@ -295,6 +297,133 @@ Let $\mc{C}, \mc{D}$ be categories. A \underline{functor} $F:\mc{C}\to\mc{D}$ co
 Let $\phi:X\to Y$ be continuous for $X, Y \fin \Top$. Then $\mathbb{S}(\phi)_n:S_n(X)\to S_n(Y)$ is given by $\sigma\mapsto\phi\circ\sigma$, and we can extend this for $\sigma$ an $n$-simplex of $X$. 
 
 \end{enumerate}
+
+\section*{Lecture 4, 1/18/23}
+
+\subsection*{\underline{Functors:}}
+\defn
+Let $\mc{C}, \mc{D}$ be categories. A \underline{covariant functor} from $\mc{C}$ to $\mc{D}$ consists of ``maps" $F_0$ and $F|_{A, B}$ for any $A, B \in \Obj(\mc{C})$ such that
+\begin{itemize}
+\item $F_0:\Obj(\mc{C})\to\Obj(\mc{D})$
+\item $F_{A, B}:\Hom_{\mc{C}}(A, B)\to \Hom_{\mc{D}}(F_0A,F_0B)$ for any $A, B \fin \Obj(\mc{C})$
+\end{itemize}
+such that 
+\begin{enumerate}[label=(\alph*)]
+\item $F_{A, C}(fg) = F_{B, C}(f)F_{A, B}(g)$ for all eligible $f, g$ 
+\item $F_{A, A}(\Id_A) = \Id_{F(A)}$
+\end{enumerate}
+from here on we don't care at all about indices. For simplicity, we will denote the action of a functor $F$ as simply $FA$ or $Ff$. 
+
+\defn
+
+A \underline{contravariant functor} from $\mc{C}$ to $\mc{D}$ amounts to a covariant functor from $\mc{C}$ to $\mc{D}^\op$.
+
+More examples of functors
+
+\exm
+
+\underline{Homology functors} $H_n:R-comp\to \Z-mod$ which sends $\A$ to $H_n(A)$. That is, $\A\to F\A = \frac{\ker(d_n)}{\Im(d_{n + 1})}$
+
+Let $f \in \Hom_{R-comp}(\A,\A')$. That is, the following diagram commutes
+
+\[
+\begin{tikzcd}
+\cdots \ar[r] \ar[d] & A_{n} \ar[d, "f_n"'] \ar[r, "d_{n}"] & A_{n - 1} \ar[r] \ar[d, "f_{n - 1}"] & \ar[d]\cdots  \\
+\cdots \ar[r] & A'_n \ar[r, "d'_n"'] & A'_{n - 1} \ar[r] & \cdots \\
+\end{tikzcd}
+\]
+$Ff$ acts by $a_n + \Im(d_{n + 1})\to f_n(a_n) + \Im(d_{n + 1}')$. Let's prove that this is actually well-defined. 
+
+\underline{Check}
+
+First, $a_n \in \ker(d_n)$ implies $f_n(a_n) \in \ker(d_n')$. This can be seen by doing a diagram chase on the above diagram. Since $d_n(a_n) = 0$, we have $0 = f_{n - 1}d_n(a_n) = d_n'f_n(a_n)$, i.e. $f_n(a_n)\in\ker(d_n')$. 
+
+
+``Don't do much thinking. It's almost harmful" - Birge on doing diagram chasing. Also ``follow your nose."
+
+Now, $a_n\in\Im(d_{n + 1})$ implies $f_n(a_n)\in\Im(d_{n + 1}')$. So $a_n = d_{n + 1}(x)$ with $x \in A_{n + 1}$. hence $f_n(a_n) = f_nd_{n + 1}(x) = a_{n + 1}'f_{n + 1}(x) \in \Im(d_{n + 1}')$. 
+
+\exm
+
+Let $\mc{C}, \mc{D}$ be pre-additive categories (definition on the top of page 6). A functor $F$ ``from" $\mc{C}$ to $\mc{D}$ is called \underline{additive} if, for all $A, B \fin \Obj(\mc{C})$, the map $F:\Hom_{\mc{C}}(A, B) \to \Hom_{\mc{D}}(F(A), F(B))$ is a homomorphism of abelian groups. 
+
+\rem Note that $H_n:R-comp\to\Z-mod$ is an additive functor. The $\pi_n$ functor is \underline{not} additive, as $\Top$ is not preadditive. 
+
+\exm
+
+\underline{Forgetful functors} e.g. $F:R-mod\to\Z-mod$ which sends $M\mapsto M$, where the $M$ on the left hand side is an $R$-module, and $M$ on the right is just an abelian group, which is a $\Z$-module. Or $F:R-mod\to\Set$ which sends an $R$-module $M$ to the set of its elements, ``forgetting" the module structure. 
+
+Moreover, if $\mc{C},\mc{D}$ are pre-additive, and $F:\mc{C}\to\mc{D}$ is a forgetful functor of some sort, then $F$ is additive. 
+
+\exm
+
+Let $F:R-mod\to S-mod$ be an additive functor. Then $F$ induces an additive functor $\tilde{F}:R-comp\to S-comp$, sending $\A$ to $F(\A)$. 
+
+If $\A$ is a complex 
+\[
+\begin{tikzcd}
+\cdots \ar[r]& A_{n + 1}\ar[r,"d_{n + 1}"] & A_n\ar[r, "d_n"] & A_{n - 1} \ar[r] & \cdots 
+\end{tikzcd}
+\]
+then $F(\A)$ is 
+\[
+\begin{tikzcd}
+\cdots\ar[r]&F(A_n)\ar[r,"F(d_{n + 1})"]&F(A_n)\ar[r, "F(d_n)"]&F(A_{n - 1})\ar[r]&\cdots 
+\end{tikzcd}
+\]
+An extremely important question: if $\A$ is exact, is $F(\A)$ exact? If not, how far does it deviate from being an exact sequence? 
+
+\exm
+
+Let $F:\mc{C}\to\mc{D}$, $G:\mc{D}\to\mc{E}$ be functors. Then $G \circ F:\mc{C}\to\mc{E}$ is a functor. \underline{WARNING:} we use $\circ$ but this isn't actually a function composition. This is just notation!!!
+
+$G \circ F$ acts how one might think: for $A\fin\Obj(\mc{C})$, $G\circ F(A) = G(F(A))$, and for $f\in\Hom_{\mc{C}}(A, B)$, $G \circ F(f) = G(F(f))\in\Hom_{\mc{E}}(G(F(A)), G(F(B)))$.
+
+Of interest to us: $H_n \circ \tilde{F}$, where $F:R-mod\to S-mod$ is additive. This functor sends a complex $\A$ to $H_n(F(\A))$. This is especially of interest if $\A$ is exact, but $F(\A)$ is not. 
+
+\rem
+
+Let $F:\mc{C}\to\mc{D}$ be a functor. Then $F$ sends isomorphisms in $\mc{C}$ to isomorphisms in $\mc{D}$. This is immediate from the definition of a functor. 
+
+\subsection*{\underline{Section 2: two types of functors that will follow us}}
+
+\begin{enumerate}[label=(\roman*)]
+\item Hom-functors: Whenever $\mc{C}$ is a category, there is a bifunctor 
+\[
+\Hom_{\mc{C}}(-,-):\mc{C}\times\mc{C}\to\Set
+\]
+which sends a pair $(A, B)$ to $\Hom_{\mc{C}}(A, B)$, and on maps (note that this is covariant in the first factor and contravariant inh the second), they act as follows. Let $f:A\to A', g:B\to B'$ be morphisms in $\mc{C}$. Then 
+\[
+\Hom(f, g):\Hom_{\mc{C}}(A', B)\to\Hom_{\mc{C}}(A, B')
+\]
+acts by $\phi\mapsto g \circ \phi \circ f$
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
