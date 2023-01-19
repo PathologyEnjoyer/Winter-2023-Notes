@@ -4,7 +4,7 @@
 \usepackage{epsfig}
 
 \pagestyle{fancy}{
-	\fancyhead[L]{Fall 2022}
+	\fancyhead[L]{Winter 2023}
 	\fancyhead[C]{220B - Rings}
 	\fancyhead[R]{John White}
   
@@ -19,11 +19,12 @@
 	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
 }
 \newcommand{\pmat}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}}
+\newcommand{\mk}[1]{\mathfrak{#1}}
 \DeclareMathOperator{\Perm}{Perm}
 
-\title{220A - Groups}
+\title{220B - Rings}
 \author{John White}
-\date{Fall 2022}
+\date{Winter 2023}
 
 
 \begin{document}
@@ -246,6 +247,213 @@ Equivalently, $ab \in (p)$ implies $a \in (p), b\in(p)$, or both.
 
 \qed
 
+\section*{Lecture 3, 1/13/23}
+
+\prop
+
+Let $R$ be a nonzero commutative ring, and $I\subset R$ a proper ideal. Then $R/I$ is a field if and only if $I$ is a maximal ideal.
+
+\proof
+
+\subsection*{$=>$}
+
+Suppose that $J\subset R$ is an ideal with $I \subset J \subset R$. Suppose that these inclusions are strict i.e. $I\subsetneq J \subsetneq R$. Let $X \in J\setminus I$, so $\underbrace{\bar{x}}_{\eqdef x + I} \neq\bar{0}\in R/I$. Then by assumption there exists $\bar{y} \in R/I$ such that $\underbrace{\bar{x}\cdot\bar{y}}_{=\bar{xy}} = \bar{1}\in R/I$. So, $1 - xy \in I \subset J$. But $x \in J$ and $J$ is an ideal, so $xy \in J$. So, $1 \in J$, so $J = R$.
+
+\subsection*{$<=$}
+
+Let $\bar{x} \neq \bar{0}\in R/I$ for some $x \not\in I$. Consider $J = \underbrace{\{a + rx \mid a \in I, r \in R\}}_{I + (x)}$. Then we see that $J$ is an ideal of $R$ containing $I$, i.e. $I \subset J$. Further, $X\neq J$ because $x \in J\setminus I$. By maximality, we must conclude that $J = R$. 
+
+In particular, $1 = a + rx$ for some elements $a \in I, r \in R$. So in $R/I$, $\bar{1} = \bar{a + rx} = \bar{a} + \bar{rx}$. $a \in I$ though, so $\bar{1} = \bar{rx}$, so $\bar{x}$ is indeed a unit of $R/I$. 
+
+\qed
+
+\cor
+
+In a nonzero commutative ring $R$, all maximal ideals are prime ideals. 
+
+\proof
+
+Fields are integral domains
+
+\qed
+
+\rem The converse is \underline{not} true. $\Z$ is an integral domain with prime ideal $(0)$, but this ideal is not maximal, as $\Z/(0) \cong \Z$ is not a field!
+
+For another counterexample, let $R = \Z[x]$, and consider the ideal $I = \{$ all polynomials with constant term equal to $ 0\} = (x)$.  This ideal is prime, since $R/I \cong \Z$ via $\bar{f(x)} \mapsto f(0)$ is an integral domain. But this ideal is not maximal, because $\Z$ is not a field. 
+
+Note: $I$ is strictly contained in the ideal of polynomials with even constant term, which is a strict subset of $R = \Z[x]$.
+
+\subsection*{\underline{The existence of maximal ideals}}
+
+\defn
+
+A \underline{partial ordering} on a set $A$ is a relation $\leq$ satisfying 
+\begin{enumerate}
+\item $x \leq x$ for all $x \in A$
+\item $x \leq y, y \leq x \implies x = y$ for all $x, y \in A$
+\item If $x \leq y$ and $y \leq z$, then $x \leq z$. 
+\end{enumerate}
+
+\rem This definition does \underline{not} necessitate that all elements $x, y$ are comparable. 
+
+\defn 
+
+Let $(A, \leq)$ be a partially ordered set. 
+\begin{itemize}
+\item Let $B \subset A$ and $x \in A$. We say $x$ is an \underline{upper bound} for $B$ if $y \leq x$ for all $y \in B$. 
+\item A subset $B\subset A$ is called a \underline{chain} if $\leq$ is a \underline{total ordering} on $B$ (that is, all elements of $B$ are comparable to all other elements of $B$)
+\end{itemize}
+
+\lem (Zorn's Lemma)
+
+Let $A$ be a nonempty partially ordered set in which every chain has an upper bound. Then $A$ has a \underline{maximal element}, i.e. an element $x \in A$ such that for all $y \in A$, $y$ cannot be compared to $x$, or $y \leq x$. 
+
+\proof
+
+This is actually equivalent to the axiom of choice!
+
+\qed
+
+\thm 
+
+Let $R$ be a nonzero commutative ring, and let $I\subset R$ be a proper ideal. Then there exists a maximal ideal $J \subset R$ containing $I$. 
+
+\proof
+
+Consider the \underline{poset} (Partially Ordered SET) $A$ consisting of all proper ideals containing $I$, partially ordered by inclusion. 
+
+Then: 
+\begin{itemize}
+\item $A\neq\varnothing$, since $I \in A$
+\item If ${a_{\lambda}}_{\lambda\in\Lambda}$ is a chain in $A$, then $\cup_{\lambda\in\Lambda}a_{\lambda} \in A$ gives an upper bound for the chain. 
+
+Note: In general, the union of ideals is \underline{not} an ideal. However, this is an increasing union of ideals, which does give an ideal. 
+
+\end{itemize}
+
+By Zorn's lemma, there exists a maximal element of $A$, which will be a maximal ideal containing $I$. 
+
+\qed
+
+\cor
+
+Let $R$ be a nonzero commutative ring. Then $R$ contains some maximal ideal. 
+
+\proof
+
+Take $I = (0)$ in the previous proposition. 
+
+\qed
+
+\section*{Lecture 4, 1/18/23}
+
+\underline{From now on:}
+
+All rings $R$ will be assumed to be commutative with 1.
+
+\defn
+\begin{itemize}
+\item Let $A_1, \dots, A_t\subset R$ be ideals, then their \underline{sum} is the ideal 
+\[
+A_1 + \cdots + A_t \eqdef \{a_1 + \cdots + a_t \mid a_i \in A_i\}
+\]
+This is the smallest ideal containing $A_i$ for all $i$. 
+
+\item If $x_1, \dots, x_t \in R$, the \underline{ideal generated by} them
+\begin{align*}
+(x_1,\dots, x_t)  & \eqdef \{\sum_{i=1}^tr_ix_i \mid r_i \in R\}\\
+						 & = (x_1) + \cdots + (x_t) \\
+\end{align*}
+
+\item More generally, if $\{x_i\}_{i\in I}\subset R$ is some collection of elements of $R$, the ideal they generate is
+\begin{align*}
+\sum_{i\in I}(x_i)\eqdef \{\text{all finite linear combinations of elements of }\{x_i\}_{i\in I}\} 
+\end{align*}
+
+\item If $A, B \subset R$ are ideals, then their \underline{product} is the ideal
+\[
+AB \eqdef \{\sum_i^n a_ib_i \mid a_i\in A, b_i \in B, n < \oo\}
+\]
+this is the ideal generated by $\{ab\mid a\in A, b \in B\}$. Note $A\cap B \subseteq AB$, with equality if $A + B = R$
+
+\exm Let $R = \Z$. Then $(a) + (b) = (\gcd(a,b))$, $(a)\cap (b) = (\lcm(a, b))$. When $a, b$ are coprime, then $(a) + (b) = (1) = \Z$, and $(a) \cap (b) = (ab)$.
+
+\defn A ring $R$ with exactly 1 maximal ideal $\mathfrak{M}$ is called a \underline{local ring} (often denoted $(R, \mathfrak{M})$).
+
+\end{itemize}
+
+
+\exm 
+
+\begin{itemize}
+\item $(\R, \{0\})$ is a local ring (in fact any field is) with maximal ideal $\{0\}$ 
+\item $(\Z/(p^n), p\Z/(p^n))$ is a local ring for any prime $p$ and $n > 0$
+\end{itemize}
+
+\lem
+
+Let $R$ be a ring and $\mathfrak{M}\subsetneq R$ a proper ideal such that every $x \in R\setminus\mathfrak{M}$ is a unit. Then $R$ $(R, \mathfrak{M})$ is a local ring. 
+
+\proof
+
+We want to show that $\mathfrak{M}$ is a maximal ideal of $R$, and is the unique such maximal ideal. 
+
+Let $I \subsetneq R$ be a proper ideal. If it contained a unit, then $I = R$, which by hypothesis is not true. So, $I$ contains no units. So, it must exist entirely within $\mathfrak{M}$. So, $\mathfrak{M}$ is a unique maximal ideal. 
+
+\qed
+
+\prop Let $R$ be a ring and $\mathfrak{M}\subset R$ a maximal ideal. Then $(R, \mathfrak{M})$ is a local ring if and only if every $x \in 1 + \mathfrak{M}$ is a unit in $R$.
+
+Note: $1 + \mathfrak{M} = \{1 + y \mid y \in \mathfrak{M}\}\subset R$ is closed under multiplication. 
+
+\proof
+
+\subsection*{$=>$}
+
+Suppose $(R, \mk{M})$ is a local ring, and suppose for the sake of contradiction that $x \in 1 + \mk{M}$ is NOT a unit. Note $x = 1 + y, y \in \mk{M}$. By hypothesis, $(1 + y)$ is a proper ideal in $R$, because $1 + y$ is not a unit. 
+
+So $(1 + y) \subset\mk{M}$. In particular, $1 + y \in \mk{M}$. But $y \in \mk{M}$, so $1 \in \mk{M}$. Oopsy! Contradiction. So, we have proven one direction. 
+
+\subsection*{$<=$}
+
+Let $x \in R\setminus\mk{M}$. Since $\mc{M}$ is maximal, $\mk{M} + (x) = R$. So, $1 = y + rx$ for some $y \in \mk{M}, r \in R$. Thus $rx = 1 - y \in \mk{M}$, so $rx$ is a unit by hypothesis, meaning there is a $z$ such that $(rx)z = 1 = x(rz)$, so $x$ is a unit. 
+
+By the lemma, this shows $(R, \mk{M})$ is a local ring. 
+
+\qed
+
+\defn
+
+Let $R$ be a ring. Then the \underline{nilradical} is defined as
+\[
+\mc{N}\eqdef\{\text{all nilpotent elements of }R\}
+\]
+
+\prop
+
+The nilradical is an ideal, and the quotient ring $R/\mc{N}$ has no nonzero nilpotent elements. 
+
+\proof
+
+If $x \in \mc{N}$, then clearly $rx \in \mc{N}$ for any $r \in R$. Suppose $x, y \in \mc{N}$. Then for some $n, m$, $x^n = y^m = 0$. Then, by the binomial theorem, 
+\[
+(x - y)^{n + m} = \sum_{i=0}^{n + m}x^i(-y)^{n + m - i}{n + m\choose i}
+\]
+for all $i$, at least one of $x^i, y^{n + m - i}$ is zero. So, this sum is zero, so $(x - y) \in \mc{N}$. 
+
+Now, suppose $\bar{x}\in R/\mc{M}$. We want to show that $\bar{x} = 0$. Then $\bar{x}^n = 0$ for some $n$, so $x^n \in \mc{N}$ for some $n$. But then $x^n$ is nilpotent, so $x$ is nilpotent. So, $\bar{x} = 0$. 
+
+\qed
+
+\prop
+
+The nilradical of $R$ is the intersection of all prime ideals of $R$. 
+
+\proof
+
+Let $x \in \mc{N}$. Then $x^n = 0 \in \mk{p}$ for any prime ideal $\mk{p} \subset R$. So, $x \in \mk{p}$, so $\mc{N}$ is contained in the intersection. We will do the other inclusion next time. 
+
+\qed
 
 
 
