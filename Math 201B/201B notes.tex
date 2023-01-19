@@ -3,8 +3,8 @@
 \usepackage[document]{ragged2e}
 \usepackage{amsmath}
 \pagestyle{fancy}{
-	\fancyhead[L]{Fall 2022}
-	\fancyhead[C]{201A - Real Analysis}
+	\fancyhead[L]{Spring 2023}
+	\fancyhead[C]{201B - Real Analysis}
 	\fancyhead[R]{John White}
   
   \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
@@ -164,22 +164,115 @@ Suppose $X$ is a metric space. A measure on $X$ is a \underline{Radon measure} i
 
 Let $X \subseteq \R^n$ be compact. Let $C(X)$ denote the vector space of all continuous functions on $X$. This admits a norm $\norm{f}_{C(X)} = \sup_X|f|$, making it a Banach space. Define $C^*(X) = \{\phi:C(X)\to\R, \phi$ is linear and continuous $\}$. 
 
-For all $\phi \in C^*(X)$, there exists a Radon measure $\mu = \mu_{\phi}$, and a function $M:X\to\{\pm1\}$ which is Borel, such that
+For all $\phi \in C^*(X)$, there exists a Radon measure $\mu = \mu_+$, and a function $M:X\to\{\pm1\}$ which is Borel, such that
 \[
-\phi(f) = \int_Xf(x)M(x)\,d\mu_{\phi}(x)
+\phi(f) = \int_Xf(x)M(x)\,d\mu(x)
 \]
-
 for all $f \in C(X)$. 
 
+\proof
 
+\qed
 
+\section*{Lecture 2, 1/17/23}
 
+Note: This is the first lecture with Davit. Davit will always use $\mu$ to refer to an \underline{outer} measure, not a measure. The book will be ``Measure theory and fine properties of functions." According to Davit, this is the correct book to be using. 
 
+\defn 
 
+Let $X$ be a nonempty set. A mapping $\mu:2^X\to[0,+\oo]$ is called a \underline{measure} if it satisfies the following 2 properties.
 
+\begin{enumerate}
+\item $\mu(\varnothing) = 0$. 
+\item (Countable subadditivity and monotonicity) If $A, A_1, A_2, \dots \subseteq X$ and $A \subseteq \cup\seq{i}A_i$ then $\mu(A)\leq\sum\seq{i}\mu(A_i)$
+\end{enumerate}
 
+\rem From the second definition, we can automatically get monotonicity, i.e. if $A\subseteq B$, then $\mu(A)\leq\mu(B)$. This is because, as written, the second definition is a statement not just about $\cup\seq{i}A_i$, but about any subset of it. Indeed, let $A = A, A_1 = B$, and $A_k = \varnothing$ for $k\geq 2$. Then we have $\mu(A)\leq\mu(\cup\seq{i}A_i) = \mu(A\cup B)$. 
 
+We will write ``$\mu$ is a measure on $X$" to mean that $\mu$ satisfies the above definition (that is, $\mu$ is an outer measure).
 
+\defn
+
+Let $X$ be a nonempty set and let $\mu$ be a measure on $X$. For a fixed set $C\subseteq X$, define the \underline{restriction measure} $\nu = \mu|_C$ by $\nu(A) = \mu|_A(A) = \mu(A\cap C)$.
+
+\rem It is easy to prove that $\mu|_C$ is a measure on $X$. 
+
+\defn (Carath\'eodory's condition). Let $X$ be a nonempty set and let $\mu$ be a measure on $X$. A subset $A\subseteq X$ is called \underline{$\mu$-measurable} if, for all subset $B\subseteq X$, we have
+\[
+\mu(B) = \mu(B \cap A) + \mu(B \setminus A)
+\]
+
+\rem $X$ and $\varnothing$ are easily seen to be $\mu$-measurable. 
+
+\thm (Carath\'eodory extension theorem)
+
+The collection of $\mu$-measurable sets on a set $X$ is a $\sigma$-algebra.
+
+\thm Let $X$ be a nonempty set and let $\mu$ be a measure on $X$. Then the following holds: 
+
+\begin{enumerate}
+\item $\varnothing$ and $X$ are $\mu$-measurable.
+\item $A \subseteq X$ is $\mu$-measurable if and only if $X \setminus A$ is $\mu$-measurable.
+\item If $A\subseteq X$ is such that $\mu(A) = 0$, then $A$ is $\mu$-measurable. 
+\item Let $C \subseteq X$. Then anything which is $\mu$-measurable is $\mu|_C$-measurable. 
+\end{enumerate}
+
+\rem
+
+A measure is also finitely subadditive, which says that if $A \subseteq A_1 \cup \cdots \cup A_n$, then $\mu(A) \leq \sum_{i=1}^n\mu(A_i)$. So, to check that $\mu(B) = \mu(B \cap A) + \mu(B\setminus A)$, it will suffice to check
+\[
+\mu(B)\geq\mu(B\cap A) + \mu(B\setminus A)
+\]
+
+\proof
+
+Part 1 is obvious. 
+
+Suppose that $A$ is $\mu$-measurable. Then $\mu(B\cap A) = \mu(B \setminus A^c)$ and $\mu(B\cap A^c) = \mu(B\setminus A)$ so $\mu(B \cap A) + \mu(B\setminus A) = \mu(B \cap A^c) + \mu(B\setminus A^c)$. So $A$ is $\mu$-measurable if and only if $A^c$ is.
+
+Suppose that $\mu(A) = 0$. Then $\mu(B\cap A) \leq \mu(A), \mu(B)$, so $\mu(B\cap A) = 0$ for any $B\subseteq X$. Now, $B\setminus A \subseteq B$, so by monotonicity $\mu(B\setminus A)\leq\mu(B)$. So $\mu(B \cap A) + \mu(B\setminus A) \leq \mu(B)$ for all $B \subseteq X$, so we are done. 
+
+Let $A$ be $\mu$-measurable. Then for any $B\subseteq X$ we have 
+\begin{align*}
+\nu(B) & = \mu|_C(B) = \mu(B \cap C) \\
+		 & = \mu((B\cap C) \cap A) + \mu((B\cap C)\setminus A) \\
+		 & = \nu(B \cap A) + \mu((B\setminus A) \cap C)\\
+		 & = \nu(B \cap A) + \nu(B\setminus A) \\
+\end{align*}
+
+\qed
+
+\thm
+
+Let $X$ be a nonempty set and let $\mu$ be a measure on $X$. 
+
+Assume $A_1, A_2, \dots, A_n\subseteq X$ are $\mu$-measurable. Then
+\begin{enumerate}
+\item $\bigcup_{k=1}^n A_k$ and $\bigcap_{i=1}^nA_k$ are also $\mu$-measurable. 
+\item If the $A_i$ are disjoint, then $\mu(\bigcup_{i=1}^nA_i = \sum_{i=1}^n\mu(A_i)$
+\end{enumerate}
+
+\proof
+
+We prove part 2 first. Because each $A_i$ is measurable, 
+\begin{align*}
+\mu(\cup_{k=1}^nA_k) & = \mu((\cup_{k=1}^nA_k)\cap A_n) + (\mu(\cup_{k=1}^nA_k) \setminus A_n) \\
+& = \mu(\cup_{i=1}^{n - 1}A_k) + \mu(A_n) = \cdots = \sum_{k=1}^n\mu(A_k) \\
+\end{align*}
+
+Now we prove part 1. Let $A, B \subseteq X$ be $\mu$-measurable and disjoint. Then for any $C\subseteq X$, $\mu(C) = \mu(C \cap A) + \mu(C\setminus A)$, and similarly for $B$. This is equal to 
+
+\begin{align*}
+\mu(C) & = \mu(C \cap A) + \mu((C\setminus A) \cap B) + \mu(C\setminus A \setminus B) \\
+		 & = \mu(C\cap A) + \mu(C\cap B) + \mu(C\setminus(A\cup B)) + \mu(C\cap(A\cup B)) (?)\\
+		 & = \mu(C \cap (A \cup B) \cap A) + \mu(C \cap (A \cup B) \setminus A) \\
+		 & = \mu(C \cap A) + \mu(C\cap B) \\
+		 & = \mu(C \cap (A \cup B)) + \mu(C\setminus(A \cup B))
+\end{align*}
+
+So $A \cup B$ is $\mu$-measurable. (I got a bit lost in the arithmetic, sorry)
+
+Next, we show if $A, B\subseteq X$ are $\mu$-measurable, then $A \cap B$ is $\mu$-measurable. This is straightforward. We will continue next time. 
 
 
 \end{document}
