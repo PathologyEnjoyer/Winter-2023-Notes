@@ -451,9 +451,444 @@ The nilradical of $R$ is the intersection of all prime ideals of $R$.
 
 \proof
 
-Let $x \in \mc{N}$. Then $x^n = 0 \in \mk{p}$ for any prime ideal $\mk{p} \subset R$. So, $x \in \mk{p}$, so $\mc{N}$ is contained in the intersection. We will do the other inclusion next time. 
+Let $x \in \mc{N}$. Then $x^n = 0 \in \ms{P}$ for any prime ideal $\ms{P} \subset R$. So, $x \in \ms{P}$, so $\mc{N}$ is contained in the intersection. We will do the other inclusion next time. 
 
 \qed
+
+\section*{Lecture 5, 1/20/23}
+
+We will continue the proof. Suppose $f\not\in \ms{N}$. We wish to show that $f\not\in\ms{P}$ for some prime ideal $\ms{P}$. 
+
+Let $\Sigma = \{$ideals $I \subset R \mid f^n\not\in I$ for all $n > 0 \}$.
+
+Then $\Sigma\neq\varnothing$, as it contains $0$ by hypothesis. Further, we can check that any chain has an upper bound (exercise). 
+
+By Zorn's Lemma, there exists a maximal $\ms{P}\in\Sigma$. 
+
+It remains to show $\ms{P}$ is a prime ideal. 
+
+Suppose that $x, y \not\in\ms{P}$. Then $\ms{P}\subsetneq\ms{P}+(x)$ and $\ms{P}\subsetneq\ms{P} + (y)$. But by maximality of $\ms{P}$, $\ms{P} + (x), \ms{P} + (y) \not\in\Sigma$. So, for some $n, m$, $f^n\in\ms{P}+(x), f^m \in \ms{P}+(y)$. 
+
+So, 
+\[
+f^{n + m} \in(\ms{P}+(x))(\ms{P}+(y))\subset \ms{P}+(xy)
+\]
+Thus $\ms{P}+(xy)\not\in\Sigma$. But $\ms{P}\in\Sigma$, so we are forced to conclude $(xy)\not\in\Sigma$, so $xy\not\in\ms{P}$. 
+
+\qed
+
+\defn We say that the ideals $I, J \subset R$ are \underline{coprime} if $I + J = R$. 
+
+\exm
+
+$(m), (n) \in \Z$ are coprime iff $\gcd(m, n) = 1$, since $(m) + (n) = (d)$, where $d = \gcd(m, n)$. 
+
+\defn
+
+Let $R_1, \dots, R_m$ be rings. Their \underline{direct product} is defined as
+\[
+R_1\times\cdots\times R_n = \{(x_1, \dots, x_n)\mid x_i \in R\}
+\]
+forms a ring with addition and multiplication defined component-wise. 
+
+\thm (Chinese Remainder Theorem) 
+
+Let $I_1, \dots, I_n$ be ideals in a ring $R$, which are pairwise coprime. 
+
+Then
+\begin{enumerate}[label=(\roman*)]
+\item $I_1\cdots I_n = I_1 \cap \cdots \cap I_n$
+\item The map $\phi:R\to R/I_n\times\cdots R/I_n$ given by 
+\[
+x\mapsto(x\mod I_1, \dots, x\mod I_n)
+\]
+induces a ring isomorphism
+\[
+\frac{R}{I_1\cdots I_m} \cong \frac{R}{I_1}\times\cdots\times\frac{R}{I_n}
+\]
+
+\end{enumerate}
+
+\proof
+
+\begin{enumerate}[label=(\roman*)]
+\item We will use induction on $n \geq 2$. For the base case, we know that $I_1\cdot I_2 \subseteq I_1\cap I_2$. Conversely, suppose $y \in I_1 \cap I_2$. Since $I_1 + I_2 = R$, we can write $1 = x_1 + x_2$, with $x_i\in I_i$. So
+\begin{align*}
+y & = y \cdot 1 \\
+  & = y \cdot(x_1 + x_2) \\
+  & = \underbrace{y}_{\in I_2}\cdot\underbrace{x_1}_{\in I_1} + \underbrace{y}_{\in I_1}\cdot\underbrace{x_2}_{\in I_2} \\
+  & \in I_1\cdot I_2 \\
+\end{align*}
+Now suppose $n > 2$ and we have $I_1\cdots I_{n - 1} = I_1 \cap \cdots \cap I_{n - 1}$. 
+
+Let $J = I_1\cdots I_n$. By hypothesis, for $i =1, \dots, n - 1$, we have $I_i + I_n = R$, so $1 = \underbrace{x_i}_{\in I_i} + \underbrace{y_i}_{\in I_n}$
+
+So $J \ni x_1\cdots x_{n - 1} = (1 - y_1)\cdots(1 - y_{n - 1}) = (1 - $some element in $I_n) \equiv 1 \mod I_n$
+
+\underline{Notation:} We write $x \equiv y \mod I$ if $x - y \in I$ for some $x, y \in R$, $I \subset R$.
+
+Thus we have $1 = ($ element of $J) + ($ element of $I_m)$, so $R = J + I_n$, so $J$ and $I_n$ are coprime. 
+
+By the base case, we have 
+\[
+\underbrace{J\cdot I_n}_{= I_1\cdots I_{n - 1}\cdot I_n} = \underbrace{J\cap I_n}_{=(I_1 \cap \cdots \cap I_{n - 1})\cap _n}
+\] 
+
+We have thus proven part (i). 
+
+\item $\phi:R\to \frac{R}{I_1}\times\cdots\times\frac{R}{I_m}$ is clearly a ring homomorphism, since every component of $\phi$ is. 
+
+To show $\phi$ is surjective, we will show that there exists some $x \in R$ such that $\phi(x) = (1, 0,\dots, 0)$. 
+
+A similar argument would show that there exists $x_i \in R$ such that $\phi(x_i) = \overbrace{(0, \dots, \underbrace{1}_{i\text{th slot}}, \dots, 0)}^{\eqdef e_i}$ and then given any $r = (\bar{r}_1, \dots, \bar{r}_m) \in \frac{R}{I_1}\times\cdots\times\frac{R}{I_n}$, we have
+\[
+\phi\left(\sum_{i=1}^nr_ix_i\right) = \sum_{i=1}^n\bar{r}_i\phi(x_i) = \sum_{i=1}^n\bar{r}_ie_i = (\bar{r}_1,\dots,\bar{r}_m) = r
+\]
+
+So we will now show surjectivity. For $i = 2, \dots, n$, we have $I_1 + I_i = R$, so $1 = \underbrace{u_i}_{\in I_1} + \underbrace{v_i}_{\in I_i}$. 
+
+Then 
+\[
+x \eqdef v_2\cdots v_n = (1 - u_2)\cdots(1 - u_n)\equiv \begin{cases}
+1 & \mod I_1 \\0 & \mod I_i, i \geq 2 \\
+\end{cases}
+\]
+So $\phi(x) = (1, 0, \dots, 0) \in \frac{R}{I_1}\times\cdots\times\frac{R}{I_n}$. Thus we have shown surjectivity of $\phi$. 
+
+Finally,
+\begin{align*}
+\ker(\phi) & = \{x\in R \mid x \mod I_i \equiv 0 \forall i\} \\
+			  & = \{x \in R \mid x \in I_i \forall i \} \\
+			  & = \cap_{i=1}^nI_i = I_1\cdots I_n \\
+\end{align*}
+So by the first isomorphism theorem for rings (exercise), $\phi$ induces the claimed isomorphism.  
+
+
+\end{enumerate}
+
+This completes the proof. 
+
+\qed
+
+\section*{Lecture 6, 1/23/23}
+
+\subsection*{\underline{Extension and contraction of ideals}}
+
+\defn
+
+Let $f:R\to S$ be a ring homomorphism, and $I\subset R$ and $J \subset S$ be ideals. 
+
+\begin{itemize}
+
+\item The \underline{contraction of $J$} is the ideal 
+\[
+J^c = f^{-1}(J)\subset R.
+\]
+\item The \underline{extension of $I$} is the ideal generated by $f(I)$:
+\[
+I^e = (f(I)) = \{\sum_{i=1}^ns_if(x_i) \mid n \in \N, s_i \in S, x_i \in I\} \subset S
+\]
+
+\end{itemize}
+
+\rem
+
+\begin{enumerate}
+
+\item If $I \subset R$ is an ideal, then $f(I)\subset S$ is not necessarily an ideal. For example, consider the inclusion $f:\Z\hookrightarrow\Q$, then $f(\underbrace{(n)}_{\neq0}) = (n) = n\Z\subset\Q$ is not an ideal. 
+
+\item If $J \subset S$ is a prime ideal, then so is $J^c\subset R$: indeed, the composition 
+\[
+\begin{tikzcd}
+R\ar[r, "f"]&S\ar[r, "\phi"]& S/J
+\end{tikzcd}
+\]
+has the kernel $f^{-1}(J) = J^c$, so it induces an injection 
+\[
+R/J^c\hookrightarrow S/J
+\]
+$S/J$ is an integral domain, so $R/J^c$ must be as well 
+
+\item If $I\subset R$ is a prime ideal, then $I^e\subset J$ is \underline{not} necessarily a prime ideal. For example, consider $f:\Z\hookrightarrow\Q$ and $I = (\underbrace{p}_{\text{prime}})$, we have $I^e = (p\Z) = \Q$, so is not prime. 
+
+\item Any ring homomorphism $f:R\to S$ can be factored as 
+\[
+\begin{tikzcd}
+R\ar[r, "\phi"] & f(R) \ar[r, hook, "\iota"] & S \\
+\end{tikzcd}
+\]
+Note that by first isomorphism theorem, $f(R) \cong R/\ker(f)$. 
+
+\begin{itemize}
+\item For $\phi$, we know that there is a bijection between the prime ideals in $R$ containing $\ker(f)$ and the prime ideals in $f(R)$ by the correspondence theorem. 
+
+\item For the inclusion map, the situation is more complicated. 
+
+\exm Consider $\Z\hookrightarrow\Z[i] = \{a + bi \mid a, b \in \Z\}$. Then a prime ideal $(p)\subset\Z$ may or may not stay prime in $\Z[i]$.
+\begin{enumerate}[label=(\roman*)] 
+\item If $p \equiv 1 \mod 4$, then $(p)^e$ is the product of two prime ideals in $\Z[i]$ (e.g $(5)^e = (2 + i)(2 - i)$).
+
+\item If $p \equiv 3 \mod 4$, then $(p)^e$ is a prime ideal in $\Z[i]$. 
+
+\item $(2)^e = (1 + i)^2$, the square of a prime ideal in $\Z[i]$.
+\end{enumerate}
+\end{itemize}
+
+
+
+\end{enumerate}
+
+\prop
+
+Let $f:R\to S$ be a ring homomorphism, and $I \subset R, J \subset S$ ideals. Then:
+
+\begin{enumerate}
+
+\item $I \subset (I^e)^c$ and $J \supset (J^c)^e$.
+
+\item $I^e = I^{ece}$ and similarly $J = J^{cec}$.
+
+\item Let $C = \{$contracted ideals (from $S$) in $R\}$ and $E = \{$extended ideals (from $R$) in $S\}$. Then we have
+\begin{align*}
+C = \{I\subset R \mid I^{ec} = I \} \\
+E = \{J\subset S \mid J^{ce} = J \} \\
+|C| = |E| \\
+\end{align*}
+The last line says that $C, E$ are in bijection, with $C\to E$ acting by $I\mapsto I^e$, and $E\to C$ acting by $J\mapsto J^c$. 
+
+
+\end{enumerate}
+
+\proof
+
+\begin{enumerate}
+
+\item We have $I \ni x \in f^{-1}(\overbrace{f(x)}^{\in I^e})$ so $I \subset I^{ec}$. On the other hand, let $y \in J^{ce}$. We can write $y = \sum_is_if(x_i)$, $s_i \in S, x_i \in J^c = f^{-1}(J)$.  So $J^{ce} \subset J$.
+
+\item Immediate from part (1): $I \subset I^{ec} \implies I^e\subset I^{ece} = (I^e)^{ce} \subset I^e$, so $I^e = I^{ece}$. A similar argument gives $J^c = J^{cec}$. 
+
+\item Suppose $I \in C$ is a contracted ideal. Then $I = J^c$ for some ideal $J \subset S$. Then $I^{ec} = J^{cec} = J^c = I$, so $C \subset \{I \subset R \mid I^{ec} = I \}$. Conversely, every ideal in $\{I \subset R \mid I^{ec} = I\}$ is a contracted ideal, so we get equality. 
+
+Similarly, we see that $E = \{J \subset S \mid J^{ec} = J\}$
+
+\end{enumerate}
+
+\qed
+
+\section*{Lecture 7, 1/25/23}
+
+\subsection*{\underline{Ring of fractions and localization}}
+
+\underline{Motivation:} Recall how we construct $\Q$ from $\Z$. We take all ordered pairs $(a, s), a, s \in \Z, s \neq 0$, and set up the equivalence relation $(a, s) \sim (b, t)$ if $at = sb$. Then $\Q \eqdef \{$ all such equivalence classes$\}$
+
+\defn
+
+Let $R$ be a commutative ring with 1. A \underline{multiplicative set $S \subseteq R$} is a subset of $R$ which contains 1 and is closed under multiplication. That is, $1 \in S$, and $s, t \in S \implies st \in S$. 
+
+\exm
+\,
+
+\begin{enumerate}
+
+\item If $\mk{p} \subset R$ is a prime ideal, then $S = R\setminus\mk{p}$ is a multiplicative sets. 
+
+\item If $R$ is an integral domain then $S = R\setminus\{0\}$ is a multiplicative set. 
+
+\item For any $f \in R$, $S = \{1, f, f^2, \dots\}$ is a multiplicative set. 
+
+\end{enumerate}
+
+Let $S \subset R$ be a multiplicative set, and define the relation
+\[
+(a, s) \sim (\ell, t) \iff (at - sb)u = 0
+\]
+for some $u \in S$. 
+
+\underline{Exercise:} Show that this is indeed an equivalence relation. 
+
+\defn
+
+Let $\frac{a}{s}$ denote the equivalence class of $(a, s) \in R\times S$. Then
+\[
+S^{-1}R\eqdef\{\frac{a}{s}\mid(a, b)\in R\times S \}
+\]
+with addition and multiplication defined by 
+\begin{align*}
+\frac{a}{s} + \frac{\ell}{t} & \eqdef \frac{at + s\ell}{st} \\
+\frac{a}{s}\cdot\frac{\ell}{t} & \eqdef \frac{a\ell}{st} \\
+\end{align*}
+
+We say that $S^{-1}R$ is \underline{the ring of fractions of $R$ with respect to $S$}, or alternatively the \underline{localization of $R$ at $S$}.
+
+\underline{Note:} We have a ring homomorphism $f:R\to S^{-1}R$ acting by 
+\[
+r\mapsto\frac{r}{1}
+\]
+such that $f(s)$ is a unit in $S^{-1}R$ for all $s \in S$, since $\frac{1}{s} \in S^{-1}R$, and $\frac{1}{s}\frac{s}{1} = 1$.
+
+\prop (Universal property of $S^{-1}R$)
+
+Let $g:R\to R'$ be a ring homomorphism such that $g(s)$ is a unit in $R'$ for all $s \in S$. Then there exists a unique ring homomorphism $h:S^{-1}R\to R'$ such that the diagram
+\[
+\begin{tikzcd}
+R\ar[d, "f"'] \ar[r, "g"] & R' \\
+S^{-1}R\ar[ur, "\exists!h"', dotted] \\
+\end{tikzcd}
+\] 
+commutes. 
+
+\proof
+
+Suppose first that such $h$ exists. Then for any $r \in R$, 
+
+\[
+h(\frac{r}{1}) = h(f(r)) = g(r)
+\]
+so for any $s \in S,$
+
+\[
+h(\frac{1}{s}) = h((\frac{s}{1})^{-1}) = h(\frac{s}{1})^{-1} = h(f(s))^{-1} = g(s)^{-1}
+\]
+So for $\frac{r}{s} \in S^{-1}R$, we must have
+\[
+h(\frac{r}{s}) = h)(\frac{r}{1})h(\frac{1}{s}) = g(r)g(s)^{-1}
+\]
+To prove the existence of $h$, set $h(\frac{r}{s}) \eqdef g(r)g(s)^{-1}$. Then $h$ will be a ring homomorphism satisfying $g = h \circ f$, so long as $h$ is well-defined, so we will check that now. 
+
+Suppose $\frac{r}{s} = \frac{r'}{s'}$. Then by definition $(rs' - r's)u = 0$ for some $u \in S$. So $(g(r)g(s') - g(r')g(s))g(u) = g(0) = 0$. $g(u) \in (R')^\times$, so is not a zero divisor, so $g(r)g(s') - g(r')g(s) = 0$, so $g(r)g(s)^{-1} = g(r')g(s')^{-1}$.
+
+\qed
+
+\exm
+
+Let $\mk{p}\subset R$ be a prime ideal, and $S = R\setminus\mk{p}$ (a multiplicative set). Then we write $R_{\mk{p}}$ for $S^{-1}R$, and call it the localization of $R$ at $\mk{p}$. 
+
+\underline{Note:} The set $_{\mk{p}}R_{\mk{p}}\eqdef\{\frac{a}{s}\mid a\in\mk{p}, s \in S\} \subset R_\mk{p}$ is a proper ideal in $R_\mk{p}$, and
+\[
+\frac{a}{s}\not\in _\mk{p}R_{\mk{p}} \implies a\not\in\mk{p}
+\]
+So $\frac{s}{a} \in R_\mk{p}$, so $\frac{a}{s}$ is a unit in $R_{\mk{p}}$. 
+
+So $R_\mk{p}$ is a local ring, with $_\mk{p}R_\mk{p}$ the unique maximal ideal by a lemma from lecture 4. 
+
+\exm
+
+If $R = \Z,$ $\mk{p} = (p)$ with $p$ a prime, then $\Z_{(p)} = \{\frac{a}{s}\mid p\nmid s\}\subset\Q$ 
+
+\section*{8, 1/27/23}
+
+\prop
+
+Let $S \subset R$ be a multiplicative subset of a ring $R$, and $f:R\to S^{-1}R$ the corresponding localization, sending $r$ to $\frac{1}{r}$. Then
+\begin{enumerate}[label=(\roman*)]
+
+\item Every ideal in $S^{-1}R$ is extended. 
+
+\item An ideal $I \subset R$ is contracted iff for all $s \in S$, $\bar{s}\in \frac{R}{I}$ is NOT a zero divisor. 
+
+\item We have a bijection between the prime ideals in $S^{-1}R$ and the prime ideals of $R$ which are disjoint from $S$. This bijection is given by extension and contraction. 
+
+\end{enumerate}
+
+
+\proof
+
+\begin{enumerate}[label=(\roman*)]
+
+\item Let $J \subset S^{-1}R$ be an ideal. We want to show that $J$ is extended, so it is enough to show $J \subset J^{ce}$.
+
+Pick $\frac{r}{s} \in J$. Then $\frac{r}{1} = \frac{s}{1}\cdot\frac{r}{s}\in J$, so $r \in f^{-1}(J) = J^c$. We can then write $\frac{r}{s} = \frac{1}{s}\cdot\frac{r}{1} \in J^{ce}$.
+
+\item Let $I \subset R$ be an ideal. It is enough to show 
+\[
+(I^{ec} \subset I) \iff \forall s \in S, \bar{s}\in\frac{R}{I}\text{ is not a zero divisor}
+\]
+Let $x \in I^{ec} = f^{-1}(I^e)$. Then 
+\begin{align*}
+f(x) \in I^e & = \{\text{all finite linear combinations }\sum_i\frac{r_i}{s_i}\overbrace{f(x_i)}^{=\frac{x_i}{1}} \mid r_i \in R, s_i \in S, x_i \in I \} \\
+				 & = \{\frac{r}{s} \mid r \in I, s \in S \} \\
+				 & \eqdef S^{-1}I \\
+\end{align*}
+So $\frac{x}{1} = \frac{r}{s}$ for some $r \in I, s \in S$, so $(xs - r)u = 0$ for some $u \in S$, so $x\underbrace{su}_{\in S} = \underbrace{ru}_{\in I}$. So $\bar{x}\cdot\bar{su} = \bar{0}\in \frac{R}{I}$.
+
+\underline{Note:} If $su \in I$, then $\frac{su}{1}$ is a unit in $I^e$. So $I^e = S^{-1}R$, so $I^{ec} = R$.  
+
+If $\bar{su}\neq\bar{0} \in \frac{R}{I}$ (i.e. $su \not\in I$) then by hypothesis on elements in $S$, $\bar{x} = 0 \in \frac{R}{I}$, i.e. $x \in I$, so $I^{ec} \subset I$. 
+
+Now for the converse.
+
+Suppose there exists $s \in S$ such that $\bar{s}\in\frac{R}{I}$ is a zero divisor. We want to show that $I$ is not contracted, i.e. there exists an $x \in I^{ec}\setminus I$. 
+
+By hypothesis, there exists $\bar{x}\neq\bar{0}\in \frac{R}{I}$ (i.e. $x\not\in I$) such that $\bar{x}\cdot\bar{s} = \bar{0}\in\frac{R}{I}$. So $xs = y$ for some $y \in I$, so $\frac{x}{1} = \frac{y}{s}\in S^{-1}I = I^e$. So $x \in f^{-1}(I^e) = I^{ec}$.   
+
+\item Suppose $\mk{q} \subset S^{-1}R$ is a prime ideal. Then, by part (i), $\mk{q} = S^{-1}\mk{p} = \mk{p}^e$ for some ideal $\mk{p}\subset R$. So $\mk{q}^c = \mk{p}^{ec} \supset \mk{p}$. 
+
+\claim 
+
+$\mk{p}^{ec} \subset \mk{p}$. 
+
+\proof
+
+Indeed, we have $\mk{p} \cap S = \varnothing$, since $s \in \mk{p} \cap S$ implies $1 = \frac{s}{s} \in S^{-1}\mk{p} = \mk{q}$, so $s\not\in\mk{p}$ for all $s \in S$. So, $\bar{s}\neq\bar{0}\in\frac{R}{\mk{p}}$ for all $s \in S$. 
+
+So $\bar{s}$ is not a zero divisor in $\frac{R}{\mk{p}}$ (because it's an integral domain), so $\mk{p}^{ec} \subset \mk{p}$, as shown in proof of part (ii). 
+
+\qed
+
+Thus $\mk{q} = S^{-1}\mk{p}, \mk{p} = \mk{q}^c$, and $\mk{p} \cap S = \varnothing$, so we get an injection 
+\[
+\{\text{prime ideals }\mk{p}\subset R\text{ with }\mk{p} \cap S = \varnothing\} \hookleftarrow \{\text{prime ideals in }S^{-1}R \}
+\]
+given by 
+\[
+\mk{q} = S^{-1}\mk{p} \mapsto \mk{q}^c = \mk{p}
+\]
+Conversely, let $\mk{p} \subset R$ be a prime ideal with $\mk{p} \cap S = \varnothing$ (we want to show that $\mk{p}^e = S^{-1}\mk{p}$ is a prime ideal in $S^{-1}R$). 
+
+Let $\bar{S} = \{\bar{s}\in\frac{R}{\mk{p}} \mid s \in S\} \subset \frac{R}{\mk{p}}$. This is a multiplicative subset. Then the ring homomorphism $S^{-1}R\to \bar{S}^{-1}(\frac{R}{\mk{P}})$ given by $\frac{r}{s} \mapsto \frac{\bar{r}}{\bar{s}}$ induces an isomorphism
+\[
+\frac{S^{-1}R}{S^{-1}\mk{p}} \to \bar{S}^{-1}(\frac{R}{\mk{p}})
+\]
+So we are done if we can show that $\bar{S}^{-1}(\frac{R}{\mk{p}})$ is an integral domain. 
+
+But this follows from
+
+\begin{itemize}
+
+\item $\mk{p} \cap S = \varnothing$, so $S^{-1}\mk{p}\subsetneq S^{-1}R$, so $\bar{S}^{-1}(\frac{R}{\mk{p}})\neq(0)$
+
+\item $\bar{S}^{-1}(\frac{R}{\mk{p}})\hookrightarrow$ field of fractions of the integral domain $\frac{R}{\mk{p}}$ (see next remark). 
+
+\end{itemize}
+
+This concludes the proof.
+
+\end{enumerate}
+
+\qed
+
+\rem
+
+Suppose $R$ is an integral domain. Then $S = R\setminus\{0\}$ is a multiplicative set. We call $S^{-1}R$ the \underline{field of fractions of $R$}. 
+
+\begin{enumerate}
+
+\item $S^{-1}R$ is a field, since $\frac{r}{s}\neq0 \in S^{-1}R$, so $r\neq0$, i.e. $r \in S$, so $\frac{s}{r} \in S^{-1}R$,so $\frac{r}{s}$ is a unit in $S^{-1}R$. 
+
+\item The map $f:R\to S^{-1}R$, $r \mapsto \frac{r}{1}$, is injective. 
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
