@@ -595,20 +595,146 @@ G(C)&\ar[l, "G(f)"] G(C') \\
 
 \item A contravariant equivalence is called a \underline{duality}.
 
-\item Let $R, S$ be rings. Call $R, S$ \underline{Morita equivalent}, denoted $R \sim S$, if $R-mod, S-mod$ are naturally equivalent. This is equivalent to saying $Mod-R, mod-S$ are naturally equivalent. 
+\item Let $R, S$ be rings. Call $R, S$ \underline{Morita equivalent}, denoted $R \sim S$, if $R-mod, S-mod$ are naturally equivalent. This is equivalent to saying $mod-R, mod-S$ are equivalent. 
 
 \end{enumerate}
 
+\section*{Lecture 7, 1/25/23}
+
+\defn
+
+Let $F:\mc{C}\to\mc{D}, G:\mc{D}\to\mc{C}$ be functors. We say that $(F, G)$ form an \underline{adjoint pair} if the following two bifunctors $\mc{C}\times\mc{D}\to\Set$ are naturally isomorphic:
+\[
+\Hom_{\mc{D}}(F(-),-) \cong \Hom_{\mc{C}}(-,G(-))
+\]
+That is, for every $(C, D) \fin \mc{C}\times\mc{D}$, we have an isomorphism
+\[
+\phi(C, D):\Hom_{\mc{D}}(F(C), D) \to \Hom_{\mc{C}}(C, G(D))
+\]
+and the collection of all $\phi(C, D)$ form a natural isomorphism.
+
+\[
+\begin{tikzcd}
+\Hom_{\mc{D}}(F(C), D)\ar[r]\ar[d,"\phi_{C, D}"]& \Hom_{\mc{D}}(F(C'), D')\ar[d,"\phi_{C', D'}"] \\
+\Hom_{\mc{C}}(C, G(D))\ar[r] &\Hom_{\mc{C}}(C', G(D')) \\
+\end{tikzcd}
+\]
+
+\exm
+\,
+
+\begin{enumerate}
+
+\item 
+\begin{enumerate}[label=(\alph*)]
+\item $R\otimes_R - \cong \Id_{R-mod}$. $R\otimes_R-:R-mod\to R-mod$ is well-defined since $_RR_R$ is a bimodule. 
+\item $\Hom_R(_RR_R, -) \cong \Id_{mod-R}$
+\end{enumerate}
+
+\item For any ring $R$, $R\sim M_n(R)$, where $\sim$ indicates Morita equivalence, defined above. Why? Let $_RF = R^n$, $S = \End_R(F) \cong M_n(R)$. Let $F^* = _R(\Hom(_SF, R))_S$
+
+\claim 
+
+The functors $\Hom(F, -):mod-R\to mod-S$, $\Hom(F^*, -):mod-S\to mod-R$ are mutually inverse functors. 
+
+\proof
+
+We want to show that, for $M \fin Mod-R$, 
+\[
+\Id_{Mod-R}\cong \Hom_S(F^*, \Hom_R(F, -))
+\]
+Consider
+\[
+\Phi(M):m\mapsto (F^* = \Hom(F, R) \ni f \mapsto (x \mapsto mf(x)))
+\]
+Check that this is a $R$-module hiomomorphisms, and in fact an isomorphism of $R$-modules. 
+
+\item Let $R = k$ be a field. Then we have a duality 
+\[
+k-mod\to k-mod
+\]
+Let $v \fin k-mod$, and consider 
+\[
+\Phi(V):V\to V^{**}= \Hom_k(\Hom_k(V, k), k)
+\]
+, and
+\[
+x\mapsto(\Hom_k(V, K) \ni f \mapsto f(x) \in k)
+\]
+A duality from $k-mod$ to $k-mod$. 
+
+We may extend $\Phi$ to a functor $k-Mod\to k-Mod$, but this is not surjective if $\dim V = \oo$ (homework problem). So we have a natural equivalence $\Id_{k-mod} \cong (-)^{**}$
+
+\item Here is an examples of an adjoint pair. Let $_SB_R$ be an $S-R$ bimodule. Then the functor
+\[
+B\otimes_R-:R\to R-mod
+\]
+is a left adjoint to 
+\[
+\Hom_S(R, -):S-mod \to R-mod
+\]
+\end{enumerate}
+
+\section*{Lecture 8, 1/27/23}
+
+\subsection*{\underline{Section 4: Additive and Abelian categories}}
+
+\defn
+
+A pre-additive category $\mc{C}$ is called \underline{an additive category} if it has a zero object, and finite direct sums/products. 
+
+\defn 
+
+An additive category $\mc{C}$ is called \underline{an Abelian category} if every map $f$ has a kernel and cokernal, and every mono is a kernel, and every epi is a cokernel. 
+
+\exm
+
+In the category of rings (we assume these are unital rings, so this category is \underline{not} preadditive, recall) there are categorical epis that fail to be surjective. For example, $f:\Z\hookrightarrow\Q$ is a categorical epimorphism. 
+
+Let $g, h \in \Hom_{\Ring}(\Q, R)$ be such that $gf = hf$. Then $g|_{\Z} = h|_{\Z}$, so it follows that $g = h$.
+
+In $R-mod, R-comp$, categorical monos coincide with injective homomorphisms, and similarly, categorical epimorphisms coincide with surjections. 
+
+\exm of Abelian categories: 
+
+$R-Mod$, in particular $\Z-Mod = \Ab$, $R-comp$. Let $\ms{T}-\Ab$ be the full subcategory of $\Ab$ consisting of the torsion Abelian groups. 
+
+Is the full subcategory of $\Ab$ consisting of torsion-free groups Abelian? No! The map $f:\Z\to\Z$ given by multiplication by 2 doesn't have a cokernel. 
+
+$R-mod$ is not Abelian if $R$ is not left Noetherian!!!! (A ring is left Noetherian if every left ideal is finitely generated). But $R-Mod$
+
+For example, let $k$ be a field, and consider $R = k^\N$. Let $I = k^{(\N)}$ (which means the direct sum, as opposed to the direct product). This is not a finitely generated left ideal, and $I \hookrightarrow R$. But $\pi:R\to R/I$ does \underline{not} have a kernel in $R$-mod even though $R, R/I$ are in $R-mod$, because we will get something not in $R-mod$, but in $R-Mod$. 
+
+She started talking about some stuff we won't see until later, and said it was ``music of the future." 
+
+\subsection*{\underline{Chapter 2: On the road to derived functors. Section 1: Exactness properties of functors}}
+
+\underline{Note:} We'll develop the theory for the Abelian category $R-mod$, but it easily adapts to arbitrary categories. 
+
+\defn
+
+Let $R, S$ be rings, $F$ an additive functor from $R-mod$ to $S-mod$. 
+
+\begin{enumerate}
+
+\item $F$ is called \underline{exact} if for all exact sequences
+\[
+\exactshort{A}{f}{B}{g}{C}
+\]
+the sequence
+\[
+\exactshort{FA}{Ff}{FB}{Fg}{FC}
+\]
+is also exact. If $F$ is contravariant, then instead we want the sequence
+\[
+\exactshort{FC}{Fg}{FB}{Ff}{FA}
+\]
+to be exact. 
+
+\item $F$ is called \underline{left-exact} or \underline{right-exact} if it sends left (or right) exact sequences to left (or right) exact sequences
 
 
-
-
-
-
-
-
-
-
+\end{enumerate}
 
 
 
