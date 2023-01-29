@@ -207,25 +207,157 @@ Consider $\RP^2$. This can be expressed as $(\R^3\setminus\{0\})/(\vec{x}\sim\la
 
 For $(x, y, z)\neq(0,0,0)$, we have $[x, y, z]\eqdef\{(\lambda x, \lambda y, \lambda z) \mid \lambda \neq0\}$. For example, $[1,2,3]=[2,4,6]$. 
 
+\section*{Lecture 5, 1/20/23}
 
+\defn
 
+A \underline{subcomplex} of a complex $X$ is a closed disjoint union of open cells $e^{n_i}_{\alpha_i}$ in $X$ such that they form a cell complex on their own. 
 
+\rem We keep talking about ``CW Complexes." The C is for ``closure finite," and the W is for "weak topology." 
 
+Recall: $\RP^n \eqdef \R^n/(x\sim\lambda x, \lambda\neq0)$. $\CP^n$ can be defined similarly. 
 
+We can write $\RP^n = e^0 \cup e^1 \cup e^2 \cup \cdots \cup e^n$, and $\CP^n = e^0 \cup e^2 \cup e^3 \cup \cdots \cup e^{2n}$. We can do the same thing with the quaternions. 
 
+Next time, we will cover operations on complexes. 
 
+\section*{Lecture 6, 1/23/23}
 
+This lecture, we will cover operations on cell complexes, and two big theorems.
 
+\subsection*{\underline{Operations on Cell Complexes}}
 
+\begin{enumerate}
 
+\item If $X, Y$ have cell structures, then $X \times Y$ has a natural cell structure.
 
+\item If $(X, A)$ is a CW-pair, then $X/A$ has a natural cell structure ($X/A$ denotes identifying all points in $A$ together). 
+\[
+\begin{tikzcd}
+\mbb{D}'_\alpha \supseteq \del\mbb{D}'_\alpha \ar[d, "\phi_\alpha"] \ar[dr] & \\
+X^0 \ar[r, "q"'] & (X/A)^0 \\
+\end{tikzcd}
+\] 
 
+\item Cones and Suspensions. The cone on $X$, $CX$, is defined as
+\[
+CX = (X\times I)/(X\times\{0\})
+\]
+Note that $CX$ is contractible for any $X$. The suspension on $X$, $SX$, is defined as 
+\[
+SX = CX/(X\times\{1\})
+\]
 
+If $f:X\to Y$ is a map, there exists a natural map $Sf:SX\to SY$. Indeed, if $f:X\to Y$, then $f\times\Id:X\times I\to Y\times I$, and so we can factor $f \times \Id$ through the quotient map:
+\[
+\begin{tikzcd}
+X\ar[r, "f"]\ar[d, hook]\ar[dr, dotted] & Y\ar[d, hook] \\
+X\times I\ar[d,"q"]\ar[r, "f\times\Id"]\ar[dr, dotted] & Y\times I \ar[d] \\
+SX\ar[r, "\exists!Sf"'] & SY \\
+\end{tikzcd}
+\]
+Note $S(\mbb{S}^n) = \mbb{S}^{n + 1}$.
 
+\item Joins. If $X, Y$ are cell structures, then we define their join $X\star Y$ as
+\[
+X\star Y = \frac{X\times Y \times I}{(x, y_1, 0) \sim (x, y_2, 0), (x_1, y, 1) \sim (x_2, y, 1)}
+\]
+This is a useful construction for simplices. 
 
+\item Wedge product. If $X, Y$ are cell structures, with distinguished points $x_0 \in X, y_0 \in Y$, then we define their wedge product $X \wedge Y$ as
+\[
+X\wedge Y = \frac{X\coprod Y}{x_0 \sim y_0}
+\]
+This is just gluing $X$ and $Y$ together at a distinguished point. This raises an obvious question: does the wedge product depend on the points $x_0, y_0$? Yes, but not if they are (connected) cell complexes!
 
+If $x_0$ is a 0-cell of $X$, and $y_0$ a 0-cell of $Y$, then $X \vee Y$ has a natural cell structure AND $X\vee Y$ is a subcomplex of $X\times Y$.
 
+\item Smash product. If $X, Y$ are spaces with distinguished points $x_0, y_0$, then the smash product is defined as 
+\[
+X\wedge Y = \frac{X\times Y}{X\vee Y}
+\]
+For example, the smash product $S^1\wedge S^1$ is a Torus quotiented out by the longitudinal and meridian circles. By arguing from some cell nonsense, we can say this is $S^2$. 
 
+\end{enumerate}
+
+Here are two big theorems. 
+
+\thm If $(X, A)$ is a CW-pair, and $A$ is contractible, then $X/A$ is homotopy equivalent to $X$, with the quotient mapping itself providing a homotopy equivalence. 
+
+\thm Suppose $(X_1, A)$ is a CW-pair, and $f, g:A\to Y$ are maps. If $f \simeq g$, and everything in sight is a cell complex, then
+\[
+X_1\coprod_f Y \simeq X_1 \coprod_g Y
+\]
+That is, if $f, g$ are used as attaching maps, then the resulting spaces will be homotopy equivalent. 
+
+\section*{Lecture 7, 1/25/23}
+
+\defn
+
+Let $X$ be a cell complex. If we let $f_i$ be the number of $i$-dimensional cells in the cell structure, then we define
+\[
+\chi(X) = f_0 - f_1 + f_2 - f_3 + \cdots
+\]
+The more general definition is the alternating sum of the Betti numbers of $X$, where the $i$th Betti number is $\dim H^i(X)$. 
+
+\defn
+
+Let $X$ be a topological space, and let $A\subseteq X$ be a subspace. We say that $(X, A)$ has the \underline{homotopy extension property} (HEP) if for all topological spaces $Y$ and for all maps $f:X\times\{0\} \cup A \times I \to Y$, there exists an extension of $f$, $\bar{f}:X\times I \to Y$, such that $\bar{f}|_{X\times\{0\}\cup A\times I} = f$. 
+
+Slogan: ``A homotopy on the subspace can be extended to a homotopy on the entire space." 
+
+\section*{Lecture 8, 1/27/23}
+
+\prop
+
+$(X, A)$ has the homotopy extension property if and only if $X \times I$ retracts to $X\times\{0\} \cup A \times I$.
+
+\proof
+
+\qed
+
+\exm 
+
+Does $(\mbb{D}^2, \del\mbb{D}^2)$ have the property? Does $\mbb{D}^2\times I$ retract onto $\mbb{D}^2\times\{0\}\cup \del\mbb{D}^2 \times I$? Yes. This is easy to see by drawing a picture. 
+
+Here is a non-example. Let $X = I$, and let $A = \{\frac{1}{n}\}_{n\in\N}\cup\{0\}$. $X \times I$ is the square, and $X \times\{0\}$ is the bottom of the square, so $X\times \{0\} \cup A\times I$ is the comb space. The square doesn't retract to this. 
+
+\prop 
+
+If $(X, A)$ is a CW pair, then $(X, A)$ has the homotopy extension property. 
+
+\proof
+
+Later
+
+\qed
+
+\thm 
+
+If $(X, A)$ has the homotopy extension property, and $A$ is contractible, then the quotient map $X \to X/A$ is a homotopy equivalence. 
+
+\proof
+
+Consider identity map $\Id:A\to A$. We have a homotopy $F:A\times I \to A$ which is a witness to $A$ being contractible. That is, $f_0 = \Id_A$, $f_1 \equiv \{p\}$ for some point $p \in A$. 
+
+Then there is an extension to a homotopy $H:X\times I \to X$. We have the following commutative diagram
+\[
+\begin{tikzcd}
+X\ar[r, "f_t"] \ar[d, "q"] & X \ar[d, "q"] \\
+X/A \ar[r, "\bar{f_t}"] & X/A \\
+\end{tikzcd}
+\]
+Because all of $A$ goes to a point for $t = 1$, then by the universal property of quotients, there is a map $g$ making the diagram commute:
+
+\[
+\begin{tikzcd}
+X\ar[r, "f_1"] \ar[d, "q"] & X \ar[d, "q"] \\
+X/A \ar[ur, "g"]\ar[r, "\bar{f_1}"] & X/A \\
+\end{tikzcd}
+\]
+So $qg$ is homotopic to the identity map, and $gq$ is homotopic to the identity map. This completes the proof? 
+
+\qed
 
 
 
