@@ -20,6 +20,18 @@
 
 \newcommand{\seq}[1]{_{#1 = 1}^\oo}
 \newcommand{\barr}{{\bar{\R}}}
+\newcommand{\cupk}{\cup\seq{k}}
+\newcommand{\cupi}{\cup\seq{i}}
+\newcommand{\cupn}{\cup\seq{n}}
+\newcommand{\bigcupk}{\bigcup\seq{k}}
+\newcommand{\bigcupi}{\bigcup\seq{i}}
+\newcommand{\bigcupn}{\bigcup\seq{n}}
+\newcommand{\capk}{\cap\seq{k}}
+\newcommand{\capi}{\cap\seq{i}}
+\newcommand{\capn}{\cap\seq{n}}
+\newcommand{\bigcapk}{\bigcap\seq{k}}
+\newcommand{\bigcapi}{\bigcap\seq{i}}
+\newcommand{\bigcapn}{\bigcap\seq{n}}
 \DeclareMathOperator{\Vol}{Vol}
 \title{220A - Groups}
 \author{John White}
@@ -273,6 +285,281 @@ Now we prove part 1. Let $A, B \subseteq X$ be $\mu$-measurable and disjoint. Th
 So $A \cup B$ is $\mu$-measurable. (I got a bit lost in the arithmetic, sorry)
 
 Next, we show if $A, B\subseteq X$ are $\mu$-measurable, then $A \cap B$ is $\mu$-measurable. This is straightforward. We will continue next time. 
+
+\section*{Lecture 3, 1/19/23}
+
+We will continue our proof of the theorem. Assume $A, B \subseteq X$ are $\mu$-measurable. We aim to show that $A \cap B$ is also $\mu$-measurable. We need to show that, for any $C \subseteq X$, we have $\mu(C) = \mu(C\cap(A\cap B)) + \mu(C\setminus(A\cap B))$. Because $A$, $B$ are $\mu$-measurable, we have
+\begin{align*}
+\mu(C) &  = \mu(C \cap A) + \mu(C\setminus A) \\
+		 & = \mu((C\cap A) \cap B) + \mu((C\cap A) \setminus B) + \mu(C\setminus A) \\
+		 & = \mu(C\cap (A \cap B)) + \mu((C\cap A) \setminus B) + \mu(C\setminus A) \\
+		 & \geq \mu(C\cap (A \cap B)) + \mu(C\setminus(A \cap B))
+\end{align*}
+The opposite inequality follows by subadditivity, so we have equality. 
+
+By induction, we get that also $\cap_{k=1}^n A_k$ is $\mu$-measurable. For the union, we can get it using the fact that $\cup_{k=1}^nA_k = X \setminus \cap_{k=1}^nA_k$.
+
+\qed
+
+\rem If $A, B$ are $\mu$-measurable, then $A \setminus B$ is $\mu$-measurable. This follows from $A \setminus B = A \cap (X \setminus B)$
+
+\thm 
+
+Let $X$ be a nonempty set, and $\mu$ a measure on $X$. Assume $\{A_k\}\seq{k}\subseteq X$ are $\mu$-measurable. Then
+\begin{enumerate}
+\item If the $A_k$ are disjoint, then we have countable additivity:
+\[
+\mu\left(\cup\seq{k}A_k\right) = \sum\seq{k}\mu(A_k)
+\]
+\end{enumerate}
+\item If $A_1 \subseteq A_2 \subseteq \cdots$, then 
+\[
+\lim_{k\to\oo}\mu(A_k) = \mu\left(\bigcup\seq{k}A_k\right)
+\]
+\item If $A_1 \supseteq A_2 \supseteq \cdots$, and $\mu(A_1) < \oo$, then 
+\[
+\lim_{k\to\oo}\mu(A_k) = \mu\left(\bigcap\seq{k}A_k\right)
+\]
+
+
+\proof
+
+We have from before that if the $A_k$ are pairwise disjoint, then $\mu(\cup_{k=1}^nA_k) = \sum_{k=1}^n\mu(A_k)$ for any $n \in \N$. Because $\cup_{k=1}^nA_k \subseteq \cup\seq{k}A_k$, we must have that $\mu(\cup_{k=1}^nA_k) \leq \mu(\cup\seq{k}A_k)$. Using the previous fact, and passing to a limit, we have
+\[
+\sum\seq{k}\mu(A_k) \leq \mu(\cup\seq{k}A_k)
+\]
+The opposite equality is automatically true by the countable subadditivity of $\mu$, so we get equality. This completes the proof of 1. Now for part 2. 
+
+Define $B_k = A_k \setminus A_{k - 1}$, where $A_0 \eqdef \varnothing$. We have $A_k = \cup_{i=1}^kB_i$. Note that the $B_i$ are disjoint. So we have
+\[
+\mu(A_k) = \sum_{i=1}^k\mu(B_i)
+\]
+So, in the limit, 
+\[
+\lim_{k\to\oo}\mu(A_k) = \lim_{k\to\oo}\sum_{i=1}^k\mu(B_i) = \sum\seq{i}\mu(B_i)
+\]
+So
+\[
+\mu(\cup\seq{i}B_i) = \mu(\cup\seq{k}A_k)
+\]
+
+Finally, let $A_1 \supseteq A_2 \supseteq \cdots, \mu(A_1)<\oo$. Define $B_k = A_1\setminus A_k$. This is decreasing sequence of $\mu$-measurable sets, so by the previous part, 
+\[
+\lim_{k\to\oo}\mu(B_k) = \mu(\cup\seq{k}B_k)
+\]
+So
+\begin{align*}
+\mu(B_k) = \mu(A_1\setminus A_k)  = \mu(A_1) - \mu(A_k) \implies \\
+\lim_{k\to\oo}\mu(B_k) = \lim_{k\to\oo}(\mu(A_1) - \mu(A_k)) & = \mu(A_1) - \lim_{k\to\oo}\mu(A_k) \\
+= \mu(\cup\seq{k}B_k) = \mu(\cup\seq{k}(A_1 \setminus A_k)) & = \mu(A_1 \setminus \cap\seq{k} A_k) \\
+\geq \mu(A_1) - \mu(\cap\seq{k}A_k) & \\
+\end{align*}
+
+So $\lim_{k\to\oo}\mu(A_k) \leq \mu(\cap\seq{k}A_k)$. The opposite inequality follows easily by monotonicity. 
+
+\qed
+
+We are ready to prove the Carath\'eodory extension theorem. 
+
+\proof
+
+Let $A_1, A_2, \dots \subseteq X$ be $\mu$-measurable. It will suffice to prove that $\cup\seq{k}A_k$ is $\mu$-measurable. So we need to check that, for any $B$, 
+\[
+\mu(B) = \mu(B\cap (\cup\seq{k}A_k)) + \mu(B \setminus \cup\seq{k}A_k)
+\]
+Fix $B \subseteq X$, and consider $\nu = \mu|_B$. Recall this is defined as $\nu(C) = \mu(B \cap C)$. We would like 
+\[
+\nu(B) = \nu(\cup\seq{k}) + \nu(B \setminus \cup\seq{k}A_k)
+\]
+To this end, 
+\begin{align*}
+\nu(\cup\seq{k}A_k) & = \lim_{k\to\oo}\nu(\cup_{i=1}^kA_i) \\
+\end{align*}
+Without loss of generality, $\nu(B)<\oo$. If $\nu(B) = \oo$, then we are done trivially. 
+
+As before, define $B_k = B\setminus \cup_{i=1}^kA_i$. Then
+\[
+\nu(B\setminus\cup\seq{k}A_k) = \lim_{k\to\oo}\nu(B\setminus\cup_{i=1}^kA_i)
+\]
+So, 
+\begin{align*}
+\nu(\cup\seq{k}A_k) + \nu(B\setminus\cup\seq{k}A_k) & = \lim_{k\to\oo}\left(\nu(\cup_{i=1}^kA_i) + \nu(B\setminus\cup_{i=1}^kA_i)\right) \\
+& = \lim_{k\to\oo}\nu(B) = \nu(B) \\
+\end{align*}
+so we are done. 
+
+\qed
+
+\defn
+
+Let $X$ be a nonempty set, and let $\mu$ be a measure on $X$. Then $\mu$ is said to be 
+\begin{enumerate}
+\item A \underline{regular measure} if, for any $A \subset X$, there exists a $\mu$-measurable $B\subseteq X$ such that $A \subseteq B$, and $\mu(A) = \mu(B)$. 
+\item A \underline{Borel measure} if all Borel sets (i.e. the elements of the Borel $\sigma$-algebra) are measurable. This only applies if $X$ is also a topological space, of course. 
+\item A \underline{Borel-regular measure} if $\mu$ is Borel, and for any $A \subseteq X$, there exists a Borel set $B \subseteq X$ such that $A \subseteq B$ and $\mu(A) = \mu(B)$. 
+\item A \underline{Radon measure} if it is Borel-regular and $\mu(K)<\oo$ if $K$ is compact. 
+\end{enumerate}
+
+\rem
+
+Note that being Borel and regular is weaker than being Borel-regular. 
+
+\thm (Increasing sets \underline{for regular measures})
+Let $X$ be a nonempty set, and let $\mu$ be a regular measure on $X$. Assume $A_1\subseteq A_2 \subseteq \cdots \subseteq X$. Then 
+\[
+\lim_{k\to\oo}\mu(A_k) = \mu\left(\bigcupk A_k\right)
+\]
+
+\rem The sets $A_k$ need not be $\mu$-measurable. 
+
+\proof
+
+For all $A_k$, there is a $C_k\subseteq X$ which is $\mu$-measurable, $A_k \subseteq C_k$, and $\mu(A_k) = \mu(C_k)$. Let $D_k = \cap_{i\geq k}C_i$. For $i \geq k$, we can see $A_k \subseteq A_i \subseteq C_i$. $A_k \subseteq \cup_{i\geq k}C_i = D_k$, then $\mu(A_k)\leq\mu(D_k)$. On the other hand, $D_k\subseteq C_k$, so $\mu(D_k)\leq\mu(C_k) = \mu(A_k)$. So
+\begin{itemize}
+\item $\mu(A_k) = \mu(D_k)$ 
+\item $A_k \subseteq D_k$ 
+\item $D_k$ is $\mu$-measurable and $D_1 \subseteq D_2 \subseteq \cdots $
+\end{itemize}
+So
+\begin{align*}
+\lim_{k\to\oo}\mu(A_k) & = \lim_{k\to\oo}\mu(D_k) \\
+						      & = \mu\left(\bigcupk D_k\right) \\
+								& \geq \mu\left(\bigcupk A_k\right) \\
+\end{align*}
+Because $\cupk A_k \subseteq \cupk D_k$, 
+\[
+\lim_{k\to\oo}\mu(A_k)\geq\mu\left(\bigcupk A_k\right) 
+\]
+But $A_k \subseteq \cupk A_k$, so the opposite inequality is also true, so we have equality. 
+
+\qed
+
+\section*{Lecture 4, 1/24/23}
+
+\thm (Restriction and Radon measures)
+
+Let $X$ be a topological space and let $\mu$ be a Borel-regular measure on $X$. Let $A \subseteq X$ be $\mu$-measurable with $\mu(A)<\oo$. Then the restriction measure $\nu = \mu|_A$ is Radon. 
+
+\proof
+
+First, $\nu$ is a finite measure, as $\nu(X) = \mu(A \cap X) = \mu(A) < \oo$ for any $C \subseteq X$. 
+
+It is clear that $\nu$ is Borel, as $\mu$ is Borel. Next, we show $\nu$ is Borel-Regular. Without loss of generality, we may assume that $A$ is Borel, because $\mu$ is Borel-regular. Explicitly, we know there is a Borel set $B \subseteq X$ such that $A \subseteq B$ and $\mu(B) = \mu(A)$. We will show $\mu|_A = \mu|_B$. 
+
+We have $\mu(B) = \mu(B \cap A) + \mu(B \setminus A) = \mu(A) + \mu(B \setminus A)$. So $\mu(B\setminus A) = 0$. 
+
+So, for all $C \subseteq X$, 
+\begin{align*}
+\mu|_B(C) & = \mu(B \cap C)\\
+			  & = \mu((B\cap C)\cap A) + \mu((B \cap C) \setminus A) \\
+			  & = \mu(C \cap A) + \mu((B \cap C) \setminus A ) \\
+			  & \leq \mu|_A(C) + \mu(B\setminus A) \\
+			  & = \mu|_A(C) \\
+\end{align*}
+But $(A \cap C) \subseteq (B \cap C)$, so $\mu|_A(C) \leq \mu|_B(C)$, so we may conclude that $\mu|_A = \mu|_B$. 
+
+So assume $A$ is Borel. Fix $C \subseteq X$. We need to prove that there exists a Borel $D\subseteq X$ such that $C\subseteq D$ and $\nu(C) = \nu(D)$. There exists a Borel $E \subseteq X$ such that $C \cap A \subseteq E$, and $\mu(C \cap A) = \mu(E)$. So $D = E \cup (X\setminus A)$ is Borel and $C \subseteq D$. 
+
+So 
+\begin{align*}
+\nu(D) & = \mu((E\cup(X\setminus A))\cap A)\\ &  = \mu(E \cap A) \\ & \leq\mu(E) \\
+& = \mu(C\cap A) \\
+& = \nu(C) \\
+\end{align*}
+$C \subseteq D$ so $\nu(C)\leq\nu(D)$, so $\nu(C)=\nu(D)$.
+
+\qed
+
+\thm (Carath\'eodory Criterion for being Borel) 
+
+Let $X$ be a metric space and let $\mu$ be a measure on $X$. Then $\mu$ is Borel if and only if, for all $A, B \subseteq X$ with $d(A, B) > 0$ (meaning $\inf\{d(a, b) \mid a \in A, b \in B\} > 0$), 
+\[
+\mu(A \cup B) = \mu(A) + \mu(B)
+\]
+
+\proof
+
+\subsection*{$=>$}
+
+Suppose $\mu$ is Borel. We will use $\bar{B}$ to denote the closure of $B$. Then $d(A,\bar{B}) = d(A, B) > 0$. By measurability of $\bar{B}$, 
+\[
+\mu(A \cup B) = \mu((A \cup B) \cap \bar{B}) + \mu((A \cup B) \setminus \bar{B}) = \mu(B) = \mu(A)
+\]
+
+\subsection*{$<=$}
+
+Suppose that, for $A, B$ with $d(A, B) > 0$, $\mu(A \cup B) = \mu(A) + \mu(B)$. We will show that this implies $\mu$ is Borel. Let us show that every closed subset $C\subseteq X$ is $\mu$-measurable. So we have to prove that for every $A \subseteq X$, 
+\[
+\mu(A) = \mu(A \cap C) + \mu(A\setminus C)
+\]
+We have $\leq$ trivially. Assume $\mu(A)<\oo$; otherwise, this equality holds trivially. 
+
+Define for every $n \in \N$ the set $C_n = \{x\in X \mid d(x, C) \leq \frac{1}{n}\}$. We can see $d(A\setminus C_n, C) \geq \frac{1}{n} > 0$. So
+\begin{align*}
+\mu({(A\setminus C_n)\cup (A \cap C)}_{\subseteq A}) & = \mu(A \setminus C_n) + \mu(A \cap C) \\
+& \leq \mu(A)\\
+\end{align*}
+SO $\mu(A \setminus C_n) + \mu(A \cap C) \leq \mu(A)$ for all $n \in \N$. We will prove that $\lim_{n\to\oo}\mu(A\setminus C_n) = \mu(A \setminus C)$. 
+
+Consider the annuli $R_n = \{x \in A \mid \frac{1}{n + 1} < d(x, C) \leq \frac{1}{n}$. We have
+\[
+(A\setminus C_1) \bigcupn R_n \subseteq A \setminus C
+\]
+$C$ is closed, so in fact we have equality above. Why? If a point belongs to $A \setminus C$, then it does not belong to $C$, so $d(x, C) > 0$. So there is an $n\in\N$ such that $x \in R_n$ or $x \in A \setminus C_1$. We have
+\begin{align*}
+\mu\left(\bigcup_{k=0}^nR_{2k + 1}\right) & = \sum_{k=0}^n\mu(R_{2k + 1})  \leq \mu(A) \\
+\mu\left(\bigcup_{k=1}^nR_{2k}\right) & = \sum_{k=1}^n\mu(R_{2k}) \leq \mu(A) \\
+\end{align*}
+
+So $\sum\seq{n}\mu(R_n) \leq 2\mu(A)<\oo$, so $\lim_{n\to\oo}(\sum_{k=n}^\oo\mu(R_k)) = 0$. So $(A \setminus C_n) \bigcup_{k=n}^\oo R_k = A \setminus C$
+
+So by subadditivity, 
+\[
+\mu(A\setminus C) \leq \mu(A\setminus C_n) + \sum_{k=n}^\oo\mu(R_k)
+\]
+So as $n\to\oo$, 
+\[
+\mu(A \setminus C) \leq \liminf_{n\to\oo}\mu(A\setminus C_n) \leq \mu(A \setminus C)
+\]
+This completes the proof. 
+
+It is time for our third section. 
+
+\subsection*{\underline{Approximation by open, closed, and compact sets}}
+
+\thm Let $\mu$ be a Borel measure on $\R^n$, and let $B \subseteq \R^n$ be a Borel set. 
+
+\begin{enumerate}
+
+\item If $\mu(B)<\oo$, then for any $\varepsilon>0$, there exists a closed $C \subseteq B$ such that $\mu(B\setminus C) < \varepsilon$. 
+
+\item If $\mu$ is a Radon measure, then for all $\varepsilon>0$, there exists an open $U \supseteq B$ such that $\mu(U\setminus B) < \varepsilon$. 
+
+\end{enumerate}
+
+\proof
+
+\begin{enumerate}
+
+\item Let $\nu = \mu|_B$, a finite measure on $\R^n$. 
+
+Define the collection $\ms{F} = \{A\subseteq\R^n\mid A$ is $\mu$-measurable and for all $\varepsilon > 0, $ there exists a closed $C \subseteq  A$ such that $\mu(A\setminus C) < \varepsilon \}$
+
+Our goal is to show that $\ms{B}_{\R^n}\subseteq\ms{F}$. Davit uses ``$\sigma_B$" to indicate the Borel $\sigma$-algebra. 
+
+By previous discussion, $\ms{F}$ contains all closed sets. 
+
+Now, if $A_1, A_2, \dots \in \ms{F}$, then $\bigcapk A_k\in\ms{F}$. For all $A_k$, there exists a closed $C_k \subseteq A_k$, such that $\nu(A_k\setminus C_k) < \frac{\varepsilon}{2^k}$. Then by subadditivity, 
+\[
+\nu(\bigcapk A_k \setminus \bigcapk C_k) \leq \nu(\bigcupk(A_k \setminus C_k)) \leq \sum\seq{k}\nu(A_k\setminus C_k) < \varepsilon
+\]
+and $C = \bigcapk C_k$ is closed. 
+
+
+\end{enumerate}
+
+
+ 
 
 
 \end{document}
