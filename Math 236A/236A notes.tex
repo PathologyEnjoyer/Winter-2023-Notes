@@ -707,7 +707,9 @@ For example, let $k$ be a field, and consider $R = k^\N$. Let $I = k^{(\N)}$ (wh
 
 She started talking about some stuff we won't see until later, and said it was ``music of the future." 
 
-\subsection*{\underline{Chapter 2: On the road to derived functors. Section 1: Exactness properties of functors}}
+\subsection*{\underline{Chapter 2: On the road to derived functors}}
+
+\subsubsection*{\underline{Section 1: Exactness properties of functors}}
 
 \underline{Note:} We'll develop the theory for the Abelian category $R-mod$, but it easily adapts to arbitrary categories. 
 
@@ -736,10 +738,249 @@ to be exact.
 
 \end{enumerate}
 
+\section*{Lecture 9, 2/1/23}
 
+Recall: 
 
+A functor $F:R-mod\to S-mod$ is left-exact if for all exact sequences
+\[
+\begin{tikzcd}
+0 \ar[r] & A\ar[r, "f"] & B \ar[r, "g"] & C
+\end{tikzcd}
+\]
+the sequence
+\[
+\begin{tikzcd}
+0 \ar[r] & FA\ar[r, "Ff"] & FB \ar[r, "Fg"] & FC
+\end{tikzcd}
+\]
+is exact. Similarly, it is right exact if the image of
 
+\[
+\begin{tikzcd}
+A\ar[r, "f"] & B \ar[r, "g"] & C\ar[r]&0
+\end{tikzcd}
+\]
+is exact. 
 
+\rem 
+
+\begin{enumerate}
+
+\item A functor $F:R-Mod\to S-Mod$ induces a functor $F:R-comp\to S-comp$. 
+
+\item If $F \cong G:R-mod\to S-mod$ (meaning $F, G$ are naturally isomorphic), then $F, G$ have the same exactness properties. 
+
+\item If $F:R-mod\to S-mod$ is an equivalence (or a duality) then $F$ is exact. 
+
+\end{enumerate}
+
+\thm (our favorite functors)
+
+\begin{enumerate}
+
+\item Let $M\fin R-Mod$. Then $\Hom_R(M, -)$ and $\Hom_R(-, M)$ are left-exact functors from $R-Mod\to\Z-Mod$. 
+
+\item Let $M\fin Mod-R$. Then $M\otimes_R-:R-mod\to\Z-mod$ is right exact.
+
+\end{enumerate}
+
+\proof
+
+Note: Starting from now, I will denote the image of $f$ under the functor $\Hom_R(M, -)$ by $f*$. The reason is that for some reason tikzcd won't let me but $\Hom_R$ inside an arrow's name. 
+
+We'll just prove part 1 for the covariant $\Hom$. The contravariant case is homework. 
+
+So, we want to show that $\Hom_R(M, -)$ is left-exact. Let
+\[
+\begin{tikzcd}
+0 \ar[r] & A\ar[r, "f"] & B \ar[r, "g"] & C
+\end{tikzcd}
+\]
+be exact in $R-Mod$. Then its image is a complex
+\[
+\begin{tikzcd}
+0 \ar[r] & \Hom_R(M,A)\ar[r, "f*"] & \Hom_R(M,B) \ar[r, "g*"] & \Hom_R(M, C)
+\end{tikzcd}
+\]
+For $\phi:M\to A$, $f*(\phi) = f\circ \phi$, and similarly for $g*$. 
+
+We first show that $f*$ is a mono: Indeed, from $f \circ \phi = 0$, we obtain $\phi = 0$, since $f$ is a mono. So the sequence is exact at $\Hom_R(M, A)$. 
+
+We know $\Im(\Hom_R(M, f)) \subseteq \ker(\Hom_R(M, g))$. To show the reverse direction, let $\psi\in\ker(\Hom_R(M, g))$, i.e. $g \circ \psi = 0$, i.e. $\Im(\psi)\subseteq\ker(\psi)$. 
+
+Consider 
+\[
+\begin{tikzcd}
+0\ar[r]&A\ar[r, "\tilde{f}"] & \Im(f) \ar[r, hook] & B \ar[r] & C \ar[r] & 0 
+\end{tikzcd} 
+\]
+Set $\phi = \tilde{f}^{-1}\circ\psi$ and check that $\Hom_R(M, f)(\phi) = \underbrace{f \circ \tilde{f}^{-1}}_{=\Id_A}\circ\psi = \psi$. So $\psi\in\Im(\Hom(M, f))$. This gives exactness at $\Hom_R(M, B)$. So, we have shown that the covariant $\Hom$ functor is left-exact. 
+
+Now for part 2. 
+
+\dbend\dbend\dbend
+
+Let 
+\[
+\begin{tikzcd}
+A\ar[r, "f"] & B \ar[r, "g"] & C\ar[r] & 0 
+\end{tikzcd}
+\]
+be exact in $R-Mod$. The sequence
+\[
+\begin{tikzcd}
+M\otimes_RA\ar[r, "f*"] & M\otimes_RB \ar[r, "g*"] & M\otimes_RC\ar[r] & 0 
+\end{tikzcd}
+\]
+is a complex. Clearly, $M\otimes_Rg, m\otimes b\mapsto m\otimes_R(f(g))$ is an epi because $g$ is an epi. 
+
+We have $\underbrace{\Im(M\otimes_Rf)}_{E} \subseteq \ker(M\otimes_Rg)$ (Birge - ``The image of $M\otimes_Rf$, which I baptize $E$, ... "), and we want the reverse inclusion. Factor $M\otimes_R g$ in the form $M\otimes B \to M\otimes_R B/E \to M\otimes_R C$. (I missed a bit here because TeXwriter was being wonky, so this proof is nonsense I think. It's a standard proof that can be googled tho). Then $M \otimes_Rg = G \circ ?$, so $\ker(G) = \ker(M\otimes g)/E$. Thus suffices to show that $G$ is a mono. 
+
+Plan: Construct $H\in\Hom_{\Z}(M\otimes_RC, M\otimes_RB/E)$ such that $HG = \Id_{M\otimes_RB/E}$
+
+Define $H':M\times C\to M\otimes_RB/E$ by $(m, c)\mapsto(m\otimes b + E)$, where $b \in B$ is such that $g(b) = c$. We check well-definedness. 
+
+Suppose $g(b) = g(b'), b, b' \in B$. Then $b - b' \in \ker(g) = \Im(f)$ by hypothesis, hence $m\otimes_Rb - m\otimes_Rb' = m\otimes(b - b') \in E$, thus $m\otimes_Rb + E = m\otimes_Rb' + E$. Check $H'$ is $\Z$-bilinear and $R$-balanced. 
+
+Hence the universal property of the tensor product yields $H \in \Hom_{\Z}(M\otimes C', M\otimes B/E)$ with $H(m\otimes c) = m\otimes b$, where $g(b) = c$. 
+
+\qed
+
+\exm
+
+Here are some examples showing that in general, we shouldn't expect better than this previous theorem. That is, some witnesses to the non-left(right) exactness of $\Hom_R(M, -)$(resp. $M\otimes_R-$)
+
+\defn
+
+\begin{enumerate}[label=(\roman*)]
+
+\item Let $A\fin\Z-Mod$. Then $a \in A$ is a \underline{torsion element} iff there exists $n\in\Z\setminus\{0\}$ such that $n\cdot a = 0$. We use $T(A)$ to denote the torsion elements of $A$, which will always be a subgroup. 
+
+We say that $A$ is torsion iff $A = T(A)$, and we say $A$ is \underline{torsion-free} iff $T(A) = 0$. 
+
+\item $a \in A$ is \underline{divisible} iff $a \in nA$ for all $n \in \Z\setminus\{0\}$ (i.e. there exists $b \in A$ such that $a = nb$). An abelian group is called a \underline{divisible group} if every element is divisible, i.e. if $nA = A$ for every $n\in\Z\setminus\{0\}$. 
+
+\end{enumerate}
+
+\rem 
+
+If $f\in\Hom_\Z(A, B)$ and $A$ is divisible, then $f(A)$ is a divisible subbgroup of $B$. 
+
+\section*{Lecture 10, 2/3/23}
+
+Consider the sequence
+\[
+\exactshort{\Z}{\cdot 2}{\Z}{\pi}{\Z/2\Z}
+\]
+This sequence is exact. However, $\Hom(\Z/2\Z, \Z) = 0$, and $\Hom(\Z/2\Z,\Z/2\Z)\neq 0$. So the image of this sequence under the functor $\Hom(\Z/2\Z, -)$ is not exact (in particular, it is not exact on the right). 
+
+The above argument will work for any integer instead of $2$, so this sequence is a witness to the inexactness of the functor $\Hom_{\Z}(\Z/n\Z, -)$ for $n \geq 2$. 
+
+Consider an epi $g:\Z^{(\N)}\to\Q$, and apply $F$. The map
+\[
+\begin{tikzcd}
+\Hom_{\Z}(\Q,\Z^{(\N)}) \ar[r, "F(g)"]&\Hom_{\Z}(\Q,\Q)
+\end{tikzcd}
+\]
+cannot be an epi, as $\Hom_{\Z}(\Q,\Z^{(\N)}) = 0$ (as $\Q$ is divisible while $\Z^{(\N)}$ is reduced), but $\Hom_{\Z}(\Q,\Q)\neq0$. 
+
+\exm
+
+Here is an example to show that the tensor functor is not left-exact. Let $R = \Z$. We consider the functor $F(-) = \Z/n\Z\otimes_{\Z}-$, $n \geq 2$. Consider the inclusion $\begin{tikzcd} \Z\ar[r, hook, "\iota"]&\Q \end{tikzcd}$. This is a mono. However, $\Z/n\Z\otimes_{\Z}\Q=0$, so $F(\iota):\Z/n\Z\otimes_{\Z}\Z\to0$. Hoever, $\Z/n\Z\otimes_{\Z}\Z = \Z/n\Z \neq 0$, so $F(\iota)$ is not a mono. 
+
+\subsection*{\underline{Short-term program}}
+
+\begin{enumerate}
+
+\item Find exact functors 
+
+\item Characterize the exact sequences $\A$ in $R-comp$ such that $F(\A)$ is exact in $S-comp$ for any additive functor $F:R-mod\to S-mod$. 
+
+\end{enumerate}
+
+\thm
+
+If $F:R-mod\to S-mod$ is an exact functor (i.e. $F$ takes short exact sequences to short exact sequences) then $F(\A)$ is exact in $S-mod$ whenever
+\[\A:
+\begin{tikzcd}
+\cdot\ar[r]&A_{n + 1}\ar[r, "f_{n + 1}"]& A_n\ar[r, "f"]& A_{n - 1} \ar[r, "f_{n - 1}"]&\cdots \\ 
+\end{tikzcd}
+\]
+is exact in $R-mod$. 
+
+\proof
+
+Suppose $F:R-mod\to S-mod$ is exact, and $\A$ as in the claim is an exact sequence in $R-mod$. We can factor each $f_n$ 
+\[
+\begin{tikzcd}
+A_n\ar[r, "\tilde{f_n}"]&\Im(A)\ar[r, hook, "\iota_n"]& A_{n - 1} \\
+x\ar[r]&f_n(x_n)\ar[r]&f_n(x_n) \\
+\end{tikzcd}
+\]
+Consider the short exact sequence 
+\[
+\exactshort{\Im(f_{n + 1})}{\iota_{n + 1}}{A_n}{\tilde{f_n}}{\Im(f_n)}
+\]
+Since $F$ is exact, we obtain an exact sequence
+\[
+\exactshort{F(\Im(f_{n + 1}))}{F(\iota_{n + 1})}{F(A_n)}{F(\tilde{f_n})}{F(\Im(\tilde{f_n}))}
+\]
+In particular $\Im(F(\iota_{n + 1})) = \ker(F(\tilde{f_n}))$ for $n \in \N$. 
+
+\claim
+\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $\ker(F(f_n)) = \ker(F(\tilde{f_n}))$
+\item $\ker(F(\tilde{f_n})) = \Im(F(\iota_{n + 1})) = \Im(F(f_{n + 1}))$
+
+\end{enumerate}
+
+\proof
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $f_n = \iota_n\circ\tilde{f_n}$, so $F(f_n) = F(\iota_n) \circ F(\tilde{f_n})$ by functoriality. Because $F$ is exact, $F(\iota_n)$ is a mono, so $\ker(F(f_n)) = \ker(F(\tilde{f_n}))$. 
+
+\item $F(f_{n + 1}) = F(\iota_{n + 1}) \circ F(\tilde{f_{n + 1}})$. Because $F$ is exact, $F(\tilde{f_{n + 1}})$ is an epi.
+
+\end{enumerate}
+
+So $\im(F(f_{n + 1})) = \Im(F(\iota_{n + 1}))$, so we have shown $F(\A)$ is exact. 
+
+\qed
+
+First installment of finding exact functors. 
+
+\prop
+
+Let $I$ be a set (index set). Consider the functors:
+\begin{align*}
+(R-Mod)^I &\to R-Mod \\
+(m_i)_{i\in I} & \mapsto \prod_{i\in I}m_i \\
+(f_i)_{i\in I} & \mapsto \prod_{i\in I}f_i, (\vec{m})_j = f_j(m_j) \\
+\end{align*}
+$\otimes_{i\in I}$ works the same as before. 
+
+Both of them are exact .
+
+\proof
+
+Obvious
+
+\qed
+
+\subsection*{\underline{First installment re (2)}}
+
+\rem 
+
+Warning: Birge uses nonstandard notation. She says ``$X$ is a direct summand of $Y$" to mean $X\subseteq \bigoplus Y$
+
+\defn 
+
+Let $A, B \fin R-mod, f \in \Hom_R(A, B)$. $f$ is called \underline{split} if $\ker f$ is a direct summand of $A$ and $\Im(f)$ is a direct summand of $B$, i.e. there exist $A', B' \fin R-Mod$ with $A = \ker(f)\oplus A'$ and $B = \Im(f)\oplus B'$.
 
 
 
