@@ -352,13 +352,99 @@ Because all of $A$ goes to a point for $t = 1$, then by the universal property o
 \[
 \begin{tikzcd}
 X\ar[r, "f_1"] \ar[d, "q"] & X \ar[d, "q"] \\
-X/A \ar[ur, "g"]\ar[r, "\bar{f_1}"] & X/A \\
+X/A \ar[ur, "g"]\ar[r, "\bar{f_1}"'] & X/A \\
 \end{tikzcd}
 \]
 So $qg$ is homotopic to the identity map, and $gq$ is homotopic to the identity map. This completes the proof? 
 
 \qed
 
+\section*{Lecture 9, 1/30/23}
+
+\defn
+
+We say that $(X, A)$ and $(Y, A)$ are homotopy equivalent relative to $A$ if there exist maps $f:X\to Y, g:Y\to X$ such that $f|_A = \Id_A, g|_A = \Id_A$ and $g \circ f \simeq \Id_X$ relative to $A$, and $f \circ g \simeq \Id_Y$ relative to $A$. 
+
+\thm
+
+If $(X, A)$ is a CW Pair, and $f, g:A\to X_0$ are homotopic maps, then $X_0 \coprod_fX_1 \simeq X_0\coprod_gX_1$ relative to $X_0$. 
+
+\proof
+
+Bunch of pictures I can't write down. 
+
+\qed
+
+\prop
+
+If $(X, A), (Y, A)$ both have the homotopy extension property, and $f:X\to Y$ is a homotopy equivalence such that $f|_A = \Id_A$, then $f$ is a homotopy equivalence relative to $A$. 
+
+\proof
+
+\qed
+
+\cor
+
+If $(X, A)$ has the homotopy extension property and $A \hookrightarrow X$ is a homotopy equivalence, then $X$ deformation retracts to $A$. 
+
+\proof
+
+\qed
+
+\cor
+
+A map $f:X\to Y$ is a homotopy equivalence if and only if $X$ is a deformation retraction of $M_f$. 
+
+\proof
+
+\qed
+
+\section*{Lecture 10, 2/3/23}
+
+\defn 
+
+Given any path $f:I\to X$, we write $[f]$ for the set of paths $g:I\to X$ such that $g \simeq f$ relative to $\del I$. If we don't fix endpoints, each $[f]$ would be a path-component. Sometimes we use $\pi^0$ to denote the set of path components. 
+
+Let $f, g:I\to\R^n, f\simeq g$ by $h_t(u) = tg(u) + (1 - t)f(u)$. Then $h_0 = f, h)1 = g$. $h$ is called the ``straight line homotopy."
+
+In fact, we could change $I$ to \underline{any} topological space, and $f \simeq g$ \underline{still} 
+
+We could also change $\R^n$ to any $U\subseteq\R^n, U$ convex, and $f\simeq g$ \underline{still}. 
+
+We could change $X$ to $U$, any metric space iwth unique shortest path which vary continuosly as the endpoints vary. 
+
+Concatenation: If $f(1) = g(0)$, then define $f\star g:I\to X$ by 
+\[
+(f\star g)(t) = \begin{cases} f(2t) & t\in[0,\frac{1}{2}] \\ g(2t-1) & t \in [\frac{1}{2}, 1] \end{cases} 
+\]
+
+\defn
+
+Assume $f(1) = g(0)$. Then $[f]\star[g] = [f\star g]$ is well defined by handwaving. 
+
+Constants: The constant path $c_x$ is the path which is constantly $x$. Note $[c_{f(0)}]\star[f] = [f], [f]\star[c_{f(1)}] = [f]$. 
+
+Inverses: Define $\bar{f}(u) = f(1 - u)$. Note $[f][\bar{f}] = [c_x]$. 
+
+Associativity: $(f\star g)\star h \simeq f\star(g\star h)$. 
+
+\defn A category where every $f:A\to B$ has an inverse (i.e. an arrow $f^{-1}:B\to A$ such that $ff^{-1} = \Id_B = f^{-1}f)$ is called a \underline{groupoid}. 
+
+$\pi_0$ is a functor, (objects$\to$objects, arrow$\to$arrows, compositions$\to$compositions, identities$\to$identities)
+
+$(X, x_0) \mapsto \pi_1(X, x_0) = \{[f]\mid f:I\to X, f(0) = f(1) = x_0\}$. 
+
+$\begin{tikzcd} (X, x_0)\ar[r, "\pi_1"]&\pi_1(X, x_0) \end{tikzcd}$. 
+\[
+\begin{tikzcd}
+(X, x_0)\ar[d, "h"]\ar[r, "\pi_1"]&\pi_1(X, x_0) & f \ar[d] \\
+(Y, y_0) \ar[r, "\pi_1"]&\pi_1(Y, y_0) & h\circ f \\
+\end{tikzcd}
+\]
+
+\section*{Lecture 11, 2/6/23}
+
+just homework review
 
 
 
