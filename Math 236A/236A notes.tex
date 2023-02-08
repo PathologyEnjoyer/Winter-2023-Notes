@@ -23,6 +23,7 @@
 \newcommand{\fin}{``\in"}
 \DeclareMathOperator{\Perm}{Perm}
 \newcommand{\Rmod}{R-\text{mod}}
+\newcommand{\onto}{\twoheadrightarrow}
 
 \newcommand{\exactlon}[5]{
 		\begin{tikzcd}
@@ -1103,6 +1104,113 @@ It is known that $_RF$ is \underline{free} iff $F$ has an $R$-basis, that is, a 
 
 \end{enumerate}
 
+\section*{Lecture 12, 2/8/23}
+
+\underline{True or false:} If $P\fin R-Mod$ is finitely generated projective, then there exists $n \in \N$ such that $P$ is isomorphic to a dirrect summand $_RR^n$? 
+
+This is true. It is isomorphic to a direct summand of a free module $R^{(I)}$. Pick finite $I'\subseteq I$ with $x_k\in\oplus_{i\in I'}R_i$. Then $P \subseteq \oplus_{i\in I'}R \cong R^n$, with $n = |I'|$ and hence $P$ is isomorphic to a direct summand of $R^n$. 
+
+Let $R = K[x, y]$. Then $P = (x)$ is not projective, despite being a submodule of $R$. 
+
+In general: If $_RV\subseteq_RU\subseteq_RM$, and $V\subseteq^\oplus M$, then $V\subseteq^\oplus U$. Look up the ``modular law."
+
+\thm
+
+For $M\fin R-Mod$, the following are equivalent. 
+
+\begin{enumerate}
+
+\item $M$ is projective
+
+\item $\Hom_R(M, -):R-mod\to\Z-mod$ is exact.
+
+\item Whenever $f\in\Hom_R(B, C)$ is an epi and $g\in\Hom_R(M, C)$, then there exists a $\phi\in\Hom_R(M, B)$ with $f\circ\phi=g$. That is, there is a $\phi$ making the following diagram commutes. 
+\[
+\begin{tikzcd}
+B\ar[r, twoheadrightarrow, "f"] & C \ar[r]&0 \\
+& M \ar[ul, dotted, "\phi"'] \ar[u, "g"'] \\
+\end{tikzcd}
+\]
+
+\item Every epi onto $M$ splits. That is, every surjection onto $M$ admits a section.
+
+\end{enumerate}
+
+For the following proof, we will abbreviate $\Hom_R(M, -)$ by $[M, -]$. 
+
+\proof\,
+
+\subsection{$(1)\implies(3)$}
+
+We have $M \subseteq^\oplus _RF$, $F$ free on basis $(x_i)_{i\in I}$, $F = M\oplus N$. 
+
+Let $f$ and $g$ be as in 3. That is, we have
+\[
+\begin{tikzcd}
+B\ar[r, twoheadrightarrow, "f"] & C\\
+& M\ar[u, "g"'] \\
+& F\ar[u, "\pi"']\\
+\end{tikzcd}
+\]
+where $\pi:F\to M$ is the projection along $N$, and $\iota:M\hookrightarrow F$ the embedding. There is a $\psi:F\to B$ which makes this commute: \[
+\begin{tikzcd}
+B\ar[r, twoheadrightarrow, "f"] & C\\
+& M\ar[u, "g"'] \\
+& F\ar[u, "\pi"']\ar[uul, dotted, "\psi"]\\
+\end{tikzcd}
+\]
+defined by $\psi(x_i) = b_i$ if $f(b_i) = g\pi(x_i)$. This is well-defined because $F$ is free on the $x_i$, and the $b_i$ exist because $f$ is an epi Then, we have $f\circ\psi = g\circ\pi$, so $f\circ\psi\circ\iota = g\circ\pi\circ\iota$. But $\pi\circ\iota=\Id_M$, so $f\circ(\psi\circ\iota) = g$. But that means $\phi = \psi\circ\iota:M\to B$ makes the diagram commute: \[
+\begin{tikzcd}
+B\ar[r, twoheadrightarrow, "f"] & C\\
+& M\ar[u, "g"'] \ar[ul, dotted, "\phi"']\\
+& F\ar[u, "\pi"']\ar[uul, dotted, "\psi"]\\
+\end{tikzcd}
+\]
+
+\subsection*{$(3)\implies(2)$}
+
+Assume 3. Since $[M,-]$ is a left-exact functor, it suffices to show that $[M,-]$ takes epis to epis. 
+
+Let $\begin{tikzcd} B\ar[r, "f"] & C\ar[r]&0\end{tikzcd}$ be exact. To show $[M, f]:[M, B]\to[M, C]$ is an epi, let $g \in [M, C]$. By assumption, there exists $\phi\in[M, B]$ with $f^*(\phi)=g$. But this means $\phi^*(f) = g$. 
+
+\subsection*{$(2)\implies(4)$}
+
+Assume 2. Let $f:N\twoheadrightarrow M$ be an epi. Then by assumption, $[M, f]:[M, B]\onto[M,C]$ is an epi. So there exists $\phi\in[M,N]$ with $f\circ\phi=\Id$. So the following diagram commutes:
+\[
+\begin{tikzcd}
+M\ar[r, "\phi"]\ar[d, equals] & N \ar[dl, twoheadrightarrow, "f"'] \\
+M & \\
+\end{tikzcd}
+\]
+Hence $N = \Im(\phi)\oplus\ker(f)$, so $\ker(f)\subseteq^\oplus N$, and $f$ splits. 
+
+\subsection*{$(4)\implies(1)$}
+
+Assume 4. If $(m_i)_{i\in I}$ is a generating set for $M$, then $F = R^{(I)}\onto M$, given by $(r_i)\mapsto\sum_{i\in I}r_im_i$, (which will be a finite sum because all but finitely many $r_i$ are zero) is an epi. 
+
+By assumption, $f$ splits, meaning $F = \ker(f)\oplus N$. Then $N \cong F/\ker(f)\cong M$. So $M$ is isomorphic to a direct summand of $F$. 
+
+This completes the proof.
+
+\qed
+
+\subsection*{\underline{Further examples of projective modules and structure results}}
+
+\exm\,
+
+\begin{enumerate}
+
+\item Let $R$ be a ring. All $M \fin R-Mod$ are projective if and only every submodule $U$ of any left $R$-module $N$ is a direct summand, i.e. $N = U \oplus V$. 
+
+($=>$)
+Let $_RU\subseteq _RN$. Take $M = N/U$ and epi $\pi:N\to N/U$. Since $N/U$ is projective, $\pi$ splits, meaning $U \subseteq^{\oplus}A$. 
+
+($<=$)
+Easy
+
+Equivalently, if $R$ is semi-simple when viewed as a right module over itself, $R_R$.
+
+\end{enumerate}
 
 
 
