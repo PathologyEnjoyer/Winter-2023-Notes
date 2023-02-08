@@ -1246,6 +1246,183 @@ Similarly, in the context of part 2 of the proposition,
 
 $\exactshort{M'}{f}{M}{g}{M''}$ exact does not imply $\bar{f}:\Hom_R(M, N)\to\Hom_R(M', N)$ surjective for general $R$-modules. 
 
+\section*{Lecture 12, 2/6/23}
+
+\section*{Lecture 13, 2/8/23}
+
+\subsection*{\underline{On $\Hom_R(-, N)$}}
+
+\underline{Recall:} If $N$ is an $R$-module and 
+\[
+\begin{tikzcd} M'\ar[r, "f"]&M\ar[r, "g"]&M''\ar[r]&0\end{tikzcd}
+\]
+is an exact sequence, then the sequence 
+\[
+\begin{tikzcd}\Hom_R(M'', N)\ar[r, "\bar{g}"]&\Hom_R(M, N) \ar[r, "\bar{f}"]& \Hom_R(M', N)\end{tikzcd}
+\]
+is exact. However, $f$ injective does \underline{not} imply $\bar{f}$ is surjective for general $N$. 
+
+\defn
+
+An $R$-module is called \underline{injective} if it satisfies any of the three equivalent (we prove they are equivalent next) conditions:
+
+\begin{enumerate}[label=(\roman*)]
+
+\item For every such diagram of $R$-modules and $R$-homs, 
+\[
+\begin{tikzcd}
+0\ar[r] & M'\ar[r, "f"]\ar[d, "\phi"] &M \\
+& Q& 
+\end{tikzcd}
+\]
+with $f$ injective, there is a $\psi:M\to Q$, that makes the following diagram commute
+\[
+\begin{tikzcd}
+0\ar[r]&M'\ar[d, "\phi"]\ar[r, "f"]&M\ar[dl, dotted, "\exists\psi
+"] \\
+&Q& \\
+\end{tikzcd}
+\]
+
+\item For every injective $R$-homomorphism $f:M'\to M$, the induced map $\bar{f}:\Hom_R(M, Q)\to\Hom_R(M', Q)$, $\psi\mapsto\psi\circ f$ is surjective. 
+
+\item Every short exact sequence
+\[
+\exactshort{Q}{\alpha}{M}{}{N}
+\]
+splits on the left. That is, there is a $\beta:M\to A$ such that $\beta\circ\alpha=\Id_Q$ (So $M\cong Q\oplus N$)
+
+\end{enumerate}
+
+
+\thm 
+
+These three conditions are indeed equivalent.
+
+\proof
+
+Exercise
+
+\qed
+
+\lem (Baer's Criterion)
+
+Let $Q$ be an $R$-module. If for all ideals $I\subset R$ every $R$-homomorphism $\phi:I\to Q$ extends to an $R$-homomorphism $\psi:R\to Q$,
+\[
+\begin{tikzcd}
+I\ar[r, hook, "\iota"] \ar[d, "\phi"']& R\ar[dl, dotted, "\psi"] \\
+Q & \\
+\end{tikzcd}
+\]
+Then $Q$ is an injective $R$-module. 
+
+\proof
+
+Consider a diagram of $R$-modules and $R$-homomorphisms 
+\[
+\begin{tikzcd}
+0\ar[r]&M'\ar[d, "\phi"']\ar[r, "f"]&M \\
+& Q& \\
+\end{tikzcd}
+\]
+If $f$ is an injection, then $M'\cong f(M')$. We want to show that there exists $\psi:M\to Q$ such that $\phi = \psi\circ f$. Without loss of generality, assume $M'\subseteq M$ and $f=\iota$. 
+
+Consider the set $\mc{A} = \{$all $R$-submodules $N$ of $M$ with $M'\subset N \subset M$, such that there exists an $R$-homomorphism $\phi_N:N\to Q$ with $\phi_N|_{M'}=\phi\}$. 
+
+We order the set as follows. We say $N_1\leq N_2$ if $N_1 \subset N_2$ and $\phi_{N_2}|_{N_1} = \phi_{N_1}$. Because $M'\in\mc{A}, \mc{A}\neq\varnothing$. Further, it is clear that every chain in $\mc{A}$ has an upper bound. 
+
+By Zorn's lemma, there exists some maximal element $N$ in $\mc{A}$. If $N = M$, we're done. 
+
+So for the sake of contradiction, suppose $N\subsetneq M$ is a proper submodule. Let $m \in M\setminus N$, and consider the ideal  $I = \{r\in R \mid rm\in N\}\subset R$. 
+
+By hypothesis, the $R$-homomorphism $\phi_M:I\to Q$, $r\mapsto \phi_N(rm)$ extends to an $R$-homomorphism $\psi_m:R\to Q$:
+\[
+\begin{tikzcd}
+I\ar[d, "\phi_m"'] \ar[r, hook, "\iota"] & R \ar[dl, dotted, "\exists \psi_m"] \\
+Q& \\
+\end{tikzcd}
+\]
+Note that $\Ann_R(m) = \{r\in R\mid rm = 0\} \subset \ker\phi_m\subset\ker\psi_m$. So $\psi_m$ factors as 
+\[
+\begin{tikzcd}
+& R\ar[ld, "\psi_m"']\ar[r, twoheadrightarrow] & R/\Ann_R(m)&\cong Rm\ar[dlll, dotted, "\psi'_m"]\\
+Q & & & \\
+\end{tikzcd}
+\]
+and we have $\psi'_m|_{Rm\cap N} = \phi_N|_{Rm\cap N}$ by definition. 
+
+So we can extend $\phi_N$ to 
+\begin{align*}
+\phi_{N'}:N' \eqdef N + Rm &\to Q \\
+n + r& \mapsto \phi_N(n) + \psi'_m(rm) \\
+\end{align*}
+but $N' \supsetneq N$, contradicting maximality of $N$. 
+
+\qed
+
+\defn
+
+Let $G$ be an Abelian group. $G$ is said to be \underline{divisible} if for any $n\in \Z\setminus\{0\}$, the map $g\mapsto ng$ is surjective. 
+
+\prop
+
+Let $G$ be an Abelian group ($=\Z$-module). Then $G$ is an injective $\Z$-module if and only if $G$ is divisible.
+
+\proof
+
+Suppose $G$ is an injective $\Z$-module. Let $n\in\Z\setminus\{0\}, g \in G$, and consider 
+\[
+\begin{tikzcd}
+\Z\ar[d, "1\mapsto g"'] \ar[r, "g\mapsto n\cdot g "]& \Z \ar[dl, dotted, "\psi"]\\
+G & \\
+\end{tikzcd}
+\]
+Then there exists $\psi:\Z\to G$ such that $\phi = \psi \circ f$. So
+\begin{align*}
+g & = \phi(1) \\ & = \psi(f(1)) \\ & = \psi(n) \\ & = n\cdot\underbrace{\psi(1)}_{\in G} \\
+\end{align*}
+
+Now suppose $G$ is divisible. By Baer's lemma, to check $G$ is injective in $\Z$-mod, it is enough to show that for all ideals $I = (n)\subset\Z$ and $\phi:I\to G$, the map $\phi$ extends to $\Z$:
+\[
+\begin{tikzcd}
+I = (n)\ar[r, hook, "\iota"] \ar[d, "\phi"']& \Z \ar[dl, dotted]\\
+G & \\
+\end{tikzcd}
+\]
+The case $n = 0$ is trivial. So suppose $n  \neq0$. Let $g=\phi(n)$. Then $g = n\cdot g'$ for some $g' \in G$. 
+
+The $\Z$-linear map $\psi:\Z\to G$ defined by $1\mapsto g'$ extends $phi$. 
+
+\qed
+
+\exm
+
+$\R, \Q, \Q/\Z$ are all injective $\Z$-modules since they are divisible. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
