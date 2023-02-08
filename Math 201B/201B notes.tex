@@ -18,21 +18,22 @@
 	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
 }
 
-\newcommand{\seq}[1]{_{#1 = 1}^\oo}
+\newcommand{\seq}[2][\oo]{_{#2 = 1}^#1}
 \newcommand{\barr}{{\bar{\R}}}
-\newcommand{\cupk}{\cup\seq{k}}
-\newcommand{\cupi}{\cup\seq{i}}
-\newcommand{\cupn}{\cup\seq{n}}
-\newcommand{\bigcupk}{\bigcup\seq{k}}
-\newcommand{\bigcupi}{\bigcup\seq{i}}
-\newcommand{\bigcupn}{\bigcup\seq{n}}
-\newcommand{\capk}{\cap\seq{k}}
-\newcommand{\capi}{\cap\seq{i}}
-\newcommand{\capn}{\cap\seq{n}}
-\newcommand{\bigcapk}{\bigcap\seq{k}}
-\newcommand{\bigcapi}{\bigcap\seq{i}}
-\newcommand{\bigcapn}{\bigcap\seq{n}}
+\newcommand{\cupk}[1][\oo]{\cup\seq[#1]{k}}
+\newcommand{\cupi}[1][\oo]{\cup\seq[#1]{i}}
+\newcommand{\cupn}[1][\oo]{\cup\seq[#1]{n}}
+\newcommand{\bigcupk}[1][\oo]{\bigcup\seq[#1]{k}}
+\newcommand{\bigcupi}[1][\oo]{\bigcup\seq[#1]{i}}
+\newcommand{\bigcupn}[1][\oo]{\bigcup\seq[#1]{n}}
+\newcommand{\capk}[1][\oo]{\cap\seq[#1]{k}}
+\newcommand{\capi}[1][\oo]{\cap\seq[#1]{i}}
+\newcommand{\capn}[1][\oo]{\cap\seq[#1]{n}}
+\newcommand{\bigcapk}[1][\oo]{\bigcup\seq[#1]{k}}
+\newcommand{\bigcapi}[1][\oo]{\bigcup\seq[#1]{i}}
+\newcommand{\bigcapn}[1][\oo]{\bigcup\seq[#1]{n}}
 \DeclareMathOperator{\Vol}{Vol}
+\DeclareMathOperator{\diam}{diam}
 \title{220A - Groups}
 \author{John White}
 \date{Fall 2022}
@@ -558,8 +559,525 @@ and $C = \bigcapk C_k$ is closed.
 
 \end{enumerate}
 
+\section*{Lecture 5, 1/26/23}
 
- 
+\thm 
+
+Let $\mu$ be a Borel measure on $\R^n$ and let $B \subseteq \R^n$ be a Borel set. 
+\begin{enumerate}
+
+\item If $\mu(B)<\oo$, then for all $\varepsilon>0$, there exists a closed $C \subseteq B$ such that $\mu(B\setminus C) < \varepsilon$. 
+
+\item If $\mu$ is a Radon measure, then for all $\varepsilon>0$, there exists an open $U \subseteq \R^n$ such that $B \subseteq U$ and $\mu(U\setminus B)<\varepsilon$. 
+
+\end{enumerate}
+
+\proof
+\,
+\begin{enumerate}
+
+\item Let $\nu = \mu|_B$ be a finite Borel measure on $\R^n$.  Define the collection
+\[
+\ms{F} = \{A\subseteq \R^n:A \mu-\text{measurable and for all }\varepsilon>0,\exists C \subseteq A, C\text{ closed, }\nu(A\setminus C)<\varepsilon\} 
+\]
+We want to show $\mc{B} \in \ms{F}$, where $\mc{B}$ is the Borel set. 
+
+\subsubsection*{Step 1:} $\ms{F}$ contains all closed sets
+
+\subsubsection*{Step 2:} If $A_1, A_1, \dots, A_k \in \ms{F}$, then for all $A_k$, there exists a closed $C_k$ such that $\nu(A_k\setminus C_k)<\frac{\varepsilon}{2^k}$. Thus, 
+\begin{align*}
+\nu\left(\bigcapk A_k\setminus \bigcapk C_k\right) & \leq \nu\left(\bigcupk(A_k\setminus C_k)\right) \\
+& \leq \sum_{k=1}^\oo\nu(A_k\setminus C_k) < \varepsilon \\
+\end{align*}
+Furthermore, $\capk C_k$ is closed. Thus $\ms{F}$ is closed under countable intersections. 
+
+\subsubsection*{Step 3:} We want to show countable unions belong to $\ms{F}$. If $A_1, A_2, \dots, A_k, \dots \in \ms{F}$, then for all $A_k$, there is a closed $C_k$ such that $\nu(A_k\setminus C_k)<\frac{\varepsilon}{2^k}$. However, we do not know if $\cupk C_k$ is closed. Note that $\nu(\cupk A_k \setminus \cupk C_k) = \lim_{m\to\oo}\nu(\cup_{k=1}^m A_k \setminus \cup_{k=1}^m C_k) < \varepsilon$. So there is an $m \in \N$ such that $\nu(\cup_{k=1}^m A_k \setminus \cup_{k=1}^m C_k) < \varepsilon$. Furthermore $C = \cupk[m]C_k$ is closed. 
+
+\subsubsection*{Step 4:} In the homework, we showed that every open set is the countable union of closed balls. Since $\ms{F}$ contains all closed sets, and is closed under countable unions, $\ms{F}$ contains all open sets. 
+
+\subsubsection*{Step 5:} Consider the subset $G \subseteq\ms{F}$ given by $G = \{A\in\ms{F}\mid A^c\in\ms{F}\}$. We claim that $G$ is a $\sigma$-algebra. Going through the axioms, 
+\begin{enumerate}[label=(\roman*)]
+
+\item Clearly, $\varnothing\in G$. 
+
+\item If $A \in G, A^c \in G$. 
+
+\item If $A_1, A_2, \dots, A_k, \dots \in G$, then $\cupk A_k \in G$. Why? $\cupk A_k \in \ms{F}$ and $\R^n\setminus\capk(\R^n\setminus A_k) \in\ms{F}$, since each $\R^n\setminus A_k \in \ms{F}$, and $\ms{F}$ is closed under countable intersections. 
+
+\end{enumerate}
+
+\subsubsection*{Step 6:} Since the complement of an open sets is a closed set, and since $\ms{F}$ contains all open and closed sets, all open sets are contained in the $\sigma$-algebra $G$. Thus the Borel sets are contained in $G$, implying that they are contained in $\ms{F}$. 
+
+Note: Part 1 requires that $X$ be a seperable metric space. 
+
+\item For all $m \in \N$, denote $U_m = B_m(0) = \{x\in\R^n\mid\norm{x}<m\}$. 
+
+
+Note that $\mu(U_m\setminus B) \leq \mu(U_m) < \oo$. Thus there exists a closed $C_m \subseteq U_m\setminus B$ such that $\mu((U_m\setminus B)\setminus C_m)<\frac{\varepsilon}{2^m}$. 
+
+Note that $B \cap U_m \subseteq (U_m\setminus C_m)$, which is an open set. 
+
+Thus, $\mu((U_m\setminus C_m)\setminus(B\cap U_m)_ = \mu((U_m\setminus C_m)\setminus B_ < \frac{\varepsilon}{2}$. 
+
+Define $U = \cup\seq{m}(U_m\setminus C_m)$, which is an open set. 
+
+Thus $B = \cup\seq{m}(B\cap U_m) \subseteq \cup\seq{m}(U_m\setminus C_m) = U$. 
+
+Furtheremore,
+\begin{align*}
+\mu(U\setminus B) & = \mu(\cup\seq{m}(U_m\setminus C_m) \setminus \cup\seq{m}(B \cap U_m)) \\
+& \leq \mu(\cup\seq{m}(U_m\setminus C_m \setminus B \cap U_m)\\
+& \leq \sum\seq{m}\mu(U_m\setminus C_m\setminus B\cap U_m) \\
+& < \varepsilon \\
+\end{align*}
+
+Note: Part 2 requires that for all $r>0$, for all $x \in X$, $\mu(B_r(x))<\oo$. 
+
+
+
+
+\end{enumerate}
+
+\qed
+
+\thm (Approximation by compact and open sets). 
+
+Let $\mu$ be a Radon measure on $\R^n$. Then 
+\begin{enumerate}
+
+\item For all $A \subseteq\R^n$, $\mu(A) = \inf\{\mu(U) \mid A \subseteq U, U$ open $\}$. 
+
+\item For all $\mu$-measurable $A \subseteq\R^n$, we have $\mu(A) = \sup\{\mu(K) \mid K\subseteq A, K$ compact $\}$. 
+
+\end{enumerate}
+
+\proof
+
+Shortly. 
+
+Note: If $\mu$ is the Lebesgue measure, we define the outer measure as
+\begin{align*}
+\mu(A) & = \inf\{\sum\seq{k}(b_k - a_k) \mid A \subseteq\cupk(a_k, b_k) \} \\
+& = \inf\{\sum\seq{k}(b_k - a_k)\mid A \subseteq \cupk\, [a_k, b_k), [a_i, b_i) \cap [a_j, b_j) = \varnothing\text{ if } i\neq j\} \\
+\end{align*}
+
+\rem Let $X$ be a topological space, and let $\mu$ be a measure on $X$. If $A \subseteq X$ is such that for all $\varepsilon>0$, there exists a $\mu$-measurable $A_\varepsilon\subseteq A$, such that $\mu(A\setminus A_\varepsilon)<\varepsilon$. Then $A$ is $\mu$-measurable. 
+
+\proof of remark. 
+
+Take $\varepsilon = \frac{1}{k}$. By part 1, there exists $A_k \subseteq A$ such that $0\leq\mu(A)-\mu(A_k)<\frac{1}{k}$. 
+
+Let $b = \cupk A_k$, and note that $B \subseteq A$, $B$ is $\mu$-measurable, and $\mu(A)-\frac{1}{k} \leq \mu(A_k) \leq \mu(B) $ for all $k \in \N$. 
+
+This implies that $\mu(B) = \mu(A), B \subseteq A$. 
+
+Thus, $\mu(A) = \mu(A\cap B) + \mu(A\setminus B) = \mu(B) + \mu(A\setminus B)$. 
+
+Since $\mu(A) = \mu(B)$, this implies that $\mu(A\setminus B) = 0$, i.e. $A\setminus B$ is $\mu$-measurable. 
+
+So $A = B \cup (A \setminus B)$ is $\mu$-measurable. 
+
+\qed
+
+We are now prepared for a proof of the theorem. 
+
+\proof
+
+\begin{enumerate}
+
+\item If $\mu(A)=\oo$, then this is trivial. So assume $\mu(A)<\oo$. If $A$ is Borel, we use part 2 of theorem 1. 
+
+We have an open $U_\varepsilon\subseteq\R^n$ such that $A \subseteq U_\varepsilon$, and $\mu(U_\varepsilon\setminus A)<\varepsilon$. 
+
+Thus $\mu(A)\leq\mu(U_\varepsilon)\leq\mu(A) + \mu(U_\varepsilon\setminus A) < \mu(A) + \varepsilon$. 
+
+So we are odne for Borel sets. If $A$ is not Borel, then there exists a Borel $B \subseteq \R^n$ such that $A \subseteq B$ and $\mu(A) = \mu(B)$. 
+
+Note: For the above proof, we used a previous theorem, and the fact that $\mu$ is Borel-regular. 
+
+\item Lets prove that $\mu(A) = \sup\{\mu(C)\mid C \subseteq A, C$ closed $\}$. 
+We have two cases:
+
+\begin{enumerate}[label=(\roman*)]
+
+\item $\mu(A)<\oo$. In this case, consider $\nu = \mu|_A$. $\nu$ is a finite Radon measure. We apply part 1 to $A^c$. There exists an open $U_\varepsilon\subseteq\R^n$ such that $\R^n\setminus A \subseteq U_\varepsilon$ and $\nu(U_\varepsilon)<\nu(A^c) + \varepsilon = \varepsilon$. 
+
+Set $C_\varepsilon = U_\varepsilon^c$, which is closed. Note that $C_\varepsilon\subseteq A$ and $\mu(A\setminus C_\varepsilon) = \mu(A \cap U_\varepsilon)= \nu(U_\varepsilon) < \varepsilon$. 
+
+Since $C \subseteq A$, $\mu(C_\varepsilon)\leq\mu(A)$. By countable subadditivity, $\mu(A)\leq\mu(C_\varepsilon) + \mu(A\setminus C_\varepsilon) < \mu(C_\varepsilon) + \varepsilon$. 
+
+\item Next time!
+
+\end{enumerate}
+
+\end{enumerate}
+
+\qed
+
+\section*{Lecture 6, 1/31/23}
+
+\rem 
+
+Let $\mu$ be a Borel measure on $X$. If for every $A \subseteq X$ one has $\mu(A) = \inf\{\mu(B) \mid A \subseteq B, B$ Borel $\}$, then $\mu$ has to be Borel-regular. 
+
+\proof of remark. 
+
+Take $B_k\supseteq A$ such that $\mu(B_k) < \mu(A) + \frac{1}{k}$. Let $B = \capk B_k$. Note $B$ is Borel, $A \subseteq B$, and $\mu(A)\leq\mu(B)\leq\mu(B_k)<\mu(A) + \frac{1}{k}$. So $\mu(A) = \mu(B)$. 
+
+\qed 
+
+\proof of theorem from last time. 
+
+We showed that if $\mu(A)<\oo$, then $\mu(A) = \sup\{\mu(C)\mid C \subseteq A, C$ closed $\}$. 
+
+If $\mu(A) = \oo$, write $\R^n = \cupk R_k$, where $R_k = \{x\in\R^n\mid k \leq \norm{x} < k + 1\}$. Thus $A = \cupk A \cap R_k$. 
+
+For all $k, \mu(A\cap R_k) \leq \mu(R_k) < \oo$. So there exists $C_k \subseteq A\cap R_k$ such that $\mu(C_k) > \mu(A\cap R_k) - \frac{1}{2^k}$. 
+
+Thus $\mu(\cupk C_k) = \sup\seq{k}\mu(C_k) \geq \sum\seq{k}*\mu(A\cap R_k) - \frac{1}{2^k}) \geq \mu(A) - 2 = \oo$. 
+
+This implies that $\lim_{m\to\oo}\mu(\cupk[m]C_k = \mu(\cupk C_k) = \oo$. 
+
+This proves the theorem for closed sets. 
+
+Now we prove the theorem for compact sets. 
+
+Case 1: $\mu(A)<\oo$. For all $\varepsilon > 0$, there exists a closed set $C_\varepsilon\subseteq A$ such that $\mu(C_\varepsilon) > \mu(A) - \varepsilon$. Consider $K_m = C_\varepsilon\cap B_m$, where $B_m = \{x\in\R^n \mid \norm{x}\leq m\}$. 
+
+Note $K_m$ is compact. 
+
+Thus $\lim_{m\to\oo}\mu(K_m) = \mu(\cupk K_m) = \mu(C_\varepsilon) > \mu(A) - \varepsilon$. 
+
+Case 2: $\mu(A) = \oo$. For all $m \in \N$, there exists a closed $C_m\subseteq A$ such that $\mu(C_m)\geq m$. Apply the same procedure. 
+
+\qed
+
+\subsubsection*{\underline{Covering theorems} (Vitali's and Besicovitch)}
+
+Notation: we will work in $\R^n$. Closed balls will be denoted by $B$. For a given closed ball $B = B_r(x) = \{y\in\R^n \mid \norm{x - y} \leq r\}$, $\hat{B} = cB = \{y\in\R^n \mid \norm{x - y} \leq cr\} = B_{cr}(x)$. 
+
+\defn
+
+Let $A \subseteq \R^n$ and let $\ms{F} = \{B\subseteq\R^n\}$ be a family of balls. 
+\begin{enumerate}
+\item $\ms{F}$ is a \underline{cover of $A$} if $A \subseteq \cup_{B\in\ms{F}}B$. 
+
+\item $\ms{F}$ is a \underline{fine cover of $A$} if for all $x \in A$ and $\varepsilon>0$, there exists a $B\in\ms{F}$ such that $x \in B$ and $\diam(B) < \varepsilon$. Alternatively, for all $x \in X$, $\inf\{\diam(B) \mid x \in B\} = 0$. 
+
+\end{enumerate}
+
+\thm (Vitali's Covering Theorem)
+
+Let $\ms{F}$ be a collection of nondegenerate closed balls in $\R^n$ with diameters uniformly bounded, i.e. $\sup\{\diam(B) \mid B \in \ms{F}\} < \oo$. Then there exists a subcollection of countably many disjoint balls $\{\hat{B}_i\}\seq{i}$, such that $\cup_{b\in B}B \subseteq \cupi\hat{B}_i$
+
+\proof 
+
+Denote $D = \sup\{\diam(B) \mid B \in \ms{F}\}$ and consider $\ms{F}_k = \{B\in\ms{F}\mid\frac{D}{2^k} < \diam(B) \leq \frac{D}{2^{k - 1}}\}$. Let $G_1 \subseteq \ms{F}_1$ be a maximal disjoint subcollection of balls in $\ms{F}$ (we can produce this easily with Zorn's Lemma). It will be maximal in the sense that if we add another element, it will not be a disjoint set. 
+
+Assume $G_1, \dots, G_{k - 1}$ have been chose. 
+
+Let $G_k$ bew a maximal disjoint subcollection in $\ms{F}$ such taht the balls at $G_k$ do not intersect with the balls in $\cup_{i=1}^{k - 1}G_i$.
+
+Set $G = \cupk G_k \subseteq \ms{F}$. Let $B \in \ms{F}_m$, i.e. $\frac{D}{2^m} < \diam(B) \leq \frac{D}{2^{m - 1}}$. 
+
+Because $G_m$ is maximal, there exists $\bar{B} \in \cupi[m]G_i$ such that $B \cap\bar{B} = \varnothing$. Thus $\diam(\bar{B}) \geq \frac{D}{2^m} \geq \frac{1}{2}\diam(B)$. Thus $B \subseteq \hat{\bar{B}}$. 
+
+\section*{Lecture 7, 2/2/23}
+
+\cor
+
+Let $A \subseteq \R^n$, and let the collection $\ms{F}$ of nondegenerate closed balls be a fine cover of $A$ such that $\sup\{\diam(B)\mid B\in\ms{F}\} < \oo$. 
+
+Then for any finite number of balls $B_1, B_2, \dots, B_m\in\ms{F}$, one has
+\[
+A\setminus\cupi[m]B_i \subseteq \cup_{B\in G\setminus\{B_1, \dots, B_m\}}\hat{B}
+\]
+where $G$ is the disjoint collection of balls guaranteed by Vitali's theorem. 
+
+\proof
+
+Assume $x \in A\setminus\cupi[m]B_i$. Then $x\not\in\cupi[m]B_i$, so $d(x, \cupi[m]B_i) > 0$, as $B_i$ is closed for all $i$, and the finite union of closed sets is closed. 
+
+Let $d = d(x, \cupi[m]B_i)$. Because $x \in A$, there exists a ball $B = B_r(y) \in \ms{F}$ such that $x\in B_r(y)$ and $2r<d$. This gives us that $B \cap \cupi[m]B_i = \varnothing$. By the construction of $G$, there exists $\bar{B} \in G$ such that $B \cap \bar{B} = \varnothing$ and $B \subseteq \hat{\bar{B}}$. Now, $\bar{B}\neq B_i, i = 1, 2, \dots, m$, and therefore $x \in B \subseteq\hat{\bar{B}}\subseteq \cup_{\bar{\bar{B}}\in G\setminus\{B_1, \dots, B_n\}}\hat{\bar{\bar{B}}}$. 
+
+\thm (Filling open sets with closed balls)
+
+Let $U \subseteq \R^n$ be open, and let $\delta > 0$. Then there is a countable collection $G$ of nondegenerate closed, disjoint balls, such that 
+\[
+\sup\{\diam(B) \mid B \in G\} \leq \delta
+\]
+and $\ms{L}^n(U\setminus\cupi B_i) = 0$, where $\ms{L}^n$ denotes $n$-dimensional Lebesgue measure. Here, $G = \{B_i\}\seq{i}$. 
+
+\proof
+\,
+
+\subsubsection*{Case 1: $\ms{L}^n(U) < \oo$}
+
+Consider the collection of nondegenerate closed balls $\ms{F} = \{ B \subseteq U \mid \diam(B)\leq\delta\}$. Because $U$ is open, $\cup_{B\in\ms{F}}B = U$. By Vitali's covering theorem, there exists a countable family $G$ of disjoint balls such that $U\subseteq\cupi\hat{B_i}$. So
+\[
+\ms{L}^n(U)\leq\ms{L}^n(\cupi\hat{B}_i) \leq \sum\seq{i}\ms{L}^n(\hat{B_i})
+\]
+By countable subadditivity, $\ms{L}^n(U) \leq 5^n\sum\seq{i}\ms{L}^n(B_i) = 5^n\ms{L}^n(\cupi B_i)$. So
+\[
+\ms{L}^n(U\setminus\cupi B_i) = \ms{L}^n(U) - \ms{L}^n(\cupi B_i) \leq (1 - \frac{1}{5^n})\ms{L}^n(U)
+\]
+Now
+\[
+\lim_{m\to\oo}\ms{L}^n(U\setminus\cupi[m]B_i) = \ms{L}^n(U\setminus\cupi B_i) \leq (1 - \frac{1}{5^n})\ms{L}^n(U)
+\]
+So there exists an index $m_1 \in \N$ such that $\ms{L}^n(U \setminus \cup_{i=1}^{m_1} B_i ) \leq (1 - \frac{1}{2\cdot 5^n})\ms{L}^n(U)$. 
+
+Consider $U_2 = U \setminus \cup_{i=1}^{m_1}B_i$ and the new collection $\ms{F}_i = \{B\mid B \subseteq U_2, \diam(B)\leq\delta\}$. Then 
+\[
+\ms{L}^n(U_2) \leq q\cdot\ms{L}^n(U) < \oo
+\]
+So there exist disjoint closed $B_{m_{1 + 1}},\cdots, B_{m_2} \in \ms{F}_2$ such that
+\[
+\ms{L}^n(U_2 \setminus \cup_{i=m_1 + 1}^{m_2}B_i) \leq q\ms{L}^n(U)
+\]
+So $\ms{L}^n(U\setminus\cup_{i=1}^{m_2})\leq q^2\ms{L}^n(U)$. 
+
+\underline{$k$-th step}
+
+There are disjoint balls $B_1, B_2, \dots, B_{m_k} \subseteq U$ such that
+\[
+\ms{L}^n(U\setminus \cup_{i=1}^{m_k}) \leq q^k\ms{L}^k(U)
+\]
+So
+\[
+\ms{L}^n(U \setminus \cupi B_i) \leq \ms{L}^n(U\setminus\cup_{i=1}^{m_k}) \leq q^k\ms{L}^n(U)
+\]
+The above is true for every $k$, so it follows that $\ms{L}^n(U \setminus \cupi B_i) = 0$. $G = \{B_i\}\seq{i}$. This completes the proof in the case of $\ms{L}^n(U)<\oo$. 
+
+\subsubsection*{Case 2, $\ms{L}^n(U) = \oo$}
+
+Consider $U_m = U \cap \{x\in \R^n: m - 1 < |x| < m\}$, $m =1, 2, \dots$. We know $\ms{L}^n(\del B_r(x)) = 0$ for all $B_r(x) \subseteq \R^n$ (this will be a homework problem). 
+
+\qed
+
+``You can go look at the proof of Besicovitch in the book , but to be honest I never read that proof." - Davit
+
+
+\thm (Besicovitch's covering theorem) 
+
+There exists a number $N_n$ that depends only on the space dimension $n$, with the following property. 
+
+If $\ms{F}$ is any collection of nondegenerate closed balls in $\R^n$, with 
+\[
+\sup\{\diam(B)\mid B \in \ms{F}\}<\oo
+\]
+and $A = \{x \mid \exists B_r(x) \in \ms{F}$ (the centers of the balls). 
+
+Then there exists $N_n$ countable collections $G_1, G_2, \dots, G_{N_n}$, each of which are disjoint (as in, the balls in each collection are disjoint. This does not mean $G_i \cap G_j = \varnothing$) in $\ms{F}$ such that
+\[
+A \subseteq \cup_{i=1}^{N_n}(\cup_{B\in G_i}B)
+\]
+
+\proof
+
+In the book
+
+\qed 
+
+\thm (More on filling open sets with Balls)
+
+Let $\mu$ be a Borel measure on $\R^n$, and let $\ms{F}$ be any collection of nondegenerate closed balls. Let $A = \{x\mid \exists B_r(x) \in \ms{F}$ (again, the set of centers). 
+
+Assume $\mu(A)<\oo$ (we do not assume $A$ is $\mu$-measurable) and $\inf\{r:B_r(a) \in \ms{f}\} = 0$ for any $a \in A$. 
+
+Then for every open set $U \subseteq \R^n$, there exists a countable collection $G$ of disjoint balls in $\ms{F}$ such that
+\begin{enumerate}
+
+\item $\cup_{B\in G}B\subseteq U$ 
+
+\item $\mu(A \cap U \setminus \cup_{B\in G}B) = 0$. 
+
+\end{enumerate}
+
+\proof
+
+Consider the collection $\ms{F}_1 = \{B \mid B \in \ms{F}, B \subseteq U, \diam(B)\leq 1\}$. 
+
+$A \cap U = \{x \mid \exists B_r(x) \in \ms{F}_1\}$. 
+
+Apply the theorem to $\ms{F}_1$. Then there exist $G_1, G_2, \dots, G_{N_n}$ countable collections of disjoint balls (each) in $\ms{F}_1$ such that
+\[
+A \cap U \subseteq \cup_{i=1}^{N_n}(\cup_{B\in G_1}B)
+\]
+Then $\mu(A \cap U) \leq \sum_{i=1}^{N_n}\mu\left((A \cap U) \cap (\cup_{B\in G_i}B)\right)$. So there exists an index $k\in\{1, 2, \dots, N_n\}$ such that
+\[
+\mu\left((A \cap U) \cap (\cup_{B\in G_k}B)\right) \geq \frac{1}{N_n}\mu(A \cap U)
+\]
+
+Write $G_k = \{B_i\}\seq{i}$. Then
+\[
+\mu\left((A \cap U) \cap (\cupi B_i)\right) \geq \frac{1}{N_n}\mu(A \cap U)
+\]
+Let $q = 1 - \frac{1}{2N_n}$. 
+
+$\mu(A \cap U) \leq \sup_{i=1}^{N_n}\mu\left((A \cap U) \cap (\cup_{B\in G_iB}\right)$. 
+
+There exists an index $k \in \{1, 2, \dots, N_n\}$ such that
+\[
+\mu\left((A \cap U) \cap (\cup_{B\in G_k}G)\right) \geq \frac{1}{N_n}\mu(A \cap U)
+\]
+
+\section*{Lecture 8, 2/7/23}
+
+We continue with the proof. Some review. 
+
+$\mu$ is a Borel measure on $\R^n$. $\ms{F} = \{B\mid B \subseteq \R^n, B$-nondegenerate$\}$. $A = \{a\in\R^n\mid \exists B_r(a)\in\ms{F}\}$. Assume $\mu(A)<\oo$. Assume $\inf\{r\mid B_r(a)\in\ms{F}\} =0$ for all $a\in A$.
+
+Then for all open $U\subseteq\R^n$, there exists $G = \{B_i\}\seq{i}\subseteq\ms{F}$ collection of disjoint balls such that $\mu(A \cap U \setminus \cupi B_i) = 0$, $\cupi B_i \subseteq U$.  
+
+Let $\ms{F}_1 = \{B\in\ms{F}\mid B\subseteq U, \diam(B)\leq1\}$. 
+
+New set of centers $= A \cap U$. By Besicovitch, there exist $N_n$ collections $G_1, G_2, \dots, G_{N_N}\subseteq\ms{F}_1$ such that $A \cap U \subseteq\cupi\cup_{B\in G_i}B$. 
+
+Then $\mu(A \cap U) \leq \sum_{i=1}^{N_n}\mu(\cup_{B\in G_i}(B\cap A\cap U))$.
+
+So there exists an index $k\in\{1, 2, \dots, N_n\}$ such that
+\[
+\mu((A\cap U) \cap (\cup_{B\in G_k}B))\geq\frac{1}{N_n}\mu(A \cap U)
+\]
+Let $\nu = \mu|_A$ - Borel.
+Let $G_k = \{B_i\}\seq{i}$. Then $\mu((A \cap U) \cap (\cupi B_i)) = \nu(U \cap \cupi B_i) = \lim_{n\to\oo}\nu(U \cap \cupi[m]B_i)$. So there exists $m_1 \in \N$ such that 
+\[
+\nu(U\cap \cup_{i=1}^{m_1}B_i) = \mu((A\cap U)\cup_{i=1}^{m_1}B_i) \geq \frac{1}{2N_n}\mu(A \cap U)
+\]
+So 
+\begin{align*}
+\mu(A \cap U \setminus \cup_{i=1}^{m_i}B_i & = \mu(A \cap U) - \mu(A \cap U \cap \cup_{i=1}^{m_1}B_i) \\
+& \leq \underbrace{(1 - \frac{1}{2N_n})}_{0<q<1}\mu(A \cap U) \\
+\end{align*}
+
+Let $U_2 = U \setminus \cup_{i=1}^{m_1}B_i$, $\ms{F}_2 = \{B\in\ms{F}_1 \mid B \subseteq U_2, \diam(B)\leq1\}$. 
+
+\underline{$k$th step}
+
+We have $B_{m_{n - 1} + 1}, \dots, B_{m_k}\in\ms{F}_k$ such that
+\[
+\mu(A \cap U \setminus \cup_{i=1}^{m_k}) \leq q^k\mu(A \cup U)
+\]
+
+Let $G = \{B_i\}$. 
+
+
+
+\qed
+
+\subsection*{\underline{Differentiation of Radon Measures}}
+
+\defn
+
+Let $\mu$ and $\nu$ be Radon measures on $\R^n$. Define, for any $x \in \R^n$, 
+\underline{the upper derivative of $\mu$ with respect to $\nu$} by
+\[
+\bar{D}_{\mu}\nu(x) = \begin{cases} \limsup_{r\to0^+}\frac{\nu(B_r(x))}{\mu(B_r(x))} & \text{ if }\mu(B_r(x)) > 0, \forall r > 0 \\ +\oo & \mu(B_r(x)) = 0\text{ for some }r\\
+\end{cases}
+\]
+The \underline{lower derivative} is defined similarly:
+\[
+\underline{D}_{\mu}\nu(x) = \begin{cases} \liminf_{r\to0^+}\frac{\nu(B_r(x))}{\mu(B_r(x))} & \text{ if }\mu(B_r(x)) > 0, \forall r > 0 \\ +\oo & \mu(B_r(x)) = 0\text{ for some }r\\
+\end{cases}
+\]
+
+$\bar{D_\mu}\nu, \underline{D}_\mu\nu:\R^n\to[0,\oo]$. These are sometimes also called the \underline{upper/lower density}. 
+
+We say that \underline{$\nu$ is differentiable with respect to $\mu$ at the point $x$} if $\bar{D}_\mu\nu(x) = \underline{D}_\mu\nu(x) < \oo$
+
+This leads to several questions/goals: 
+
+\begin{enumerate}
+
+\item Study the set where $\underline{D}_\mu\nu(x) = \bar{D}_\mu\nu(x) < \oo$. Is it $\mu$-a.e.?
+
+\item Do we have $\nu(B) = \int_BD_\mu\nu(x)\,d\mu$ for Borel sets $B \subseteq\R^n$?
+
+\end{enumerate}
+
+For question 1, the answer is yes, $\mu$-almost everywhere in $\R^n$. The answer to question 2 is also yes, subject to the additional condition $\nu<<\mu$. 
+
+\lem
+
+Let $\mu$ and $\nu$ be Radon measures on $\R^n$. Let $0 < \alpha < +\oo$. 
+
+\begin{enumerate}[label=(\roman*)]
+
+\item If $A \subseteq \{x\in\R^n\mid\underline{D}_\mu\nu(x)\leq\alpha\}$, then $\nu(A)\leq\alpha\mu(A)$
+
+\item If $A \subseteq \{x\in\R^n\mid\bar{D}_\mu\nu(x)\geq\alpha\}$, then $\nu(A)\geq\alpha\mu(A)$. 
+
+\end{enumerate}
+
+\proof
+
+We can assume without loss of generality that $\mu(\R^n),\nu(\R^n)<\oo$. This is because $\nu(A \cap B_R(0)) \leq \alpha\mu(A \cap B_R(0))$, and as $R\to+\oo$, the left converges to $\nu(A)$, and the right converges to $\alpha\mu(A)$, $B_R(0) = \{|x|<R\}$. 
+
+Fix $\varepsilon>0$. 
+
+\begin{enumerate}[label=(\roman*)]
+
+\item Let $U$ be any open set such that $A \subseteq U$. Consider the collection of closed balls $\ms{F} = \{B_r(x) \subseteq U \mid x\in A,\nu(B_r(x)) \leq (\alpha + \varepsilon)\mu(B_r(x)), \diam(B)\leq1\}$
+
+For any $a \in A,$ we have $\inf\{r\mid B_r(a)\in\ms{F} \} = 0$ because $\underline{D}_\mu\nu(x)\leq\alpha$. Set of centers $=A$. 
+
+By the theorem we just proved, there exists a countable collection $G = \{B_i\}\seq{i}$ of disjoint balls in $\ms{F}$ such that
+\[
+\nu(A\cap U \setminus\cupi B_i) = 0
+\]
+So
+\[
+\nu(A)\leq\nu(\cupi B_i) + \nu(A\setminus \cupi B_i) = \nu(\cupi B_i)
+\]
+By disjointness, this is equal to 
+\begin{align*}
+\sum\seq{i}\nu(B_i) & \leq\sum\seq{i}(\alpha+\varepsilon)\mu(B_i) \\
+& = (\alpha + \varepsilon)\mu(\cupi B_i) \\
+& \leq (\alpha + \varepsilon)\mu(U) \\
+\end{align*}
+
+So $\nu(A)\leq(\alpha+\varepsilon)\mu(U)$ for all $\varepsilon > ), U \supseteq A$. 
+
+In the limit as $\varepsilon\to0^+$, we have $\nu(A)\leq]alpkha\mu(U)$ for all $U \supseteq A$. So $\nu(A) \leq \alpha\inf\{\mu(U)\mid A \subseteq U, U$-open$\} = \alpha\mu(A)$. 
+
+This completes the proof of 1. Proof of 2 is similar? 
+
+\qed
+
+\end{enumerate}
+
+\thm Let $\mu$ and $\nu$ be Radon measures on $\R^n$. Then
+
+\begin{enumerate}[label=(\roman*)]
+
+\item $\nu$ is differentiable with respect to $\mu$ almost everywhere in $\R^n$. 
+
+\item $\underline{D}_\mu\nu(x) = \bar{D}_\mu\nu(x)<\oo$ $\mu$-almost everywhere in $\R^n$. 
+
+\item $D_\mu\nu$ is $\mu$-measurable. 
+
+\end{enumerate}
+
+\proof
+
+Let $I = \{x\in\R^n \mid \bar{D}_\mu\nu(x) = \oo\}$. 
+
+With the lemma we have just proven, it is easy to see that $\mu(I) = 0$. 
+
+Assume $\mu(\R^n),\nu(\R^n) < \oo$. Fix any $\alpha>0$. Then $I = \{x\in\R^n\mid\bar{D}_\mu\nu(x)\geq\alpha\}$. So $\nu(I)\geq\alpha\mu(I)$, so
+\[
+\mu(I)\leq\frac{1}{\alpha}\nu(I)\leq\frac{\nu(\R^n)}{\alpha}
+\]
+As let let $\alpha\uparrow+\oo$, we get $\mu(I)<\oo$. 
+
+
+
+
+
+
+
+
 
 
 \end{document}
