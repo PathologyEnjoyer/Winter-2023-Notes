@@ -498,6 +498,29 @@ Questions from previous exams;
 
 		Give an example of a contractible space that does not deformation retract to a point. 
 
+\section*{Lecture 13, 2/13/23}
+
+\prop
+
+Let $h:I\to X$ be a path from $x_1$ to $x_0$. The map $\beta_h:\pi_1(X, x_1) \to \pi_1(X, x_0)$ defined by $\beta_h([f]) = [hf\bar{h}]$ is an isomorphism. 
+
+\proof
+
+\qed
+
+\rem As long as $X$ is path-connected, $\pi_1(X, x_0)$ is well-defined, up to isomorphism, independent of $x_0$, but this isomorhpism is not canonical. 
+
+If $x_1 = x_0$, then $h$ is a loop, and $[h]\in\pi_1(X, x_0)$. 
+
+So $[f]\mapsto[hf\bar{h}] = [h][f][h]^{-1}$. So $\beta_h$ is an inner automorphism of $G = \pi_1(X, x_0)$. 
+
+\defn
+
+A map $p:\hat{X}\to X$ is called a \underline{covering map} if there exists an open cover $\{U_\alpha\}$ of $X$ such that for all $\alpha$, $p^{-1}(U_\alpha)$ can be decomposed into a disjoint union of subsets which are each homeomorphic to $U_\alpha$ and sent homeomorphically to $U_\alpha$ by $p$. 
+
+Fact: If $p:\hat{X}\to X$ is a covering map and $p(\hat{x_0}) = x_0$, then the induced map $p_\star:\pi_1(\hat{X},\hat{x_0}) \to \pi_1(X, x_0)$ is injective. 
+
+
 
 
 
