@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=latex 2020.4.29)  13 FEB 2023 14:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=latex 2020.4.29)  23 FEB 2023 18:48
 entering extended mode
 **"220B notes.tex"
 (220B notes.tex
@@ -1655,25 +1655,15 @@ Make it at least 17.0pt.
 We now make it that large for the rest of the document.
 This may cause the page layout to be inconsistent, however.
 
-
-LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 83.
-
 [1{/private/var/containers/Bundle/Application/5F5005C8-E695-448A-B8AF-603770697
 4F2/TeX Writer.app/texmf-base/./fonts/map/pdftex/updmap/pdftex.map}
 
-]
-
-LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 134.
-
-[2]
+] [2]
 Overfull \hbox (0.19586pt too wide) in paragraph at lines 150--151
 \OT1/cmr/m/n/14.4 (+19) there is a bijective orderpreserving correspondence bet
 ween $\OMS/cmsy/m/n/14.4 f\OML/cmm/m/it/14.4 J \OMS/cmsy/m/n/14.4 ^^Z \OML/cmm/
 m/it/14.4 R; J$ \OT1/cmr/m/n/14.4 (+19) is an ideal, 
  []
-
-
-LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 184.
 
 [3]
 Overfull \hbox (37.15788pt too wide) in paragraph at lines 184--185
@@ -1681,31 +1671,18 @@ Overfull \hbox (37.15788pt too wide) in paragraph at lines 184--185
 \OT1/cmr/m/n/14.4 (-20) with-out nonzero zero di-vi-sors is called an $[]$.  
  []
 
-
-LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 231.
-
-[4]
-
-LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 261.
-
-[5]
+[4] [5]
 Overfull \hbox (0.10883pt too wide) in paragraph at lines 282--283
 [] \OMS/cmsy/m/n/14.4 7! \OML/cmm/m/it/14.4 f\OT1/cmr/m/n/14.4 (+12) (0)$ is an
  in-te-gral do-main. But this ideal is not max-i-mal, be-cause $\U/msb/m/n/14.4
  Z$ \OT1/cmr/m/n/14.4 (+12) is not a 
  []
 
-
-LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 309.
-
 [6]
 Overfull \hbox (0.20032pt too wide) in paragraph at lines 330--331
 []\OT1/cmr/m/n/14.4 (+2) Note: In gen-eral, the union of ide-als is $[]$ an ide
 al. How-ever, this is an in-creas- 
  []
-
-
-LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 366.
 
 [7]
 LaTeX Font Info:    Trying to load font information for U+euf on input line 381
@@ -1719,90 +1696,25 @@ File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 ibrary/Caches/texmf-dist/./tex/latex/microtype/mt-euf.cfg
 File: mt-euf.cfg 2006/07/03 v1.1 microtype config. file: AMS Euler Fraktur (RS)
 
-)
-
-LaTeX Warning: Reference `LastPage' on page 8 undefined on input line 414.
-
-[8]
+) [8]
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
 (amsmath)                 on input line 440.
 
-
-LaTeX Warning: Reference `LastPage' on page 9 undefined on input line 465.
-
-[9]
-
-LaTeX Warning: Reference `LastPage' on page 10 undefined on input line 521.
-
-[10]
-
-LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 555.
-
-[11]
-
-LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 612.
-
-[12]
-
-LaTeX Warning: Reference `LastPage' on page 13 undefined on input line 667.
-
-[13]
-
-LaTeX Warning: Reference `LastPage' on page 14 undefined on input line 719.
-
-[14]
-
-LaTeX Warning: Reference `LastPage' on page 15 undefined on input line 765.
-
-[15]
+[9] [10] [11] [12] [13] [14] [15]
 Overfull \hbox (0.11237pt too wide) in paragraph at lines 798--799
 []\OT1/cmr/m/n/14.4 (+12) Let $\OML/cmm/m/it/14.4 J \OMS/cmsy/m/n/14.4 ^^Z \OML
 /cmm/m/it/14.4 S[]R$ \OT1/cmr/m/n/14.4 (+12) be an ideal. We want to show that 
 $\OML/cmm/m/it/14.4 J$ \OT1/cmr/m/n/14.4 (+12) is extended, so it is 
  []
 
-
-LaTeX Warning: Reference `LastPage' on page 16 undefined on input line 811.
-
-[16]
-
-LaTeX Warning: Reference `LastPage' on page 17 undefined on input line 849.
-
-[17]
-
-LaTeX Warning: Reference `LastPage' on page 18 undefined on input line 914.
-
-[18]
-
-LaTeX Warning: Reference `LastPage' on page 19 undefined on input line 977.
-
-[19]
-
-LaTeX Warning: Reference `LastPage' on page 20 undefined on input line 1034.
-
-[20]
-
-LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 1085.
-
-[21]
-
-LaTeX Warning: Reference `LastPage' on page 22 undefined on input line 1119.
-
-[22]
+[16] [17] [18] [19] [20] [21] [22]
 Overfull \hbox (19.7989pt too wide) detected at line 1174
 []
  []
 
-
-LaTeX Warning: Reference `LastPage' on page 23 undefined on input line 1174.
-
-[23]
-
-LaTeX Warning: Reference `LastPage' on page 24 undefined on input line 1221.
-
-[24]
+[23] [24]
 Overfull \hbox (100.124pt too wide) in paragraph at lines 1228--1229
 []\OT1/cmr/m/it/14.4 (-20) Remark. []\OT1/cmr/m/n/14.4 (-20) In the con-text of
  part 1 of the propo-si-tion, sup-pose $[]$ 
@@ -1813,34 +1725,7 @@ Package amsmath Warning: Foreign command \atop;
 (amsmath)                \frac or \genfrac should be used instead
 (amsmath)                 on input line 1238.
 
-
-LaTeX Warning: Reference `LastPage' on page 25 undefined on input line 1266.
-
-[25]
-
-LaTeX Warning: Reference `LastPage' on page 26 undefined on input line 1327.
-
-[26]
-
-LaTeX Warning: Reference `LastPage' on page 27 undefined on input line 1366.
-
-[27]
-
-LaTeX Warning: Reference `LastPage' on page 28 undefined on input line 1408.
-
-[28]
-
-LaTeX Warning: Reference `LastPage' on page 29 undefined on input line 1452.
-
-[29]
-
-LaTeX Warning: Reference `LastPage' on page 30 undefined on input line 1520.
-
-[30]
-
-LaTeX Warning: Reference `LastPage' on page 31 undefined on input line 1572.
-
-[31]
+[25] [26] [27] [28] [29] [30] [31]
 Overfull \hbox (31.77332pt too wide) in paragraph at lines 1605--1606
 [][]\OT1/cmr/m/it/14.4 (-20) Definition \OT1/cmr/m/n/14.4 (-20) 0.28\OT1/cmr/m/
 it/14.4 (-20) . []\OT1/cmr/m/n/14.4 (-20) We say that an $\OML/cmm/m/it/14.4 R$
@@ -1855,9 +1740,6 @@ Overfull \hbox (52.94586pt too wide) in paragraph at lines 1627--1628
 (\OML/cmm/m/it/14.4 a[]; [] ; a[]; a[]; a[]\OT1/cmr/m/n/14.4 (-20) ) = 
  []
 
-
-LaTeX Warning: Reference `LastPage' on page 32 undefined on input line 1634.
-
 [32]
 Overfull \hbox (5.24004pt too wide) in paragraph at lines 1679--1680
 []\OT1/cmr/m/n/14.4 (-20) Then $\OML/cmm/m/it/14.4 ^^^ \OT1/cmr/m/n/14.4 (-20) 
@@ -1869,83 +1751,73 @@ sm in-duc-ing $\OML/cmm/m/it/14.4 R[]= []\OT1/cmr/m/n/14.4 (-20) (\OML/cmm/m/it
 /14.4 ^^^\OT1/cmr/m/n/14.4 (-20) ) [] 
  []
 
-
-Package lastpage Warning: Rerun to get the references right on input line 1710.
-
+[33] [34]
+Overfull \hbox (0.27295pt too wide) in paragraph at lines 1767--1768
+[]\OT1/cmr/m/n/14.4 (+14) All these are shown using the universal property. We 
+will prove $(\OML/cmm/m/it/14.4 a\OT1/cmr/m/n/14.4 (+14) )$. We want 
+ []
 
 
 AED: lastpage setting LastPage
-
-LaTeX Warning: Reference `LastPage' on page 33 undefined on input line 1710.
-
-[33]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1710.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1710.
+[35]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1801.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1801.
  (220B notes.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1710.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1710.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1801.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1801.
 
 Package rerunfilecheck Info: File `"220B notes".out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1710.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1801.
  ) 
 Here is how much of TeX's memory you used:
- 35437 strings out of 480618
- 776600 string characters out of 5894377
- 1058193 words of memory out of 5000000
- 50331 multiletter control sequences out of 15000+600000
- 555078 words of font info for 160 fonts, out of 8000000 for 9000
+ 35555 strings out of 480618
+ 779349 string characters out of 5894377
+ 1059791 words of memory out of 5000000
+ 50437 multiletter control sequences out of 15000+600000
+ 555127 words of font info for 161 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  63i,20n,109p,969b,1126s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/var/mobile/Containers/Data/Application/6C9FEFAA-4487-4660-BEE0-1B033EB4CD44
 /Library/Caches/texmf-dist/./fonts/enc/dvips/cm-super/cm-super-ts1.enc}</privat
 e/var/containers/Bundle/Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Wr
-iter.app/texmf-base/./fonts/type1/public/amsfonts/cm/cmbx10.pfb></private/var/c
+iter.app/texmf-base/./fonts/type1/public/amsfonts/cm/cmbx12.pfb></private/var/c
 ontainers/Bundle/Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.ap
-p/texmf-base/./fonts/type1/public/amsfonts/cm/cmbx12.pfb></private/var/containe
+p/texmf-base/./fonts/type1/public/amsfonts/cm/cmex10.pfb></private/var/containe
 rs/Bundle/Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf
--base/./fonts/type1/public/amsfonts/cm/cmex10.pfb></private/var/containers/Bund
+-base/./fonts/type1/public/amsfonts/cm/cmmi10.pfb></private/var/containers/Bund
 le/Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-base/.
-/fonts/type1/public/amsfonts/cm/cmmi10.pfb></private/var/containers/Bundle/Appl
+/fonts/type1/public/amsfonts/cm/cmmi12.pfb></private/var/containers/Bundle/Appl
 ication/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-base/./fonts/
-type1/public/amsfonts/cm/cmmi12.pfb></private/var/containers/Bundle/Application
-/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-base/./fonts/type1/p
-ublic/amsfonts/cm/cmmi7.pfb></private/var/containers/Bundle/Application/5F5005C
-8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-base/./fonts/type1/public/am
-sfonts/cm/cmr10.pfb></private/var/containers/Bundle/Application/5F5005C8-E695-4
-48A-B8AF-6037706974F2/TeX Writer.app/texmf-base/./fonts/type1/public/amsfonts/c
-m/cmr12.pfb></private/var/containers/Bundle/Application/5F5005C8-E695-448A-B8AF
--6037706974F2/TeX Writer.app/texmf-base/./fonts/type1/public/amsfonts/cm/cmr17.
-pfb></private/var/containers/Bundle/Application/5F5005C8-E695-448A-B8AF-6037706
-974F2/TeX Writer.app/texmf-base/./fonts/type1/public/amsfonts/cm/cmr7.pfb></pri
+type1/public/amsfonts/cm/cmmi7.pfb></private/var/containers/Bundle/Application/
+5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-base/./fonts/type1/pu
+blic/amsfonts/cm/cmr10.pfb></private/var/containers/Bundle/Application/5F5005C8
+-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-base/./fonts/type1/public/ams
+fonts/cm/cmr12.pfb></private/var/containers/Bundle/Application/5F5005C8-E695-44
+8A-B8AF-6037706974F2/TeX Writer.app/texmf-base/./fonts/type1/public/amsfonts/cm
+/cmr17.pfb></private/var/containers/Bundle/Application/5F5005C8-E695-448A-B8AF-
+6037706974F2/TeX Writer.app/texmf-base/./fonts/type1/public/amsfonts/cm/cmr7.pf
+b></private/var/containers/Bundle/Application/5F5005C8-E695-448A-B8AF-603770697
+4F2/TeX Writer.app/texmf-base/./fonts/type1/public/amsfonts/cm/cmsy10.pfb></pri
 vate/var/containers/Bundle/Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX
- Writer.app/texmf-base/./fonts/type1/public/amsfonts/cm/cmsy10.pfb></private/va
-r/containers/Bundle/Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer
-.app/texmf-base/./fonts/type1/public/amsfonts/cm/cmsy7.pfb></private/var/contai
+ Writer.app/texmf-base/./fonts/type1/public/amsfonts/cm/cmsy7.pfb></private/var
+/containers/Bundle/Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.
+app/texmf-base/./fonts/type1/public/amsfonts/cm/cmti12.pfb></private/var/contai
 ners/Bundle/Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/tex
-mf-base/./fonts/type1/public/amsfonts/cm/cmti12.pfb></private/var/containers/Bu
-ndle/Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-base
-/./fonts/type1/public/amsfonts/euler/eufm10.pfb></private/var/containers/Bundle
+mf-base/./fonts/type1/public/amsfonts/euler/eufm10.pfb></private/var/containers
+/Bundle/Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-b
+ase/./fonts/type1/public/amsfonts/euler/eufm7.pfb></private/var/containers/Bund
+le/Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-base/.
+/fonts/type1/public/amsfonts/symbols/msam10.pfb></private/var/containers/Bundle
 /Application/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-base/./f
-onts/type1/public/amsfonts/euler/eufm7.pfb></private/var/containers/Bundle/Appl
-ication/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-base/./fonts/
-type1/public/amsfonts/symbols/msam10.pfb></private/var/containers/Bundle/Applic
-ation/5F5005C8-E695-448A-B8AF-6037706974F2/TeX Writer.app/texmf-base/./fonts/ty
-pe1/public/amsfonts/symbols/msbm10.pfb></var/mobile/Containers/Data/Application
-/6C9FEFAA-4487-4660-BEE0-1B033EB4CD44/Library/Caches/texmf-dist/./fonts/type1/p
-ublic/rsfs/rsfs10.pfb></var/mobile/Containers/Data/Application/6C9FEFAA-4487-46
-60-BEE0-1B033EB4CD44/Library/Caches/texmf-dist/./fonts/type1/public/cm-super/sf
-rm1440.pfb>
-Output written on "220B notes.pdf" (33 pages, 365551 bytes).
+onts/type1/public/amsfonts/symbols/msbm10.pfb></var/mobile/Containers/Data/Appl
+ication/6C9FEFAA-4487-4660-BEE0-1B033EB4CD44/Library/Caches/texmf-dist/./fonts/
+type1/public/rsfs/rsfs10.pfb></var/mobile/Containers/Data/Application/6C9FEFAA-
+4487-4660-BEE0-1B033EB4CD44/Library/Caches/texmf-dist/./fonts/type1/public/cm-s
+uper/sfrm1440.pfb>
+Output written on "220B notes.pdf" (35 pages, 373105 bytes).
 PDF statistics:
- 444 PDF objects out of 1000 (max. 8388607)
- 211 named destinations out of 1000 (max. 500000)
+ 495 PDF objects out of 1000 (max. 8388607)
+ 221 named destinations out of 1000 (max. 500000)
  28173 words of extra memory for PDF output out of 29859 (max. 10000000)
 
