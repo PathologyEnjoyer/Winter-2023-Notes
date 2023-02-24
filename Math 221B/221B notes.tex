@@ -520,13 +520,254 @@ A map $p:\hat{X}\to X$ is called a \underline{covering map} if there exists an o
 
 Fact: If $p:\hat{X}\to X$ is a covering map and $p(\hat{x_0}) = x_0$, then the induced map $p_\star:\pi_1(\hat{X},\hat{x_0}) \to \pi_1(X, x_0)$ is injective. 
 
+\section*{Lecture 14, 2/15/23}
+
+\defn
+
+If $X$ is a path connected space, then $X$ is said to be \underline{simply connected} if $\pi_1(X, x_0) = 0$. 
+
+\prop
+
+$X$ is simply connected if and only if the homotopy class of a loop is determined entirely by its endpoints. 
+
+That is, if $\gamma, \sigma:[0,1]\to X$ are paths, and $\gamma(0) = \sigma(0), \gamma(1) = \sigma(1)$, then $\gamma \simeq \sigma$. 
+
+\proof
+
+\qed
+
+Let $f, g$ be paths as in the statement of the problem, and let $h:[0,1]\to X$ be a path with $h(0) = f(1) = g(1), h(1) = f(0) = g(0)$. Because $\pi_1(X, x_0)$ is trivial, we know that $f\star h$ is contractible relative to $x_0$. The same is true of $h \star g$. So 
+\begin{align*}
+[f] & = [f\star e]\\
+	 & = [f\star(h\star g)] \\
+	 & = [(f \star h) \star g]\\
+    & = [g] \\
+\end{align*}
+
+\qed
+
+\defn
+
+Given $p:Y\to X$ and $f:Z\to X$, a map $\tilde{f}:Z\to Y$ such that $p\circ\tilde{f} = f$, then $\tilde{f}$ is called a \underline{lift of $f$}.
+
+\[
+\begin{tikzcd}
+Z\ar[dr, "f"]\ar[d, dotted, "\tilde{f}"'] & \\
+Y \ar[r, "p"] & X \\
+\end{tikzcd}
+\]
 
 
+\thm
+
+Let $\Phi:\Z\to\pi_1(S^1, (1, 0))$ be given by $n\mapsto[\omega_n]$, where $\omega_n:I\to \mbb{S}^1$ is defined by $s\mapsto(\cos(2\pi ns), \sin(2\pi n s))$ (this is the path which wraps around $n$ times) is an isomorphism. 
+
+\proof
+
+One can think of the projection map $\rho:\R\to\mbb{S}^1$ given by $\rho(s) = e^{2\pi i s}$ as a projection from a ``spiral" above the circle. So we have a map 
+\[
+\begin{tikzcd}
+\{0\} \ar[r]\ar[d] & \R \ar[d, "\rho"] \\
+\,[0, 1]\ar[r, "f"]\ar[ur, dotted, "\exists! \tilde{f}"] & \mbb{S}^1 \\
+\end{tikzcd}
+\]
+
+We need two facts: 
+
+\begin{enumerate}[label=(\alph*)]
+
+\item For all $f:I\to\mbb{S}^1$ starting at $x_0 \in \mbb{S}^1$, and for each choice of $\tilde{x_0} \in p^{-1}(x_0)$, there exists a unique path $\tilde{f}:I\to\R$ starting at $\tilde{x_0}$ which lifts $f$. 
+
+\item For all $\underbrace{f_t:I\to\mbb{S}^1}_{F:I\times I\to\mbb{S}^1}$ starting at $x_0 \in \mbb{S}^1$, and for each choice of $\tilde{x_0} \in p^{-1}(x_0)$, there exists a unique lifted homotopy of paths $\tilde{f_t}:I\to \R$ which is a lift of $f_t$. 
+
+\item For every $F:Y\times I\to \mbb{S}^1$ and every $\tilde{F}|_{Y\times\{0\}}:Y\times\{0\}\to\R$ which lifts $F|_{Y\times\{0\}}:Y\times\{0\}\to\mbb{S}^1$, there exists a unique $\tilde{F}:Y\times I\to\R$ lifting $F$. 
+
+\[
+\begin{tikzcd}
+Y\times\{0\}\ar[d, hook]\ar[r, "\tilde{F}|_{Y\times\{0\}}"] & \R \ar[d, "p"] \\
+Y\times I \ar[ur, dotted, "\exists!\tilde{F}"]\ar[r, "F"'] & \mbb{S}^1 \\
+\end{tikzcd}
+\]
+\end{enumerate}
+
+The first guarantees surjectivity of $\Phi;$ the second injectivity. 
+
+Indeed, let $[f]$ be a homotopy class of maps based at $x_0$. Then, once we choose an element of $p^{-1}(x_0)$, this will lift to a path $[\tilde{f}]$ in $\R$ which is homotopic to one of the $\omega_n$'s. The second will then allow us to use that homotopy to extend to a homotopy between $f$ and $p(\omega_n)$.
+
+Note: There exists a lift of $\omega_n$ starting at $(1, 0, 0)$ in the spiral, $\tilde{\omega_n}:I\to\R\subseteq\R^3, s\mapsto (\cos(2\pi n s), \sin(2\pi n s), ns)$. 
+
+We will prove (c), which will prove the first two. 
+
+There exists an open cover $\{U_\alpha\}$ of $\mbb{S}^1$ such that for all $\alpha, p^{-1}(U_\alpha) = \coprod_{\beta}\tilde{U}_\alpha^{(\beta)}$ where for each $\tilde{U}_\alpha^{(\beta)}$, 
+\[
+p|_{\tilde{U}_\alpha^{(\beta)}}: \tilde{U}_\alpha^{(\beta)} \to U_\alpha
+\]
+is a homeomorphism. 
+
+\rem
+
+This means that 
+\[
+(p|_{\tilde{U}_\alpha^{(\beta)}})^{-1}:U_\alpha\to\tilde{U}_\alpha^{(\beta)}
+\]
+exists and is continuous. 
+
+From here we argue by compactness. 
+
+\qed
+
+\section*{Lecture 15, 2/17/23}
+
+We know that $\pi_1$ is functor from the category of based topological spaces to the category of groups. This tells us that if $A \hookrightarrow X$ is a homotopy equivalence, i.e. if $X$ deformation retracts to $A$, with retraction $r$, then because $\iota\circ r = \Id_A$, we get that $\iota_*$ must be injective. 
+
+So if $A \subseteq X$ admits a retraction, then $\pi_1(A, x_0) \subseteq \pi_1(X, x_0)$
+
+\cor
+
+If $X$ deformation retracts to $A$, then $\begin{tikzcd} \pi_1(A, a) \ar[r, "\iota_*"] & \pi_1(X, a)\end{tikzcd}$ is not just injective but is an isomorphism. 
+
+\proof 
+
+It is easy to see that any element of $\pi_1(X, a)$ homotopes to an element of $\pi_1(A, a)$. $\iota_*$ then clearly inverts this, so we have an isomorphism. 
+
+\qed
+
+We only know two facts:
+
+\begin{enumerate}
+
+\item $\pi_1(\mbb{S}^1) \cong \Z$ 
+
+\item $\pi_1(\text{a single point}) = 0$
+
+\end{enumerate}
+
+Just this fact tells us that there isn't a retraction from the disk to its boundary, because then $\Z$ would inject into the trivial group, which is clearly not the case. 
+
+This machinery finally will give us ways to prove negative statements - statements to the effect of ``there is no continuous $f:X\to Y$ with such and such property".
 
 
+\thm (Fundamental theorem of algebra)
+
+Let $p(z) = z^n + z_1z^{n - 1} + \cdots + a_n$, $p:\C\to \C$ has a root. 
+
+\proof
+
+Suppose $p$ has no roots. Fix a positive real $r$. Then define the map $\mbb{S}^1\to\mbb{S}^1$ by sending $s \in [0, 1]$ to $p(re^{2\pi i s})/p(r)$. This starts and ends at $1 \in \C$. We know this is not zero, so we can divide by the length to get 
+\[
+f_r(s) = \frac{p(re^{2\pi i s})/p(r)}{\norm{p(re^{2\pi i s})/p(r)}}
+\]
+As an element of $\pi_1(\mbb{S}^1, 1) \cong \Z$, if $r$ is small enough, then $[f_r(s)] = 0$. But if $r$ is large enough, then $[f_r(s)]= [z^n]$. This is because we can consider $p(z) = z^n + b(a_1z^{n - 1} + \cdots + a_n)$ and letting $b\to 0$. For this to work $r$ must be large enough.
+
+But $F:[0,1]\times\mbb{S}^1\to\mbb{S}^1$ given by $F(r, s) = f_r(s)$ is a homotopy between $0$ and $[z^n]$, which is impossible. 
+
+Thus $p$ must have a root. 
+
+The punchline is essentially that as the radius grows large, it must run into a root eventually, or this bad behavior will happen.
+
+\qed
+
+\thm (Brouwer Fixed Point)
+
+If $f:D^2\to D^2$ is continuous, then there exists $x \in D^2$ such that $f(x) = x$. 
+
+\proof
+
+Suppose this was not the case. Let $f$ be such that for all $x, f(x)\neq x$. Define the function $g:D^2\to\mbb{S}^1$ by letting $g(x)$ be the point on $\mbb{S}^1$ where the line going from $f(x)$ to $x$ intersects it. This is continuous and well-defined. This is also a retraction $r:D^2\to\mbb{S}^1$, which is impossible by previous discussion. 
+
+\qed
+
+\thm (Borsuk-Ulam)
+
+For every function $f:\mbb{S}^2\to\R^2$, there is some $x \in \mbb{S}^2$ such that $f(x) = f(-x)$. In other words, if we flatten a sphere, there are a pair of antipodal points which get sent to the same point. 
+
+\proof
+
+Suppose that this is not the case. Let $f$ be a function $\mbb{S}^2\to\R^2$ such that $f(x)\neq f(-x)$ for all $x$. Define $g:\mbb{S}^2\to\mbb{S}^1$ by 
+\[
+x\mapsto \frac{f(x) - f(-x)}{|f(x) - f(-x)|}
+\]
+Note $g(-x) = -g(x)$. Consider the function $h:s\mapsto(\cos(2\pi s), \sin(2\pi s), 0)$, which is an equatorial loop around $\mbb{S}^2$, based at $(1, 0, 0)$. Then $gh:I\to S^1$ is a loop based at $(1, 0)$, and $h(s) = - h(s + \frac{1}{2})$. 
+
+We now lift to the spiral $S$:
+
+\[
+\begin{tikzcd}
+& S \ar[d]\\
+I\ar[ur, "\tilde{h}"] \ar[r, "h"] & \mbb{S}^1\\
+\end{tikzcd}
+\]
+We see that $\tilde{h}(s), \tilde{h}(s + \frac{1}{2})$ must differ by a half integer, i.e. $\tilde{h}(s) = \tilde{h}(s + \frac{1}{2}) + \frac{q}{2}$ with $q$ an odd integer (this can be seen by drawing the spiral and looking at lifts of antipodal points). 
+
+So $\tilde{h}(1) = \tilde{h}(\frac{1}{2}) + \frac{q}{2}$. Because the integers are discrete, $q$ can't change as $s$ varies. Further, $\tilde{h}(0) = \tilde{h}(\frac{1}{2}) + \frac{q}{2}$, so $\tilde{h}(0) = \tilde{h}\frac{1}{2}) + \frac{q}{2} = \tilde{h}(1) + q$. So $[h] = -q$ is odd. So $[h]$ is not zero, so is a loop which is not contractible. 
+
+Hitting everything with $\pi_1$, get a map from $\pi_1(I)$ to $\pi_1(\mbb{S}^1)$ which has image consisting of at least two points. But this is impossible, as $\pi_1(I) = 0$. So we have a contradiction, so we have finished the proof. 
+
+\qed
+
+\prop
+
+For all $n \geq 2$, $\pi_1(\mbb{S}^n) = 0$. 
+
+\proof
+
+Let $\gamma:I\to\mbb{S}^2$ be a loop. If this loop misses one point, then taking away that point, then this is a loop in $\R^2$, which is contractible, so the loop is contractible. 
+ 
+What if $\gamma$ is very poorly behaved? Well, then there is an open set whose preimage is a union of open intervals in $I$. Then some stuff happens idk. 
+
+\qed
+
+\thm (Invariance of domain)
+
+$\R^2 \not\cong \R^m$ for $m > 2$. 
+
+\proof
+
+I missed it :(
+
+\qed
+
+\section*{Lecture 16, 2/22/23}
+
+\defn
+
+Let $G_1, G_2, H$ be groups. Consider maps $f_i:G_i\to H$. We want a group $G_1\star G_2$ such that there is a unique $f$ making the following diagram commute:
+\[
+\begin{tikzcd}
+& G_1\star G_2\ar[d, dotted, "\exists!f"] & \\
+G_1\ar[ur, "\iota_1"] \ar[r] & H & \ar[l] G_2\ar[ul, "\iota_2"'] \\
+\end{tikzcd}
+\]
+Indeed, this is the coproduct in $\Grp$, and is the \underline{free product of the groups $G_1$ and $G_2$}. This can be given explicitly by using group presentations of $G_1, G_2$. If $G_1, G_2$ have presentations $G_i \cong \langle K_i \mid R_i \rangle$, where $K_i$ is the set of generators and $R_i$ the relations, then $G_1\star G_2$ has presentation $\langle K_1 \coprod K_2 \mid R_1 \coprod R_2 \rangle$.
+
+\subsection*{\underline{At long last, SVK}}
+
+What is $\pi_1(\mbb{S}^1\vee\mbb{S}^1)$? That is, what is the fundamental group of the figure 8? 
+
+Last time, we showed that if $r$ is a retraction, then $\iota_*$ is injective and $r_*$ is surjective. So, because there is a retraction from $\mbb{S}^1\vee\mbb{S}^1$ to $\mbb{S}^1$, we know $\pi_1(\mbb{S}^1) ]\cong \Z$ injects into $\pi_1(\mbb{S}^1\vee\mbb{S}^1)$ somehow. 
+
+Further, we get two different ways for $\Z$ to embed into it, because there are two different copies of $\mbb{S}^1$ to retract onto.
+
+We're trying to make covering spaces of the figure 8. We eventually came to the Cayley graph for $\mbb{F}_2$. Because this is a tree, it has trivial fundamental group, so homotopy classes are determined by endpoints, and this clearly gives $\mbb{F}_2$.
+
+$\mbb{F}_2$, the free group generated by $a$ and $b$, is $\pi_1(\mbb{S}^1\vee\mbb{S}^1)$. So $\pi_1(\mbb{S}^1\vee\mbb{S}^1)\cong\Z\star\Z$. Be careful: earlier we used $\star$ to refer to the join, which this is not.
+
+\defn
+
+A covering space $\begin{tikzcd} Y \ar[d, "p"] \\ X \end{tikzcd}$ such that $Y$ is simply connected is called the \underline{universal cover of $X$}. 
 
 
+\thm 
 
+If $\{(X_\alpha, x_\alpha)\}$ are ``nice," then 
+\[
+\pi_1(\bigvee_\alpha X_\alpha) = \star_\alpha\pi_1(X_\alpha)
+\]
+where again, $\star$ means free product. 
+
+\proof
+
+This is a direct corollary of Van Kampen's theorem. 
 
 
 
