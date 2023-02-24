@@ -22,8 +22,14 @@
 \newcommand{\A}{\mathbb{A}}
 \newcommand{\fin}{``\in"}
 \DeclareMathOperator{\Perm}{Perm}
+\DeclareMathOperator{\pdim}{pdim}
+\DeclareMathOperator{\gldim}{gldim}
+\DeclareMathOperator{\lgldim}{lgldim}
+\DeclareMathOperator{\rgldim}{rgldim}
+\DeclareMathOperator{\idim}{idim}
 \newcommand{\Rmod}{R-\text{mod}}
 \newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\barf}{\bar{f}}
 
 \newcommand{\exactlon}[5]{
 		\begin{tikzcd}
@@ -1212,22 +1218,349 @@ Equivalently, if $R$ is semi-simple when viewed as a right module over itself, $
 
 \end{enumerate}
 
+\section*{Lecture 13, 2/10/23}
+
+\prop (Baer) $\Z^\N$ is not free. 
+
+\proof (not by Baer) 
+
+Assume $\Z^\N$ is free, i.e. there exists an isomorphism $\Z^\N\cong\Z^{(I)}$ for some $I$. Then $|I|>\aleph_0$. Pick a countable subset $I'\subset I$ such that $f(\Z^{(\N)}) \subseteq \Z^{(I')}$ and consider the map $\bar{f}$ induced by $f$, 
+\[
+\bar{f}:\Z^\N/\Z^{(\N)} \to \Z^{(I)}/\Z^{(I')}\cong\Z^{(I\setminus I')}
+\]
+\[
+x + \Z^{(\N)} \mapsto f(x) + \Z^{(I')}
+\]
+In particular, $\Z^{(I\setminus I')}$ is nonzero and free, because $I$ is uncountable and $I'$ is countable. 
+
+Now, if $F$ is a free abelian group, $F$ contains no nonzero elements which are divisible by $3^n$ for all $n\in\N$. 
+
+Let $S = \{(z_n)_{n\in\N}\in\Z^\N \mid 3^n \mid z_n\text{ for }n\in\N\}$. Note $S$ is uncountable. 
+
+Since $\Z^{(I')}$ is countable, there exists $s\in S$ with $f(s) \in \Z^{(I')}$ and thus $f(s) + \Z^{(I')}\neq0$ in $\Z^{(I\setminus I')}$.
+
+Hence $\barf(s + \Z^{(\N)}) \neq 0\in\underbrace{\Z^{(I\setminus I')}}_{\text{free}}$.
+
+Thus $\Z^{(I\setminus I')}$ contains nonzero elements divisible by $3^n$ for all $n$, a contradiction. 
+
+Recall that projective means isomorphic to a summand of a free module $R^{(I)}$ for some $I$. 
+
+\dbend\dbend\dbend
 
 
+In general, projectives in $R$-Mod are \underline{not} direct sums of finitely generated modules. 
+
+\thm (Kaplensky)
+
+Let $P\fin R$-Mod be projective. Then $P$ is the sum of countably generated modules. 
+
+\proof
+
+Not enough time. 
+
+\qed
+
+\cor
+
+If $R$ is local, then all projective $R$-modules are free.
+
+\proof
+
+\qed
+
+\subsection*{\underline{Section 3:Projective resolutions and projective dimension}}
+
+\underline{Idea:} 
+
+Let $M\fin R$-mod. Approximate $f_0:P_0\twoheadrightarrow M\to 0$
+
+\underline{Error:} $\ker(f_0)$. Next approximate $f_1:P_1\to\ker(f_0)\to0$, with $P_1$ projective. This results in a sequence
+
+\[
+\begin{tikzcd}
+\cdots\ar[r]&P_2\ar[dr, twoheadrightarrow] \ar[rr, "f_2"]&&P_1\ar[rr, "f_1"] \ar[dr, twoheadrightarrow]&&P_0\ar[r, twoheadrightarrow, "f_0"]&M\ar[r]&0 \\ &
+&\ker(f_1)\ar[ur]& &\ker(f_0)\ar[ur]& &\\
+\end{tikzcd}
+\]
+
+\defn
+
+Let $M\fin R$-Mod. A \underline{projective resolution of $M$} is an exact sequence
+\[
+\begin{tikzcd}
+\cdots\ar[r]&P_2\ar[r, "f_2"]&P_1\ar[r, "f_1"]&P_0\ar[r, "f_0"]&M\ar[r]&0 \\
+\end{tikzcd}
+\]
+where all $P_i$ are exact. 
+
+Call such a projective resolution \underline{finite of length $n$} if $P_n\neq0$, but $P_m =0$ for $m > n$. 
+
+\defn 
+
+We define the \underline{projective dimension} of a module $M$ as follows. If there is no finite projective resolution, then it is $\oo$. Otherwise it is the smallest $n$ suuch there exists a projective resolution of length $n$. By convention, the projective dimension of the zero module is $-\oo$. 
+
+We denote this by $\pdim M$. 
+
+The \underline{(left) global dimension} of a ring $R$ is the defined as $\gldim R = \sup\{\pdim M \mid M\fin R-Mod\}$. There is also of course the right global dimension, where instead we consider $Mod-R$. 
+
+\exm\,
+
+\begin{itemize}
+
+\item $\gldim\Z = 1$.
+
+\item $\lgldim R = 0$ if and only if $R$ is semisimple, which happens if and only if $\rgldim R = 0$. 
+
+\item 
+\[
+\begin{pmatrix}
+K&\cdots&K \\
+\vdots & \vdots \\
+0 & \cdots & K \\
+\end{pmatrix}  \not\supseteq \begin{pmatrix} 0 & K & \cdots K \\ 
+\vdots & \ddots & \ddots & \vdots \\
+0 & \cdots & \cdots & 0 \\
+\end{pmatrix}
+\]
+not semisimple, so $\lgldim R \geq 1$. In fact, $=$ holds (argument later). 
+
+\item This is Hilbert's Syzygy theorem. It says that if $K$ is a field, then 
+\[
+\gldim K[x_1, \dots, x_n] = n
+\]
+ 
+
+\item $R = \Z/p^n\Z$, $p$ prime, $n\geq2$. 
+\[
+\begin{tikzcd}
+\Z/p^n\Z\ar[rr]\ar[dr]&& \underbrace{\Z/p^n\Z}_{P_0=_RR}\ar[r, twoheadrightarrow, "f_0"]&\underbrace{\Z/p^{n - 1}\Z}_{_RM}\ar[r]&0 \\
+&p\Z/p^n\Z \ar[ur, hook] & \\
+\end{tikzcd}
+\]
 
 
+\end{itemize}
+
+\section*{Lecture 14, 2/13/23}
+
+\section*{Lecture 15, 2/17/23}
+
+\subsection*{\underline{Section 4, part A: Injective modules}}
+
+\defn
+
+A module is called \underline{injective} if, for every such diagram of $R$-modules
+\[
+\begin{tikzcd}
+0\ar[r] & M'\ar[d, "\phi"]\ar[r, "f"] & M \\
+& Q & \\
+\end{tikzcd}
+\]
+with $f$ injective, then there is a $\psi:M\to Q$ making the following diagram commute:
+
+\[
+\begin{tikzcd}
+0\ar[r] & M'\ar[d, "\phi"]\ar[r, "f"] & M\ar[dl, dotted, "\exists\psi"] \\
+& Q & \\
+\end{tikzcd}
+\]
+
+\prop (Baer's Criterion)
+
+A module $M \fin R-Mod$ is injective if and only if whenever $I \subseteq R$ is an ideal and $y\in\Hom_R(I, M)$, there exists $\Phi\in\Hom_R(R, M)$ such that $	\Phi|_I = y$.
+
+\proof
+
+online, also proven in 220B.
+
+\qed
+
+\subsection*{\underline{Section 4, part B: Injective modules over a PID}}
+
+\thm
+
+Let $R$ be a PID and $R \fin R-Mod$. Then the following are equivalent:
+
+\begin{enumerate}[label=(\roman*)]
+
+\item $M$ is injective. 
+
+\item $M$ is divisible, meaning that $aM = M$ for all nonzero $a \in R$. 
+
+\end{enumerate}
+
+\proof
+
+First, assume (1). And let $a$ be a nonzero element of $R$. Fix $x \in M$ and consider 
+\[
+\begin{tikzcd}
+I = Ra\ar[d,"g"'] \ar[r, hook] & R \ar[dl, dotted, "\exists\psi"] \\
+M & \\
+\end{tikzcd}
+\]
+So $g(a) = g(a\cdot 1) = \psi(a\cdot 1) = a\cdot\psi(1) \in aM$.
+
+Assume (2). We'll apply Baer. So let $_RI\hookrightarrow _RR$ and $\varphi \in \Hom_R(I, M)$. 
+
+We know $I = Ra$, and without loss of generality $a \neq 0$. So by hypothesis there exists an $x \in M$ with $\varphi(a) = a\cdot x$. Define $\phi\in\Hom_R(R, M), \gamma\mapsto\gamma x$, check that $\phi|_I = \varphi$, and that does it. 
+
+\qed
+
+So now we know the injective Abelian groups are precisely the divisible Abelian groups. 
+
+\exm\,
+
+$\Q, \Z(p^\oo)$, Pr\"ufer groups for $p$ prime.
+
+Above, $\Z(p^\oo)$ is defined as follows. Start with $\oplus\Z[x_i]/U(p)$, where $\Z[x_i]$ is a free group, and $U(p)$ is the subgroup of $\sum_{i\in\N}\Z[x_i]$ generated by $px_1 + \cdots + px_{i - 1} - x_i$ for all $i \in \N$. 
+
+We find $\Z[\bar{x_i}] \cong \Z/p^i\Z$.
+
+\rem
+
+If $T$ is a torsion Abelian group, then $T$ is the direct sum $\oplus_{p\text{ prime}}T_p$, where $T_p = \{x\in T \mid p^nx = 0$ for some $n\}$.
+
+\thm
+
+$A \fin \Z-Mod$ is divisible iff $A \cong \Q^{(I)}\oplus\bigoplus_{p\text{ prime}}(\Z/(p^\oo))$
+
+\proof
+
+exercise
+
+\qed
+
+\subsection*{\underline{Part C: Injective resolutions}}
+
+\thm (Eckmann)
+
+Every left $R$-module is a submodule of an injective module. 
+
+\lem 
+
+If $M \fin \Z-Mod$, then there exists a divisible $D \fin \Z-Mod$ such that $M$ is isomorphic to a submodule of $D$. 
+
+\proof
+
+We know $M \cong \Z^{(I)}/K$ for some subgroup $K \subseteq \Z^{(I)}$. But everything here is divisible. 
+
+\qed
+
+\section*{Lecture 16, 2/22/23}
+
+Consider the bimodule $_\Z R_R$ and note $R\otimes_R-$ is exact, as $R\otimes_R-$ is isomorphic to the identity. 
+
+\lem
+
+If $D \fin\Z-mod$ is a divisible Abelian group, then the left $R$-module $_R\Hom_{\Z}(R_R, D)$ is injective.
+
+\proof
+
+Set $E = \Hom_{\Z}(R, D)\fin\R$-Mod for a divisible $D$. To show injectivity of $_RE$, let
+\[
+\exactshort{_RU}{f}{_RV}{g}{_RW}
+\]
+be an exact sequence in $R$-Mod.
+
+Then
+\[
+\exactshort{R\otimes_RU}{}{R\otimes_RV}{}{R\otimes_RW}
+\]
+is exact. Since $_\Z D$ is injective, the sequence
+\[
+\exactshort{\Hom_\Z(R\otimes_RW,D)}{g^*}{\Hom_\Z(R\otimes_RV, D)}{f^*}{\Hom_\Z(R\otimes_RU, D)}
+\]
+is exact, where $f^*, g^*$ are the maps induced from $f$ and $g$. But by the tensor-hom adjunction, we know $\Hom_\Z(R\otimes_R-, D) \cong \Hom_R(-, E)$ naturally. So the sequence
+\[
+\begin{tikzcd}
+0\ar[r]&\Hom_R(W, E) \ar[r]&\Hom_R(V, E)\ar[r]&\Hom_R(U, E)\ar[r]&0
+\end{tikzcd}
+\]
+is exact. Thus $E$ is injective.
+
+\qed
+
+Recall that we are trying to prove that every left $R$-module is a submodule of an injective module. 
+
+\proof
+
+We have $_RM\cong\Hom_R(R_R, M)\subseteq\Hom_{\Z}(R, M)$. So $M_\Z\subseteq_\Z D$ in $\Z-$Mod, where $D$ is divisible and $\Hom_\Z(R, -)$ is left-exact. But $\Hom_\Z(R, M)$ is isomorphic to a submodule of $_R\Hom_\Z(R_R, D)$.
+\dbend
+
+Watch out! All iso's/embeddings above respect the left $R$-module structure. 
+
+But $_R\Hom_\Z(R_R,D)$ is injective by previous lemma.
+
+\qed
+
+\cor
+
+Every $M \fin R-Mod$ has an injective resolution.
+
+\proof
+
+Let $M$ be an $R$-module. We know that there is an inclusion $f_0:M\to E_0$, where $E_0$ is injective. The cokernel will then embed into $E_1$, and the induced map from $E_0$ to $E_1$ is called $f_1$, and we continue, as in the diagram
+\[
+\begin{tikzcd}
+0\ar[r] & M\ar[r, hook, "f_0"] & E_0\ar[rr, "f_1"]\ar[dr, twoheadrightarrow] && E_1 \ar[dr, twoheadrightarrow] \ar[rr, "f_2"] && E_2\ar[r]&\cdots\\
+		  & 							  &  & \coker(f_0)\ar[ur, hook] &  & \coker(f_1)\ar[ur, hook] &   &&&
+\end{tikzcd}
+\]
+
+\qed
+
+\defn
+
+Let $M \fin R$-Mod. 
+
+\begin{enumerate}
+
+\item An \underline{injective resolution of $M$} is any exact sequence 
+\[
+\begin{tikzcd}
+0\ar[r]&M\ar[r, "f_0"]&E_0\ar[r, "f_1"]&E_1 \ar[r]&\cdots 
+\end{tikzcd}
+\]
+such that $E_i$ is injective for all $i$. If $E_i = 0$ for $i > > 0$, define the length in analogy with projective case. 
+
+\item The \underline{$n$th cozyzygy} of $M$ is $\Im(f_n) \cong \coker(f_{n - 1})$, which is unique up to injective direct summands. 
+
+\item The \underline{injective resolution}, $\idim M$, is the minimal length of all finite injective resolutions, assuming any exist. Otherwise it is $\oo$. 
+
+\end{enumerate}
+
+\rem
+
+We'll see that $\sup\{\idim M \mid M \fin R-Mod\} = \lgldim R$. 
+
+\thm 
+
+For $M \fin R$-Mod, and $n \in \N\cup\{0\}$, the following are equivalent: 
+
+\begin{enumerate}
 
 
+\item 
 
+\begin{enumerate}[label=(\alph*)]
 
+\item $\idim M \leq n$ 
 
+\item There exists an injective resolution of $M$ with an injective $n$-th cosyzygy
 
+\item In all injective resolutions of $M$, then $n$-th cosyzygy is injective.
 
+\end{enumerate}
 
+\item $\idim M = \oo$ iff all (one) injective resolutions has no injective cosyzygies.
 
+\end{enumerate}
 
+\proof
 
+\qed
 
+If $\Z_D$ is divisible, and $R$ is any ring, then $_R\Hom_\Z(R, D)$ is injective. The only bimodule structure on $_\Z R_R$ we use is that $R$ is flat as a left $R$-module.
 
 
 
