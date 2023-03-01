@@ -20,6 +20,7 @@
 }
 \newcommand{\pmat}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}}
 \newcommand{\A}{\mathbb{A}}
+\newcommand{\B}{\mathbb{B}}
 \newcommand{\fin}{``\in"}
 \DeclareMathOperator{\Perm}{Perm}
 \DeclareMathOperator{\pdim}{pdim}
@@ -28,6 +29,7 @@
 \DeclareMathOperator{\rgldim}{rgldim}
 \DeclareMathOperator{\idim}{idim}
 \newcommand{\Rmod}{R-\text{mod}}
+\newcommand{\RMod}{R-\text{Mod}}
 \newcommand{\onto}{\twoheadrightarrow}
 \newcommand{\barf}{\bar{f}}
 
@@ -1562,7 +1564,270 @@ For $M \fin R$-Mod, and $n \in \N\cup\{0\}$, the following are equivalent:
 
 If $\Z_D$ is divisible, and $R$ is any ring, then $_R\Hom_\Z(R, D)$ is injective. The only bimodule structure on $_\Z R_R$ we use is that $R$ is flat as a left $R$-module.
 
+\section*{Lecture 17, 2/25/23}
 
+\section*{Lecture 18, 2/27/23}
+
+Last time, we stated and proved the so-called snake lemma. Pay special attention to the map $\del$ and how it is defined, and indeed well-defined. 
+
+\thm (Long exact homology sequence)
+
+Suppose $\ms{A}:\exactshort{\A}{f}{\A'}{f'}{\A''}(\star)$ is an exact sequence in $R-comp$. Then for each $n\in\Z$, there exists $\del_n\in\Hom_R(H_n(\A''), H_n(\A))$, such that the following long sequence is exact:
+\[
+\begin{tikzcd}
+\cdots\ar[r]&H_n(\A)\ar[r, "H_n(f)"] & H_n(\A') \ar[r, "H_n(f')"] & H_n(\A'')\ar[r, "\del_n"] & H_{n - 1}(\A) \ar[r, "H_{n - 1}(f')"] & H_{n - 1}(\A') \ar[r] & \cdots
+\end{tikzcd}
+\]
+
+Morover, this is natural in the sense that for any $\ms{A}$ as above, the family $(\del_n)_{n\in\Z} = (\del_n^\ms{A})$ satisfies the following condition: 
+
+Whenever 
+
+\[
+\begin{tikzcd}
+\ms{A}:0\ar[r] & \A\ar[r, "f"]\ar[d, "h"] & \A' \ar[r, "f'"]\ar[d, "h'"] & \A'' \ar[r] \ar[d, "h''"]& 0 \\
+\ms{L}: 0 \ar[r] & B \ar[r, "g"'] & B' \ar[r, "g'"'] & B'' \ar[r] & 0 \\
+\end{tikzcd}
+\]
+the following diagrams commute:
+
+\[
+\begin{tikzcd}
+H_n(\A'') \ar[r, "\del_n^\ms{A}"]\ar[d, "H_n(h'')"] & H_{n - 1}(\A) \ar[d, "H_{n - 1}(h)"] \\
+H_n(B'') \ar[r, "\del_n^{\ms{L}}"'] & H_{n - 1}(B) \\
+\end{tikzcd}
+\]
+
+\proof
+
+The exact sequence $(\star)$ translates into an infinite commutative grid 
+
+\[
+\begin{tikzcd}
+& \vdots \ar[d] & \vdots \ar[d] & \vdots \ar[d]\ar[d] & \\
+0\ar[r]&A_{n + 1} \ar[r]\ar[d, "d_{n + 1}"] & A_{n + 1}' \ar[r] \ar[d, "d_{n + 1}'"]& A_{n + 1}'' \ar[r]\ar[d, " d_{n + 1}"]& 0 \\
+0\ar[r]& A_n \ar[r] \ar[d]& A_n' \ar[r] \ar[d]& A_n'' \ar[r] \ar[d]& 0 \\
+0\ar[r]& A_{n - 1} \ar[r]\ar[d]& A_{n - 1}' \ar[r]\ar[d]& A_{n - 1}'' \ar[r] \ar[d]& 0 \\
+& \vdots & \vdots & \vdots & \\
+\end{tikzcd}
+\]
+
+We'll extract the commutative diagrams 
+
+\[
+\begin{tikzcd}
+0\ar[r]&\frac{A_n}{\Im(d_{n + 1})}\ar[d, "\bar{d_n}"] \ar[r, "\bar{f_n}"] & \frac{A_n'}{\Im(d_{n + 1}')} \ar[r]\ar[d, "\bar{d_n'}"] & \frac{A_n''}{\Im(d_{n + 1}'')} \ar[d, "\bar{d_n''}"]\ar[r]&0\\
+0\ar[r]&\ker(d_{n - 1}) \ar[r]& \ker(d_{n - 1}') \ar[r] & \ker(d_{n - 1}'') \ar[r] & 0 \\
+\end{tikzcd}
+\]
+
+Then we'll apply the snake lemma. 
+
+\subsection*{\underline{Step 1}}
+
+Define $\bar{d_n}:\frac{A_n}{\Im(d_{n + 1})} \to \ker(d_{n - 1})$ by $\bar{a_n} \mapsto d_n(a_n)$. This is well-defined because $d_nd_{n + 1} = 0 = d_{n - 1}d_n$.
+
+Note $\ker(\bar{d_n}) = \frac{\ker(d_n)}{\Im(d_{n + 1})} = H_n(\A)$, and $\coker(\bar{d_n}) = \frac{\ker(d_{n - 1})}{\Im(d_n)} = H_{n - 1}(\A)$. So we obtain exact sequences of the following ilk:
+
+\[
+\begin{tikzcd}
+0\ar[r]& H_n(\A) \ar[r, hook, "\iota_n"] & \frac{A_n}{\Im(d_{n + 1})} \ar[r, "\bar{d_n}"] & \ker(d_{n -1 }) \ar[r, twoheadrightarrow, "j_n"] & H_{n - 1}(\A) \ar[r] & 0 \\
+\end{tikzcd}
+\]
+
+\subsection*{\underline{Step 2}}
+
+The snake lemma now yields maps $\del_n\in\Hom_R(H_n(\A''), H_{n - 1}(\A))$ such that the following diagram (refer to diagram on Gauchospace) commutes, and the sequence 
+
+\[
+\begin{tikzcd}
+\cdots\ar[r]& H_n(\A') \ar[r] & H_n(\A'') \ar[r, "\del_n"] & H_{n - 1}(\A) \ar[r] & H_{n - 1}(\A') \ar[r] & \cdots
+\end{tikzcd}
+\]
+is exact.
+
+\qed
+
+\section*{\underline{Section 2: Homotopy of complexes}}
+
+\defn\,
+
+\begin{enumerate}
+
+\item Let $u:\A\to\A'$ be a morphism in $R-comp$, say $u = (u_n)_{n\in\Z}$. Call $u$ \underline{null-homotopic} if there exist $s_n \in \Hom_R(A_n, A_{n - 1})$ such that $u_n = d_{n + 1}'\circ s_n + s_{n - 1}\circ d_n$. So 
+\[
+\begin{tikzcd}
+\cdots \ar[r]&A_{n + 1} \ar[d, "u_{n + 1}"'] \ar[r, "d_{n + 1}"]&A_n\ar[d, red, "u_n"]\ar[dl, orange, "s_n"']\ar[r, orange, "d_n"] & A_{n - 1} \ar[dl, orange, "s_{n - 1}"]\ar[d, "u_{n - 1}"]\ar[r]&\cdots\\
+\cdots\ar[r]&A_{n + 1}' \ar[r, orange, "d_{n + 1}'"] & A_n' \ar[r, "d_n'"] & A_{n - 1}' \ar[r]&\cdots\\
+\end{tikzcd}
+\]
+
+\item Two chain maps $f, g$ are called \underline{homotopy equivalent} if $f - g$ is null-homotopic. We write $f \simeq g$. 
+
+\item Two chain complexes $\A, \B$ are \underline{homotopy equivalent} if there are chain maps
+
+\end{enumerate}
+
+\prop
+
+Suppose $u = (u_n) \in \Hom_{R-comp}(\A, \A')$ is null-homotopic. Then $H_n(u) = 0$ for all $n\in\Z$.
+
+\proof
+
+Let $s_n \in \Hom_R(A_n, A_{n + 1}')$ be as in the definition, i.e. $u_n = d_{n + 1}'\circ s_n + s_{n - 1} \circ d_n$. Then
+\[
+H_n(u): \frac{\ker(d_n)}{\Im(d_{n + 1})} \to \frac{\ker(d_n')}{\Im(d_{n + 1}')}
+\]
+acts by $H_n(u)(\bar{a_n}) = \bar{u_n(a_n)}$. 
+
+Suppose $a_n\in\ker(d_n)$. Then 
+\begin{align*}
+u_n(a_n) & = d_{n + 1}'(s_n(a_n)) + s_{n - 1}(\overbrace{d_n(a_n)}^{=0}) \\
+			& = d_{n + 1}'(s_n(a_n)) \in \Im(d_{n + 1}') \\
+\end{align*}
+
+\section*{Lecture 19, 3/1/23}
+
+\defn\,
+
+\begin{enumerate}
+
+\item Let $M \fin \RMod$, and 
+\[
+\begin{tikzcd}
+\cdots \ar[r]& P_n \ar[r, "d_n"] & \cdots \ar[r] & P_1 \ar[r, "d_1"] & P_0 \ar[r, "d_0"] & M \ar[r] & 0
+\end{tikzcd}
+\]
+a projective resolution of $M$.
+
+Then the \underline{deleted projective resolution} is the complex obtained by deleting $M$ and replacing it with 0, i.e.
+\[
+\begin{tikzcd}
+\mbb{P}: \cdots \ar[r]& P_n \ar[r, "d_n"] & \cdots \ar[r] & P_1 \ar[r, "d_1"] & P_0 \ar[r, "d_0"] & 0 
+\end{tikzcd}
+\]
+Note that this ``just" a complex, not necessarily exact. 
+
+\item If 
+\[
+\begin{tikzcd}
+0\ar[r]&M\ar[r]&E_0\ar[r]&E_1\ar[r]&\cdots
+\end{tikzcd}
+\]
+is an injective resolution of $M$, then the \underline{deleted injective resolution} is defined the same way, i.e. as
+\[
+\begin{tikzcd}
+0\ar[r]&E_0\ar[r]&E_1\ar[r]&\cdots
+\end{tikzcd}
+\]
+
+\end{enumerate}
+
+\rem A deleted projective resolution of $M$ determines $M$ up to isomorphism. As we'll see, conversely, any two deleted projective resolutions of a given $M$ are homotopy equivalent. 
+
+\underline{Model problem:} Look at the functor $X\otimes_R-$. We know this functor is right exact, and in general not left exact. 
+
+For 
+\[
+\exactshort{M}{f}{M'}{f'}{M''}
+\]
+we want to get some information on the kernel of $X\otimes_Rf:X\otimes_RM\to X\otimes_RM'$.
+
+\underline{Step 1:} One can construct projective resolutions of $M, M', M''$, and one obtains a short exact sequence
+\[
+\exactshort{\mbb{P}}{\barf}{\mbb{P}'}{\bar{f'}}{\mbb{P}''}
+\]
+where $\mbb{P},\mbb{P}',\mbb{P}''$ are deleted resolutions of $M, M', M''$. 
+
+In particular, if $\barf = (f_n)_{n\in\Z}$, and $\bar{f'} = (\barf_n)_{n\in\Z}$, we obtain split exact sequences
+\[
+\exactshort{P_n}{f_n}{P_n'}{f_n'}{P''}
+\]
+
+Due to projectivity of $P_n''$, this sequence is split, and hence
+\[
+\exactshort{F(P_n)}{F(f_n)}{F(P_n')}{F(\bar{f_n})}{F(P_n'')}
+\]
+
+is exact.
+
+In other words, 
+\[
+\otimes: \exactshort{F(\mbb{P})}{}{F(\mbb{P}')}{}{F(\mbb{P}'')}
+\]
+is exact. 
+
+\underline{Step 2:}
+
+The sequence $\otimes$ give rise to a long exact homology sequence
+\[
+\begin{tikzcd}
+H_n(F(\mbb{P}))\ar[r] & H_{n - 1}(F(\mbb{P}))\ar[r] & H_{n - 1}(F(\mbb{P}')) \ar[r] & H_{n - 1}(F(\mbb{P}''))\ar[r] & \ddots \ar[d] \\ & & & &H_0(F(\mbb{P}''))
+\end{tikzcd}
+\]
+
+\underline{Step 3:}
+
+Since $F$ is right-exact, $H_0(F(\mbb{P})) \cong F(M)$, and similarly $H_0(F(\mbb{P}')) \cong F(M')$, and $H_0(F(\mbb{P}'')) \cong F(M'')$. 
+
+We obtain an exact sequence
+\[
+\begin{tikzcd}
+\cdots\ar[r]&H_1(F(\mbb{P})) \ar[r] & H_1(F(\mbb{P}')) \ar[r] & H_1(F(\mbb{P}'')) \ar[d, "\del_1"]\\
+& & & F(M)\ar[d, "F(f)"]\\
+& & & F(M') \ar[d, "F(f')"] \\
+& & & F(M'') \ar[d] \\
+& & & 0 \\
+\end{tikzcd}
+\]
+
+\lem (Comparison Lemma)
+
+Let $M, M' \fin \RMod$, and $f\in\Hom_R(M, M')$. Moreover, let $\mbb{P}, \mbb{P}'$ be deleted projective resolutions of $M, M'$ respectively. Then there exists a map $\bar{f} = (f_n)_{n\geq0}\in\Hom_{R-comp}(\mbb{P}, \mbb{P}')$, such that the following diagram commutes: 
+
+\[
+\begin{tikzcd}
+\cdots \ar[r] & P_1 \ar[r, "d_1"]\ar[d, "f_1"] & P_0\ar[d, "f_0"] \ar[r, "d_0"] & M \ar[r]\ar[d, "f"] & 0 \\
+\cdots\ar[r] & P'_1 \ar[r, "d_1'"'] & P'_0 \ar[r, "d_0'"'] & M' \ar[r] & 0 
+\end{tikzcd}
+\]
+
+Moreover, given another map $\bar{g} \in \Hom_{R-comp}(\mbb{P}, \mbb{P}')$, such that the above diagram, with $f_i$ replaced by $g_i$ (the final $f:M\to M'$ stays), still commutes, then $\barf\simeq\bar{g}$. 
+
+\rem Here $\barf$ is called ``the" chain map lying over $f$. 
+
+\proof
+
+\underline{Existence of $\barf$} 
+
+We find $f_n$ by induction on $n \geq 0$. 
+
+\begin{itemize}
+
+\item For $n = 0$, consider the diagram 
+
+\[
+\begin{tikzcd}
+& P_0 \ar[d, "d_0"] \\
+& M \ar[d, "f"] \\
+P'_0 \ar[r, "d_0'"']\ar[uur, dotted, "\exists f_0"] & M' \\
+\end{tikzcd}
+\]
+
+$f_0$ exists because $P_0$ is projective and $d_0'$ is an epi. 
+
+\item Let $n \geq 1$, and suppose $f_0, \dots, f_{n - 1}$ are given as required. Consider the diagram 
+
+\[
+\begin{tikzcd}
+&P_n \ar[d, "d_n"] \\
+&P_{n - 1} \ar[d, "f_{n - 1}"] \\
+P_{n - 1}'\ar[r, "d_n'"'] &P_{n - 1}' 
+\end{tikzcd}
+\]
+The problem is $d_n'$ is not necessarily an epi. So we replace $P_{n - 1}'$ by $\Im(d_n')$. We wish to show $\Im(f_{n - 1}d_n) \subseteq \Im(d_n')$. But $\Im(d_n') = \ker(d_{n + 1}')$. Compute $d_{n - 1}'f_nd_n = d_{n - 1}'d_nf_n$. We will continue next time.
+
+\end{itemize}
 
 
 
