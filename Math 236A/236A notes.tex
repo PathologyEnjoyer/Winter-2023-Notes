@@ -32,6 +32,8 @@
 \newcommand{\RMod}{R-\text{Mod}}
 \newcommand{\onto}{\twoheadrightarrow}
 \newcommand{\barf}{\bar{f}}
+\renewcommand{\P}{\mathbb{P}}
+\renewcommand{\E}{\mathbb{E}}
 
 \newcommand{\exactlon}[5]{
 		\begin{tikzcd}
@@ -1828,6 +1830,324 @@ P_{n - 1}'\ar[r, "d_n'"'] &P_{n - 1}'
 The problem is $d_n'$ is not necessarily an epi. So we replace $P_{n - 1}'$ by $\Im(d_n')$. We wish to show $\Im(f_{n - 1}d_n) \subseteq \Im(d_n')$. But $\Im(d_n') = \ker(d_{n + 1}')$. Compute $d_{n - 1}'f_nd_n = d_{n - 1}'d_nf_n$. We will continue next time.
 
 \end{itemize}
+
+\section*{Lecture 20, 3/3/23}
+
+We complete the proof of the comparison lemma. We will prove the uniqueness of $\barf$. Supppose there is a $\bar{g}\in\Hom_R(\mbb{P},\mbb{P}')$ which lies over $f$, so that $f_i - g_i = d_{i + 1}'s_i - s_{i - 1}d_i$ for $i \geq -1$. 
+
+\underline{$n = 0$}
+
+Consider the diagram 
+\[
+\begin{tikzcd}
+P_1 \ar[r, "d_1"] & P_0 \ar[dl, dotted, "\exists s_0"]\ar[r] \ar[d, "f_0 - g_0"]& 0 \ar[dl, dotted, "s_{-1} \eqdef 0"]\\
+P_1'\ar[r, "d_1'"'] & P_0' \ar[r] & 0 \\
+\end{tikzcd}
+\]
+Since $P_0$ is a projective modules and $d_1'$ is surjective, $s_{-1}$ exists so that the left-hand triangle commutes. This means $f_0 - g_0 = s_1's_0$ as required.
+
+\underline{$n \geq 1$}
+
+Suppose that, for $1 \leq i \leq n - 1$, we have $s_i \in \Hom_R(P_i, P_i')$ such that $f_i - g_i = d_{i + 1}'s_i - s_{i - 1}d_i$. 
+
+In particular, $f_{n - 1} - g_{n - 1} = d_n's_{n - 1} + s_{n - 2}d_{n + 1}$. We check that $\Im(f_n - g_n - s_{n - 1}d_n)\subseteq \ker(d_n')$. Since $\ker(d_n') = \Im(d_{n - 1})$, we obtain a commutative diagram:
+\[
+\begin{tikzcd}
+&P_n\ar[dl, dotted, "s_n"']\ar[d, "f_n - g_n - s_{n - 1}d_n"] \\
+P_{n + 1}' \ar[r, twoheadrightarrow, "d_{n + 1}'"] & \Im(d_{n + 1}') \\
+\end{tikzcd}
+\]
+where $s_n$ exists, because $P_n$ is projective over the horizontal maps as a projection (?). 
+
+This completes the induction
+
+\qed
+
+\cor
+
+Suppose $M \fin \RMod$. Then any two deleted projective resolutions of $M$ are homotopy equivalent. 
+
+\proof
+
+Let 
+\[
+\begin{tikzcd} \cdots \ar[r] & P_2 \ar[r] & P_1 \ar[r] &P_0 \ar[r] & M \ar[r] & 0 \end{tikzcd}
+\]
+and 
+\[
+\begin{tikzcd} \cdots \ar[r] & P_2' \ar[r] & P_1' \ar[r] &P_0' \ar[r] & M \ar[r] & 0 \end{tikzcd}
+\]
+are projective resultions, and $\mbb{P},\mbb{P}'$ the corresponding deleted resolutions. By lemma, we obtain $\barf\in\Hom_{R-comp}(\mbb{P},\mbb{P}')$ and $\bar{g} \in \Hom_{R-comp}(\mbb{P},\mbb{P}')$
+
+..... proof continues in document on gauchospace.
+
+\qed
+
+\lem (Horseshoe lemma) 
+
+On Gauchospace.
+
+\proof
+
+ditto
+
+\qed
+
+\section*{Lecture 20, 3/6/23}
+
+\subsection*{\underline{Chapter 3, Section 4: Left Derived Functors}}
+
+\underline{Have:} Let $T$ be a covariant, additive functor from $R$-Mod to $S$-Mod. 
+
+\underline{Goal:} Construct functors $L_nT$, for $n \geq 0$, such that for any exact sequence 
+\[
+\exactshort{M}{}{M'}{}{M''}
+\]
+in $R$-Mod, we obtain a long exact sequence
+\[
+\begin{tikzcd}
+\cdots\ar[r]& L_1T(M)\ar[r]& L_1T(M')\ar[r] & L_1T(M'')\ar[r, "\del_1"] & L_0T(M) \ar[d] \\&&&& L_0T(M') \ar[d]\\&&&& L_0T(M'') \ar[d]\\&&&&0
+\end{tikzcd}
+\]
+Moreover, we want: If $T$ is right exact, then $L_0T \cong T$. 
+
+\underline{Construction:}
+
+Pick and fix a projective resolution $\begin{tikzcd} \cdots \ar[r]& P_1\ar[r, "d_1"] & P_0\ar[r, "d_0"] & M \ar[r]& 0 \end{tikzcd}$ of $M$. Let $\mbb{P}_M$ denote the deleted complex 
+\[
+\begin{tikzcd} \cdots \ar[r]& P_1\ar[r, "d_1"] & P_0\ar[r, "d_0"] & 0 \end{tikzcd}
+\]
+Then define $L_nT(M) \eqdef H_n(T(\mbb{P}_M))$. We still need to know what $L_nT$ does to maps $f\in\Hom_R(M, M')$. By the comparison lemma, we choose (and fix) a map $\barf\in\Hom_{R-comp}(\mbb{P}_M, \mbb{P}_{M'})$ lying over $f$. 
+
+Define $L_nT(f) \eqdef = H_n(T(\barf))$. So we apply $T$ to the chain map $\barf$ and then see what morphism this induces on homology. 
+
+First, we will show that $L_nT$ is indeed well-defined. We check that, if we use a different choice of deleted projective resolutions for the $M$ from $R$-Mod, the resulting functors $L_nT$ and $\hat{L_nT}$ are naturally equivalence. 
+
+\thm
+
+$L_nT$, as defined above, is a well-defined covariant functor $\RMod\to S$-Mod.
+
+Moreover, if $\hat{\mbb{P}_M}$ is a different deleted resolution of $M$, then the functor $\hat{L_nT}$ defined on the basis of the $\hat{\mbb{P}_M'}$, satisfies $\hat{L_nT} \cong L_nT$.
+
+\proof
+
+We start by showing that for morphisms $f\in\Hom_R(M, M'), g \in \Hom_R(M',M'')$, we have $L_nT(gf) = L_nT(g)\circ L_nT(f)$. Let $\bar{g}\in\Hom_{R-comp}(\P_{M'}, \P_{M''})$ and $\barf\in\Hom_{R-comp}(\P_M, \P_{M'})$ lie over $g$ and $f$, respectively, then both $\bar{g}\circ\barf$ and $\bar{g\circ f}$ both lie over $gf$. 
+
+By the comparison lemma, $\bar{g}\circ\barf \cong \bar{g\circ f}$. Then, because $T$ is additive, $T(\bar{g}\circ\barf) \cong T(\bar{f\circ g})$. By a previous lemma, (null-homotopic implies the induced map on homology is trivial), this implies 
+\begin{align*}
+L_nT(g) \circ L_nT(f) & = H_nT(\bar{g})\circ H_nT(\barf) \\&= H_nT(\bar{g}\circ\barf) \\&= H_nT(\bar{g\circ f}) \\& = L_nT(g\circ f)
+\end{align*} 
+Similarly, $L_nT(\Id_M) = \Id_{L_nT(M)}$. 
+
+We have shown $L_nT$'s action on morphisms is well-defined. We now show that changing our choice of projective resolution $\P_M$ of $M$ will result in a naturally equivalent functor. 
+
+We know $\P_M, \hat{\P}_M$ are homotopy equivalent. Let $i\in\Hom_{R-comp}(\P_M, \hat{\P}_M)$ and $j \in \Hom_{R-comp}(\hat{\P}_M, \P_M)$ with $ij \simeq \Id_{\P_M}, ji \simeq \Id_{\hat{\P}_M}$. Then, again because $T$ is additive, $T(ji) \simeq \Id_{T\P_M}$ and $T(ij) \simeq \Id_{\hat{\P}_M}$. Hence 
+\begin{align*}
+H_nT(i) \circ H_nT(j) & = H_n(T(ji))\\
+& = H_n(T(\Id_{\P_M}) \\
+& = \Id_{H_nT(\P_M)} \\
+\end{align*}
+So $\overbrace{H_nT(i)}^{\phi(M)}:\underbrace{H_nT(\P_M)}_{L_nT(M)} \to \underbrace{H_nT(\hat{\P}_M)}_{\hat{L_n}T(M)}$ is an isomorphism.
+
+To show that $(\phi(M))_{M\fin\RMod}$ is a natural transformation $L_nT\to\hat{L_n}T$, use the comparison lemma, as well as the proposition we've been using (i.e. null-homotopic implies induced maps on homology are trivial (completed proof on the Gaucho))
+
+\qed
+
+\thm 
+
+Keep all notation from previous discussion. Suppose
+\[
+(\star):\exactshort{M}{f}{M'}{f'}{M''}
+\]
+is an exact sequence in $\RMod$. Then there exists a long exact sequence
+\[
+\begin{tikzcd}
+\cdots \ar[r]&L_{n + 1}T(M'') \ar[r, "\del_{n + 1}"] & L_nT(M)\ar[r, "L_nT(f)"] & L_nT(M') \ar[r, "L_nT(f')"] & L_nT(M'') \ar[r, "\del_n"] & \cdots \ar[dlllll, dotted]\\
+\cdots \ar[r] & L_1T(M'')\ar[r, "\del_1"] & L_0T(M) \ar[r, "L_0T(f)"] & L_0T(M) \ar[r, "L_0T(f')"] & L_0T(M'') \ar[r] & 0 
+\end{tikzcd}
+\]
+Moreover, if $T$ is right-exact, $L_0T\cong T$, and if $M$ is projective, then $L_nT(M) = 0$ for all $n \geq 1$ (because of some shit about syzygies?)
+
+Finally, the $\del_n$, for $n\geq1$, are natural in the sense specified in the statment of theorem 14, at the bottom of page 32 of this document.
+
+\proof
+
+By the horseshoe lemma, we may choose a short exact sequence of complexes $\exactshort{\P_M}{\barf}{\P_{M'}}{\bar{f'}}{\P_{M''}}$ lying over $\star$ (of course $\barf = (f_n), \bar{f'} = (f_n')$).
+
+This yields short exact sequences $\exactshort{P_n}{f_n}{P_n'}{f_n'}{P_n''}$ in $\RMod$. Injectivity of $P_n''$ makes this sequence split-exact, and so 
+\[
+\exactshort{T(P_n)}{T(f_n)}{T(P_n')}{T(f_n')}{T(P_n'')}
+\]
+is still exact. 
+
+\section*{Lecture 21, 3/8/23}
+
+Let $T \fin \RMod\to S$-Mod be a covariant additive functor. For $M\fin\RMod$, $L^nT(M) = H_nT(\P_M)$ where $\P_M$ is a deleted projective resolution of $M$. $L_nT(f)$, for $f:M\to M'$, is defined via the comparison lemma. 
+
+We restate and prove the theorem:
+
+\thm 
+
+For any exact sequence $\exactshort{M}{f}{M'}{f'}{M''}$ in $\RMod$, there is an exact sequence 
+\[
+\begin{tikzcd}
+\cdots \ar[r]&L_{n + 1}T(M'') \ar[r, "\del_{n + 1}"] & L_nT(M)\ar[r, "L_nT(f)"] & L_nT(M') \ar[r, "L_nT(f')"] & L_nT(M'') \ar[r, "\del_n"] & \cdots \ar[dlllll, dotted]\\
+\cdots \ar[r] & L_1T(M'')\ar[r, "\del_1"] & L_0T(M) \ar[r, "L_0T(f)"] & L_0T(M) \ar[r, "L_0T(f')"] & L_0T(M'') \ar[r] & 0 
+\end{tikzcd}
+\]
+Moreover:
+\begin{enumerate}[label=(\alph*)]
+
+\item If $M$ is projective, then $L_nT(M) = 0$ for all $n \geq 1$. 
+
+\item If $T$ is right exact, then $L_0T \cong T$. 
+
+\end{enumerate}
+
+\proof
+
+Let $\P,\P',\P''$ be deleted projective resolutions of $M, M', M''$ such that we get a commutative diagram with exact rows in $R$-comp:
+\[
+\begin{tikzcd}
+0\ar[r] & \P \ar[d, "d_0"] \ar[r, "\barf"] & \P'\ar[d, "d_0'"] \ar[r, "\barf'"] & \P'' \ar[r]\ar[d, "d_0''"] & 0 \\
+0 \ar[r] & M \ar[r, "f"] & M' \ar[r, "f'"] & M'' \ar[r] & 0 \\
+\end{tikzcd}
+\]
+with $\barf = (f_n)_{n\geq0}, \barf'= (f_n')_{n\geq0}.$ Since each 
+\[
+\exactshort{P_n}{f_n}{P_n'}{f_n'}{P_n''}
+\]
+is exact in $\RMod$, the sequence splits, and
+\[
+\exactshort{TP}{Tf}{TP'}{Tf'}{TP''}
+\]
+is exact, i.e.
+\[
+\exactshort{\P}{\barf}{\P'}{\barf'}{\P''}
+\]
+is exact in $R$-comp. 
+
+By a previous theorem, we obtain an exact sequence 
+\[
+\begin{tikzcd}
+\cdots\ar[r]& \underbrace{H_1(T\P'')}_{=L_2T(M'')}\ar[r]&\underbrace{H_0(T\P)}_{=L_0T(M)} \ar[r] & \underbrace{H_0(T\P')}_{=L_0T(M')} \ar[r] & \underbrace{H_0(T\P'')}_{=L_0T(M'')} \ar[r]& 0 
+\end{tikzcd}
+\]
+Now:
+
+\begin{enumerate}[label=(\alph*)]
+
+\item If $M$ is projective, then we have a projective resolution 
+\[
+\begin{tikzcd}
+0\ar[r]&M\ar[r, "\Id_M"] & M \ar[r]& 0 
+\end{tikzcd}
+\]
+Consider the deleted resolution 
+\[
+\P:\begin{tikzcd} 0 \ar[r]& M \ar[r] & 0 \end{tikzcd}
+\]
+Then $L_n(M) = H_nT(\P) = 0$ for all $n \geq 1$. 
+
+\item Now, suppose that $T$ is right exact, with $M$ a module, with projective resolution
+\[
+\P:
+\begin{tikzcd}
+\cdots\ar[r] & P_1 \ar[r, "d_1"] & P_0 \ar[r, "d_0"] & M \ar[r] & 0 
+\end{tikzcd}
+\]
+By hypothesis, 
+\[
+\begin{tikzcd}
+TP_1\ar[r, "Td_1"] & TP_0\ar[r, "Td_0"] & TM \ar[r] & 0 
+\end{tikzcd}
+\]
+is exact, hence $TM \cong \frac{TP_0}{\Im(Td_1)} = H_0(T\P) = L_0T(M)$. 
+
+\end{enumerate}
+
+\qed
+
+The big steps were starting with a short exact sequence in $R$-comp, getting a long exact homology sequence, then using the comparison and horseshoe lemmas, as well as the fact that homotopic complexes have isomorphic homology modules. 
+
+\thm (Dimension shifting) 
+
+Let $M, T, $ etc. be as before. Then $L_nT(M) \cong L_{n - 1}T(K_1) \cong L_{n - 2}T(K_2) \cong \cdots$, where $K_i$ is an $i$th syzygy of $M$. 
+
+\proof
+
+Recall, an $i$th syzygy of $M$ is just the image of $d_i$ in a projective resolution of $M$. 
+
+Consider
+\[
+\begin{tikzcd}
+\cdots\ar[r] & P_2\ar[r, "d_2" ] & P_1\ar[rr, "d_1"]\ar[dr, twoheadrightarrow]& & P_0 \ar[r, "d_0"] & M \ar[r] & 0 \\
+& &  &K_1\ar[ur, hook]  & & & & \\
+\end{tikzcd}
+\]
+A deleted resolution of $K_1$ is 
+\[\tilde{\P}:
+\begin{tikzcd}
+\cdots\ar[r] & P_3 \ar[r,"Td_3"] & P_2 \ar[r,"Td_2"] & P_1 \ar[r,"Td_1"] & 0 
+\end{tikzcd}
+\]
+We'll show $L_2TM \cong L_1T(K_1)$, and induction will finish the job. 
+
+Note $L_1T(K_1) \cong H_1T\tilde{\P} = \frac{\ker(Td_2)}{\Im(Td_3)} = H_2T\P$
+where $\P$ is
+\[
+\begin{tikzcd}
+\cdots\ar[r] & P_2 \ar[r] & P_1 \ar[r] & P_0 \ar[r] & 0 
+\end{tikzcd}
+\]
+
+\qed
+
+\subsection*{\underline{Section 4: Other derived functors (sketch)}}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item Our model is $T = \Hom(X,-)$, a left-exact covariant functor.
+
+Right derived functors of covariant functors, $T:\RMod\to S$-Mod, for $M \fin \RMod$, let 
+\[
+\begin{tikzcd}
+0 \ar[r] & M \ar[r, "d_0"] & E_0 \ar[r, "d_1"] & E_1 \ar[r, "d_2"] & E_2 \ar[r] & \cdots
+\end{tikzcd}
+\]
+be an injective resolution of $M$. Consider the deleted injective resolution
+\[
+\begin{tikzcd}
+\E_M:0 \ar[r] & E_0 \ar[r] & E_1 \ar[r] & E_2 \ar[r] & \cdots 
+\end{tikzcd}
+\]
+Set $R^nT(M) \eqdef H_nT(\E_m)$, and we obtain a long exact sequence
+\[
+\begin{tikzcd}
+0 \ar[r] & R^0TM \ar[r] &R^0TM' \ar[r]& R^0TM'' \ar[r, "\del_1"]& R^1T(M) \ar[r] & \cdots 
+\end{tikzcd}
+\]
+If $T$ is left exact, then $R^0T \cong T$, exactly as before. Moreover, $R^nT(M) = 0$ if $M$ is injective. 
+
+\item Right derived functors of contravariant additive functors. For $M\fin\RMod$, let $\P_M$ be a projective deleted resolution of $M$, and define $R^nT(M) = H_n(T\P_m)$
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
