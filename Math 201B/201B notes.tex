@@ -32,6 +32,9 @@
 \newcommand{\bigcapk}[1][\oo]{\bigcup\seq[#1]{k}}
 \newcommand{\bigcapi}[1][\oo]{\bigcup\seq[#1]{i}}
 \newcommand{\bigcapn}[1][\oo]{\bigcup\seq[#1]{n}}
+\newcommand{\Dmn}{D_\mu\nu}
+\newcommand{\Dnm}{D_nu\mu}
+\newcommand{\loc}{loc}
 \DeclareMathOperator{\Vol}{Vol}
 \DeclareMathOperator{\diam}{diam}
 \title{220A - Groups}
@@ -1039,7 +1042,7 @@ By disjointness, this is equal to
 
 So $\nu(A)\leq(\alpha+\varepsilon)\mu(U)$ for all $\varepsilon > ), U \supseteq A$. 
 
-In the limit as $\varepsilon\to0^+$, we have $\nu(A)\leq]alpkha\mu(U)$ for all $U \supseteq A$. So $\nu(A) \leq \alpha\inf\{\mu(U)\mid A \subseteq U, U$-open$\} = \alpha\mu(A)$. 
+In the limit as $\varepsilon\to0^+$, we have $\nu(A)\leq\alpha\mu(U)$ for all $U \supseteq A$. So $\nu(A) \leq \alpha\inf\{\mu(U)\mid A \subseteq U, U$-open$\} = \alpha\mu(A)$. 
 
 This completes the proof of 1. Proof of 2 is similar? 
 
@@ -1070,6 +1073,603 @@ Assume $\mu(\R^n),\nu(\R^n) < \oo$. Fix any $\alpha>0$. Then $I = \{x\in\R^n\mid
 \mu(I)\leq\frac{1}{\alpha}\nu(I)\leq\frac{\nu(\R^n)}{\alpha}
 \]
 As let let $\alpha\uparrow+\oo$, we get $\mu(I)<\oo$. 
+
+\section*{Lecture 9, 2/9/23}
+
+\thm
+
+Let $\mu$ and $\nu$ be Radon measures on $\R^n$. Then 
+
+\begin{enumerate}
+
+\item $D_\mu\nu(x)$ exists and is finite $\mu$-almost everywhere. 
+
+\item $D_\mu\nu(x)$ is $\mu$-measurable. 
+
+\end{enumerate}
+
+\proof
+
+Let $I = \{x \in \R^n \mid \bar{D}_\mu\nu(x) = \oo\}$. We know that $\mu(I) = 0$, so we just have to prove 2. Assume within the ball $B_R(0) = \{x\in\R^n\mid|x|<R\}, D_\mu\nu(x)$ exists $\mu$-almost everywhere in $B_R(x)$. 
+
+Define $X_{INE}(R) = \{x\in B_R(0)\mid $either $D_\mu\nu(x) = \oo$ or $D_\mu\nu(x) $ DNE $\}$. 
+
+Note $X_{INE}(R)\subseteq B_R(x), X_{INE}(1) \subseteq X_{INE}(2) \subseteq \cdots \subseteq X_{INE}(m)\subseteq\cdots$. 
+
+Now $\mu(X_{INE}(m)) = 0$ for all $m \in \N$, thus $\mu(X_{INE}(\oo))\leq\sum_{m=1}^\oo\mu(X_{INE}(m)) = 0$. Since $X_{INE}$ is a null set, it is measurable.
+
+Assume $\nu(\R^n), \mu(\R^n)<\oo$. Let $X_{NE} = \{x\in\R^n \mid D_\mu\nu(x)\, $DNE$\} \implies \mu(X_{NE}) = 0$.
+
+For $0 < a < b < \oo$, define $J(a, b) = \{x\in\R^n\mid \underline{D}_\mu\nu(x) \leq a$ or $\bar{D}_{\mu}\nu(x)\geq b\}$. 
+
+Then $X_{NE} \subseteq I \cup (\cup_{0<r,q<\oo}J(r, q))$. 
+$\mu(X_{NE})\leq\mu(I) + \sum_{0<r, q< \oo}\mu(J(r, q))$. 
+
+By a previous lemma, $\nu(J(a, b)) \leq a\mu(J(a, b)), \nu(J(a, b)) \geq b \mu(J(a, b))$. 
+
+Since $a\mu(J(a, b)) \geq b\mu(J(a, b))$ for all $a < b$, $\mu(J(a, b)) = 0$ for all $0<a<b<\oo$. So $\mu(X_{NE}) = 0$. 
+
+\qed ?
+
+Idea: Express $D_\mu\nu(x)$ as the limit of a sequence of $\mu$-measurable functions. 
+
+\claim
+
+\[
+D_\mu\nu(x) = 
+\begin{cases} \lim_{r\to0^+}\frac{\nu(B_r(x))}{\mu(B_r(x))} & x \in \R^n\setminus N \\ \oo\text{ or not defined in }N & \text{ where }\mu(N) = 0 \\
+\end{cases}
+\]
+\proof
+
+For fixed $r > 0$, define $f_r(x):\R^n\to[0,\oo]$ by 
+\[
+f_r(x) = 
+\begin{cases}
+\frac{\nu(B_r(x))}{\mu(B_r(x))} & \text{ if }\mu(B_r(x))>0 \\
+\oo & \text{ otherwise}. \\
+\end{cases}
+\]
+
+\claim 
+
+For any $r > 0$, the function $f_r(x)$ is $\mu$-measurable. 
+
+\claim
+
+For every $r > 0$, the function $g_r(x):\R^n\to[0,\oo)$ defined by $g_r(x) = \mu(B_r(x))$ is upper semicontinuous, i.e. if $x_k \to x$, then $\limsup g_r(x_k) \leq g_r(x)$. 
+
+\proof of second claim
+
+Let $x_k \to x$ be a convergent sequence. 
+
+Define $\varphi(x) = \chi_{B_r(x)}$ and note $\limsup_{x_k\to x}\varphi(x_k) \leq\varphi(x)$. 
+
+$\limsup_{x_k\to x}\chi_{B_r(x_k)}(y) \leq \chi_{B_r(x)}(y)$. 
+
+If $y\in B_r(x)$ then $\chi_{B_r(x)}(y) = 1$, so we're done. 
+
+If $y\not\in B_r(x)$ then $|x - y| = r + \delta$ where $\delta > 0$ so there exists $K \in \N$ such that for all $k \geq K$, $|x_k - x| < \delta \implies y\not\in B_r(x_k)$. 
+
+So $\chi_{B_r(x_k)}(y) = 0 \implies \limsup_{x_k\to x}\chi_{B_r(x)}(y) = 0$. 
+
+Note $\liminf_{x_k\to x}(1 - \chi_{B_r(x_k)}(y)) \geq 1 - \chi_{B_r(x)}(y)$. 
+
+Thus $\int_{B_r(x)}\liminf_{x_k\to x}(1 - \chi_{B_r(x_k)}(y))\,d\mu(y) \geq \int_{B_r(x)}1 - \chi_{B_r(x)}(y)$
+
+By Fatou's lemma, 
+\[
+\liminf_{k\to\oo}\int_{B_r(x)}(1 - \chi_{B_r(x_k)}(y))\,d\mu(y) \geq \int_{B_r(x)}(1 - \chi_{B_r(x)}(y))
+\]
+
+Thus $\liminf_{k\to\oo} f(\mu(B_{2r}(x))) - \mu(B_r(x_k)) \geq \mu(B_{2r}(x)) - \mu(B_r(x))$
+
+So $\limsup_{k\to\oo}\mu(B_r(x_k)) \leq \mu(B_r(x))$
+
+\qed
+
+\proof of first claim
+
+Denote $I_r = \{x\in\R^n \mid \mu(B_r(x)) = 0 \}$. 
+
+$I_r \subseteq I$, $\mu(I) = 0$, so $\mu(I_r) = 0$ for all $r > 0$. 
+
+Furthermore, if $0 < r_1 < r_2$, $I_{r_2} \subset I_{r_1} \subset I$. 
+
+\qed
+
+\claim
+
+\[
+D_\mu\nu(x) = 
+\begin{cases}
+\lim_{k\to\oo}\frac{\nu(B_{\frac{1}{k}}(x))}{\mu(B_{\frac{1}{k}}(x))} & \mu(B_{\frac{1}{k}}(x) > 0 \\ 
+\oo & \mu(B_{\frac{1}{k}}(x)) = 0 \\
+\end{cases}
+\] 
+
+If $D_\mu\nu(x)<\oo$ $\mu$-almost everywhere, then $D_\mu\nu(x)$ is $\mu$-measurable. 
+
+\proof
+
+\qed
+
+\defn
+
+Let $\mu$ and $\nu$ be Borel measures on $\R^n$. Then
+
+\begin{enumerate}
+
+\item $\nu$ is \underline{absolutely continuous with respect to $\mu$} if $\mu(A) = 0\implies\nu(A) = 0$ for all $A \subseteq \R^n$. We write $\nu<<\mu$. 
+
+\item $\mu$ and $\nu$ are \underline{mutually singular} if there exists a Borel set $B \subseteq \R^n$ such that $\nu(B) = \mu(\R^n\setminus B) = 0$. We write $\nu\perp\mu$. 
+
+\end{enumerate}
+
+\thm (Radon-Nikodym)
+
+Let $\mu$ and $\nu$ be Radon measures on $\R^n$ such that $\nu<<\mu$. Then for any $\mu$-measurable set $A \subseteq \R^n$, one has
+
+\begin{enumerate}
+
+\item $\nu(A) = \int_AD_\mu\nu(x)\,d\mu$ 
+
+\item For any $f:\R^n\to\R$ $\mu$-measurable, one has $\int_Af(x)\,d\nu = \int_Af(x)D_\mu\nu(x)\,d\mu$. 
+
+\end{enumerate}
+
+\proof
+
+For the first part, observe that if $A$ is $\mu$-measurable, then $A$ is also $\nu$-measurable. Why? If there exists a Borel set $B\subseteq\R^n$ such that $A\subseteq B, \mu(A) = \mu(B)$, then $\mu(B\setminus A) = 0$. Since $\nu<<\mu$, $\nu(B\setminus A) = 0$, so $B \setminus A$ is $\nu$-measurable. So $A = B\setminus(B\setminus A)$. so $A$ is $\nu$-measurable. 
+
+\cor
+
+If $f$ is $\mu$-measurable, then it is $\nu$-measurable. 
+
+\section*{Lecture 10, 2/21/23}
+
+\claim
+
+If $A \subseteq \R^n$ is $\mu$-measurable, then $A$ is also $\nu$-measurable. If $f:\R^n\to\R$ is $\mu$ measurable, then $f$ is also $\nu$-measurable. 
+
+\proof\,
+
+Fix $t > 1$ ($t$-truncation argument)
+
+Consider the sets
+\[
+A_m = \{x\in A\mid t^m \leq D_\mu\nu(x) < t^{m + 1}\},\,\,m\in\Z
+\]
+Let $A = \cup_{m\in\Z}A_m \cup (A \cap \tilde{I}) \cup (A \cap \{x\mid D_\mu\nu(x) \text{ does not exist}\} \cup (A \cap Z)$, where 
+\begin{align*}
+\tilde{I} & \eqdef \{x\in\R^n\mid D_\mu\nu(x) = +\oo\} \\
+Z & \eqdef \{x\in\R^n\mid D_\mu\nu(x) = 0\} \\
+\end{align*}
+
+Note $\nu((A \cap \tilde{I}) \cup (A \cap \{x\mid D_\mu\nu(x) DNE ) \cup (A \cap Z))= 0$, so $\nu(A) = \nu(\cup_{m\in\Z}A_m) = \sum_{m\in\Z}\nu(A_m)$.
+
+Why is this set $\nu$-null? 
+
+First, note $\mu(\{x\mid D_\mu\nu(x) DNE\}) = 0$ implies $\nu(\{x\mid D_\mu\nu(x) DNE\}) = 0$. 
+
+$\tilde{I}\subseteq I$, and $\mu(I) = 0$, so $\mu(\tilde{I}) = 0$, so $\mu(\tilde{I} \cap A) = 0$, so $\nu(\tilde{I}\cap A) = 0$.
+
+Fix $\alpha > 0$. $\nu(C_\alpha)\leq\alpha\mu(C_\alpha)$. So $\nu(Z)\leq\nu(C_\alpha)\leq\alpha\mu(C_\alpha)\leq\alpha\mu(\R^n)$, which goes to $0$. 
+
+So $\nu(Z) = 0$. 
+
+Thus $\nu(\tilde{I}) = \int_{\tilde{I}} D_\mu\nu(x)\,d\mu, \nu(Z) = \int_ZD_\mu\nu(x)\,d\mu = 0$.
+
+Now $t^n\mu(A_m) \leq \nu(A_m) \leq t^{m + 1}\mu(A_)$. 
+
+So $\sum_{m\in\Z}t^m\mu(A_m) \leq \sum_{m\in\Z}\nu(A_m) \leq \sum_{m\in\Z}t^{m + 1}\mu(A_m) =t \sum_{m\in\Z}t^m\mu(A_m)$. 
+
+
+So $\int_{A_m}t^m\,d\mu \leq \int_{A_m}D_\mu\nu(x)\,d\mu \leq \int_{A_m}t^{m + 1}\,d\mu$. 
+
+By monotone convergence theorem,$\sum_{m\in\Z}\int_{A_m}D_\mu\nu(x)\,d\mu = \int_{\cup A_m}D\mu\nu(x)\,d\mu$. 
+
+So $\sum_{m\in\Z}t^n\mu(A_m) \leq \int_{\cup A_m}\Dmn(x)\,d\mu \leq t\sum_{m\in\Z}t^m\mu(A_m)$. 
+
+So $\frac{1}{t}\int_{\cup A_m}\Dmn(A)\,d\mu \leq \nu(A) \leq t\int_{\cup A_m}\Dmn(x)\,d\mu, \forall t > 1$. 
+
+So $\frac{1}{t}\int_A\Dmn(x)\,d\mu \leq \nu(A) \leq t \int_{A}\Dmn(x)\,d\mu$. 
+
+We let $t\to 1$ to get $\nu(A) = \cup_A\Dmn(x)\,d\mu$. 
+
+We now prove that $\int_Af(x)\,d\nu = \int_Af(x)\Dmn(x)\,d\mu$. 
+
+Let $f^+(x) = \max(f(x), 0)$ and $f^-(x) = -\min(0, f(x))$. Note $f = f^+ - f^-$. 
+
+Assume $f(x) \geq 0$ for all $x \in\R^n$. 
+
+\lem 
+
+Let $X$ be a nonempty set, and let $\mu$ be a measure on $X$, and let $f:X\to[0,\oo]$ be $\mu$-measurable. Then there exist $\mu$-measurable sets $\{A_k\}\seq{k}$ such that 
+\[
+f(x) = \sum_{k=1}^\oo \frac{1}{k}\chi_{A_k}(x)
+\]
+
+\rem The $\{A_k\}$ need not be disjoint.
+
+\proof 
+
+Define $A_1 = \{x\mid f(x)\geq1\}$. 
+
+Assuming $A_1, A_2, \dots, A_{k - 1}$ are well-defined, define $A_k = \{x\in X \mid f(x) \geq \frac{1}{k} + \sum_{i=1}^{k - 1}\frac{1}{i}\chi_{A_i}(x)\}$
+
+By construction/induction, each $A_k$ is $\mu$-measurable. 
+
+We claim $f(x) = \sum_{k=1}^\oo\frac{1}{k}\chi_{A_k}(x)$. 
+
+\begin{enumerate}
+
+\item Fix $n\in\N$. We claim $f(x) \geq \sum_{k=1}^n\frac{1}{k}\chi_{A_k}(x)$. Let $m\in\{1,\dots,n\}$ be the largest integer such that $x \in A_m$. Then 
+\[
+f(x) \geq \frac{1}{m} + \sum_{k=1}^{m - 1}\frac{1}{k}\chi_{A_k}(x) = \sum_{k=1}^m\frac{1}{k}\chi_{A_k}(x) \leq \sum_{k=1}^n\frac{1}{k}\chi_{A_k}(x)
+\]
+
+\item If $f(x) = \oo$, $x \in A_k$ for all $k\in\N$ so $\sum_{k=1}^m\frac{1}{k}\chi_{A_k}(x) = \sum_{k=1}^\oo\frac{1}{k} = \oo$. If $f(x) < \oo$, then there exists a sequence of naturals $\{n_\ell\}$ such that $x\not\in A_{n_\ell}$. So 
+\[
+f(x) - \sum_{k=1}^{n_\ell - 1}\frac{1}{k}\chi_{A_k}(x) < \frac{1}{n_\ell}, \,\,\ell = 1, 2, \dots .
+\]
+We let $\ell\to\oo$ to get $f(x) = \sum_{k=1}^{\oo}\frac{1}{k}\chi_{A_k}(x)$
+
+\end{enumerate}
+
+We are now ready to finish the proof. 
+
+Let $f_m = \sum_{k=1}^{m}\frac{1}{k}\chi_{A_k}(x)$, $A_k \subseteq A$. 
+
+Then $\int_Af_m(x)\,d\nu = \int_Af_m(x)\Dmn(x)\,d\nu(x)$. 
+
+By MCT, 
+\[
+\int_Af(x)\,d\mu = \int_Af(x)\Dmn(x)\,d\nu
+\]
+
+\qed
+
+\thm (Lebesgue Decomposition Theorem)
+
+Let $\mu$ and $\nu$ be Radon measures on $\R^n$. Then there exists Radon measures $\nu_{ac},\nu_s$ on $\R^n$ such that $\nu = \nu_{ac} + \nu_s$, and 
+\begin{enumerate}
+
+\item $\nu_{ac} << \mu, \nu_s \perp \mu$ 
+
+\item $\Dmn_s(x) = 0$ for $\mu$-almost every $x \in \R^n$. Further, for all Borel $B \subseteq\R^n$, we have 
+\[
+\nu(B) = \int_B\Dmn_{ac}(x)\,d\mu + \nu_s(B)
+\]
+
+\end{enumerate}
+
+\proof
+
+Consider the collection $\ms{F} = \{A\subseteq \R^n\setminus A) = 0, A$ Borel $\}$. Let $m = \inf\{nu(A) \mid A \in \ms{F}\}$.
+
+
+
+
+
+\section*{Lecture 11, 2/23/23}
+
+\thm (Lebesgue Decomposition Theorem). 
+
+Let $\mu$ and $\nu$ be Radon measures on $\R^n$. Then there exists $\nu_{ac}, \nu_s$ Radon measures on $\R^n$ such that $\nu = \nu_{ac} + \nu_s$, 
+\begin{enumerate}
+
+\item $\nu_{ac}<<\nu_{s}, \nu_s\perp\mu$
+
+\item $\Dmn_s(x) = 0$ for $\mu$-almost every $x \in\R^n$, and for all Borel $B \subseteq \R^n$, 
+\[
+\nu(B) = \int_B\Dmn_{ac}(x)\,d\mu + \nu_s(B)
+\]
+
+\end{enumerate}
+
+\proof
+
+First, assume $\mu,\nu$ are finite. Consider the collection $\ms{F} = \{A\subseteq\R^n \mid \mu(\R^n\setminus A) = 0, A$ Borel$\}$. 
+
+Let $m = \inf\{\nu(A)\mid A\in\ms{F}\}$. 
+
+Note $0 \leq m < \oo$, so we can choose $A_k\in\ms{F}$ so that $m \leq \nu(A_k) < m + \frac{1}{k}$. 
+
+Define $B = \capk A_k$. By continuity from above, $\nu(B) = m$. Furthermore, $B$ is Borel. Note $\mu(\R^n\setminus B) = \mu(\R^N\setminus \capk A_k) = \mu(\cupk(\R^n\setminus A_k)) \leq \sum\seq{k}\mu(\R^n\setminus A_k) = 0$. 
+
+So $B \in \ms{F}$.
+
+Note $\mu$ is supported on $B$. Define $\nu_{ac} = \nu|_B$, $\nu_s = \nu_{\R^n\setminus B}$. Obviously, $\nu_s\perp\nu_{ac}$. 
+
+We claim $\nu_{ac}<<\mu$. Towards contradiction, suppose there is a $C \subseteq\R^n$ such that $\mu(C) = 0$ but $\nu_{ac}>0$.
+
+Without loss of generality, assume $C$ is Borel. Further, assume $C\subseteq B$. Then $B \setminus C \in \ms{F}$, since $\mu(\R^n\setminus(B\setminus C)) \leq \mu(\R^n\setminus B) + \mu(C) = 0$. Furthermore, $\nu(B\setminus C) = \nu(B) - \nu_{ac}(C) < \nu(B)$, a contradiction.
+
+Now we show $\Dmn_s(x) = 0$ for $\mu$-almost every $x \in \R^n$. 
+
+For every $\alpha>0$, set $C_\alpha = \{x\in\R^n\mid \bar{\Dmn_s}(x) \geq\alpha\}$.
+
+By lemma, $\nu_s(C_\alpha) \geq \alpha\mu(C_\alpha)$. Clearly, $C_\alpha = (C_\alpha \cap B) \cup (C_\alpha \setminus B)$. Note $\mu(C_\alpha\setminus B) = 0$, $\mu(C_\alpha \cap B) = 0$. So $\mu(C_\alpha) = 0$. 
+
+Since $\{x\mid \Dmn_s(x) > 0\} = \cupk C_{\frac{1}{k}}$, $\mu(\{x\mid \Dmn_s(x)>0\}) = 0$.
+
+Let $C_m = \{x\mid|x|<m\}$. There exists $B_m\subseteq C_m$ such that
+\begin{itemize}
+\item $\mu(C_m\setminus B_m) = 0$
+\item $\nu_{ac}^m = \nu_{C_m} < < \mu$
+\item $\nu_s^m = \nu_{C_m\setminus B_m}\perp\mu$
+\item $\Dmn_{ac}^m(x) = 0$ for $\mu$-almost every $x \in C_m$
+\end{itemize}
+Set $B = \cupi B_i$, $\nu_{ac} = \nu_B, \nu_s = \nu_{\R^n\setminus B}$
+
+\begin{enumerate}
+
+\item $\mu(\R^n\setminus B) = \mu(\cupk C_k \setminus \cupk B_k) \leq \mu(\cupk(C_k\setminus B_k)) \leq \sum\seq{k}\mu(C_k\setminus B_k) = 0$
+
+\item We claim $\nu_s\perp\mu$, $\nu_{ac}<<\mu$. If $\mu(A) = 0$, $\mu(A \cap C_m) = 0$ for all $m\in\N$. So $\nu_{ac}(A) = \nu_{ac}(\cupk C_k \cap A) \leq \sum\seq{k}\nu_{ac}(C_k\cap A) = \sum\seq{k}\nu(B\cap C_k \cap A)$.
+
+Fix: New $\bar{B_m} = \cupk[m]B_k$. This will give us $ = \sum\seq{k}\nu_{ac}^k(C_k \cap A) = 0$.
+
+\qed ?
+
+\end{enumerate}
+
+\subsection*{\underline{Differentiation of Integrals, Lebesgue's Point}}
+
+\defn
+
+\[
+L^1(\R^n,\mu) \eqdef \{f:\R^n\to[-\oo,\oo] \mid f\text{ is }\mu-\text{measurable }, \int_{\R^n}|f|\,d\mu < \oo\}
+\]
+\[
+L^1_{\loc}(\R^n, \mu) \eqdef \{f:\R^n\to[-\oo,\oo] \mid f\text{ is } \mu-\text{measurable }, \int_K|f|\,d\mu < \oo\text{ for all $K$ compact}\}
+\]
+
+\thm (Lebesgue-Besicovitch differentiation theorem)
+
+Let $\mu$ be a Radon measure on $\R^n$ and let $f\in L^1_{\loc}(\R^n, \mu)$. Then 
+\[
+\lim_{r\to0^+}\frac{1}{\mu(B(x, r))}\int_{B(x, r)}f(y)\,dy = f(x)
+\]
+for $\mu$-almost every $x \in \R^n$.
+
+\proof
+
+Consider $f^+ = \max(f, 0)$ and $f^- = -\min(0, f)$. Note $f = f^+ - f^-$, $f^+$ and $f^-$ are $\mu$-measurable, $f^+, f^- \in L^1_{\loc}(\R^n,\mu)$. 
+
+Define $\nu^+,\nu^-:2^{\R^n}\to[0,\oo]$ as follows: 
+\begin{align*}
+\nu^{\pm}(B) & \eqdef \int_Bf^{\pm}(x)\,d\mu, \text{ where $B$ is Borel}\} \\
+\nu^{\pm}(A) & \eqdef \inf\{\nu^{\pm}(B) \mid A \subseteq B, B\text{ Borel}\} \\
+\end{align*}
+
+\lem 
+
+$\nu^{pm}$ are Radon measures with 
+\begin{itemize}
+
+\item $\nu^{\pm} << \mu$
+\item $\Dmn^{\pm}(x) = f^{\pm}(x)$ for $\mu$-almost every $x \in \R^n$.
+
+\end{itemize}
+
+\lem Let $g \in L^1_{\loc}(\R^n,\mu)$, where $\mu$ is a Borel measure on $\R^n$. Then
+\begin{align*}
+\nu(B) & = \int_Bg(x)\,d\mu, B\text{ Borel} \\
+\nu(A) & = \inf\{\nu(B)\mid A \subseteq B, B \text{ Borel} \}\\
+\end{align*}
+is a Radon measure, $\nu<<\mu, \Dmn(x) = g(x)$ for $\mu$-almost every $x\in\R^n$. 
+
+\section*{Lecture 12, 2/28/23}
+
+\lem Let $\mu$ be a Borel measure on $\R^n$ and let $f:\R^n\to[0,\oo]$ be such that $f\in L^1_{\loc}(\R^n,\mu)$. Define $\nu(B) = \int_Bf\,d\mu$ for all $B$ Borel, $\nu(A) = \inf\{\nu(B)\mid A \subseteq B, B \text{ Borel}\}$. Then:
+\begin{enumerate}
+
+\item $\nu$ is a Radon measure on $\R^n$ (even if $\mu$ is just Borel)
+\item If $\mu$ is Borel-regular, then $\nu<<\mu$ and $\nu(A) = \int_Af\,d\mu$ for all $A \subseteq\R^n$ $\mu$-measurable.
+\item If $\mu$ is Radon, then $\Dmn(x) = f(x)$ for $\mu$-almost every $x \in \R^n$. 
+
+\end{enumerate}
+
+\proof\,
+
+\begin{enumerate}
+
+\item $\nu$ is a Borel-regular measure on $\R^n$, by homework 2, problem 2. 
+
+\item Assume $A$ is $\mu$-measurable. 
+
+Then there exists a Borel set $B$ such that $A \subseteq B, \mu(A) = \mu(B)$. So $\mu(B\setminus A) = \mu(B) - \mu(A) = 0$. 
+
+$\nu(B) = \int_Bf\,d\mu = \int_Af\,d\mu + \int_{B\setminus A}f\,d\mu = \int_Af\,d\mu$
+
+$\nu(A) = \inf\{\nu(\tilde{B})\mid A\subseteq\tilde{B}, \tilde{B} \text{ Borel}\}$. 
+
+So $\int_{\tilde{B}}f\,d\mu = \int_{\tilde{B}\setminus A}f\,d\mu + \int_Af\,d\mu \geq \int_Af\,d\mu = \nu(B)$. So $\nu(B) = \inf\{``"\} = \nu(A)$. 
+
+Assume $\mu(A) = 0$. Then $\nu(A) = \int_Af\,d\mu = 0$, so $\nu<<\mu$. 
+
+\item We need a lemma
+
+
+\end{enumerate}
+
+\lem 
+
+Let $X$ be a nonempty set, and let $\mu$ be a measure on $X$. Assume $f \in L^1_{\loc}(X,\mu)$. If $\int_Af(x)\,d\mu = 0$ for all $A$ $\mu$-measurable, then $f \equiv 0$ $\mu$-almost everywhere. 
+
+\proof
+
+Assume $f$ is nonnegative $\mu$-almost everywhere. Let $A_n = \{x\in X \mid f(x) \geq\frac{1}{n}\}$. For all $n$, $A_n$ is $\mu$-measurable. Note $\{x\in X \mid f(x) > 0 \} = \cupn A_n$. We have
+\[
+0 = \int_{A_n}f\,d\mu \geq \int_{A_n}\frac{1}{n}\,d\mu = \frac{1}{n}\mu(A_n) \geq 0
+\]
+So $\mu(A_n) = 0$. Thus $\mu(\{x\in X \mid f(x) > 0 \}) = 0$. 
+
+Now consider any $f\in L^1_{\loc}(X,\mu)$. Let $f = f^+ - f^-$. Both $f^+, f^- = 0$ $\mu$-almost everywhere. 
+
+\qed
+
+We now proceed with the proof. For all $A \subseteq \R^n$ $\mu$-measurable and $K$ compact, we have $\int_{A\cap K}f\,d\mu = \nu(A\cap K)$, and by the Radon-Nikodym theorem this equals $\int_{A\cap K}\Dmn(x)\,d\mu$. Thus $\int_{A\cap K}\Dmn(x) - f(x)\,d\mu = 0$. So by lemma 2, $\Dmn(x) = f(x)$ $\mu$-almost everywhere. Take $K = B_1, B_2, \dots $. 
+
+\thm (Lebesgue-Besicovitch Theorem):
+
+Let $\mu$ be a Radon measure on $\R^n$ and let $f\in L^1_{\loc}(\R^n,\mu)$. Then $\lim_{r\to0^+}\frac{1}{\mu(B(x, r))}\int_{B(x, r)}f\,d\mu = f(x)$ $\mu$-almost everywhere.
+
+\proof
+
+Write $f = f^+ - f^-$ and note $f^{\pm}\in L^1_{\loc}(\R^n,\mu)$. Define $\nu^{\pm}(B) = \int_Bf^{\pm}\,d\mu$ for all $B$ Borel, and as in lemma 1, $\nu^{\pm}(A) = \inf\{\nu^{\pm}(B)\mid A \subseteq B, B$ Borel $\}$. 
+
+Then $\nu^{\pm}<<\mu, \nu^{\pm}$ are Radon. Note that $\Dmn^{\pm}(x) = f^{\pm}(x)$ $\mu$-almost everywhere. So
+\begin{align*}
+\lim_{r\to0^+}\frac{1}{\mu(B(x, r))}\int_{B(x, r)}f\,d\mu & = \lim_{r\to0^+}\frac{1}{\mu(B(x, r))}\int_{B(x, r)}(f^+ - f^-)\,d\mu \\
+& = \lim_{r\to0^+}\left(\nu^+(B(x, r)) - \nu^-(B(x, r))\right) \\
+& = \lim_{r\to0^+}\frac{\nu^+(B(x, r))}{\mu(B(x, r))} - \lim_{r\to0^+}\frac{\nu^-(B(x, r))}{\mu(B(x, r))} \\
+& = \Dmn^+(x) - \Dmn^-(x) \\
+& = f^+(x) - f^-(x) \\
+& = f(x) \mu-a.e. \\
+\end{align*}
+
+\qed
+
+\thm Under the conditions of the previous theorem, we have 
+\[
+\lim_{r\to0^+}\frac{1}{\mu(B(x, r))}\int_{B(x, r)}|f(y) - f(x)|\,d\mu = 0
+\]
+$\mu$-almost everywhere. 
+
+\proof
+
+We have
+\begin{align*}
+|\frac{1}{\mu(B(x, r))}\int_{B(x, r)}f(y)\,d\mu - f(x)| & = |\frac{1}{\mu(B(x, r))}\int_{B(x, r)}f(y) - f(x)\,d\mu| \\
+& \leq \frac{1}{\mu(B(x, r))}\int_{B(x, r)}|f(y) - f(x)|\,d\mu \\
+& \to 0 \\
+\end{align*}
+
+And then the previous theorem finishes the proof. 
+
+\section*{Lecture 13, 3/2/23}
+
+\thm Let $\mu$ be a Radon measure on $\R^n$ and let $f \in L^1_{\loc}(\R^n,\mu)$. Then 
+\[
+\underbrace{\lim_{r\to0^+}\frac{1}{\mu(B(x, r))}\int_{B(x, r)}|f(y) - f(x)|\,d\mu}_{*} = 0
+\]
+for $\mu$-almost every $x \in \R^n$. 
+
+\defn Points $x\in\R^n$ that satisfy the above equation are called 
+
+\underline{Lebesgue points of $f$ (for the measure $\mu$)}
+
+\proof
+
+Let $\Q = \{r_i\}\seq{i}\subseteq\R$ be an enumeration of the rationals. We know $\Q$ is dense in $\R$. 
+
+For every $i \in \N$, $\lim_{r\to0^+}\frac{1}{\mu(B(x, r))}\int_{B(x, r)}|f(y) - f(r_i)|\,d\mu = |f(x) - r_i|$ is satisfied $\mu$-almost everywhere. 
+
+Let $A_i\subseteq \R^n$ be points where the equation is satisfied. Then $\mu(\R^n\setminus A_i) = 0$. 
+
+We have 
+\[
+\phi_i(x) = |f(x) - r_i|\in L^1_{\loc}(\R^n,\mu)
+\]
+because 
+\[
+|\phi_i(x)| \leq |f(x) + |r_i| \in L^1_{\loc}(\R^n,\mu)
+\]
+Set $A = \capi A_i$. We claim that $*$ is satisfied for all $x \in A$. Note
+\[
+\mu(\R^n\setminus A) = \mu(\R^n\setminus\capi A_i) = \mu(\cupi (R^n\setminus A_i)) \leq \sum\seq{i}\mu(\R^n\setminus A_i) = 0
+\]
+Fix $\varepsilon > 0$. Choose $r_m$ such that $|f(x) - r_m| < \varepsilon$. 
+
+Then 
+\[
+|f(y) - f(x)| \leq |f(y) - r_m| + |f(x) - r_m|
+\]
+so
+\[
+\frac{1}{\mu(B(x, r))}\int_{B(x, r)}|f(y) - f(x)|\,d\mu \leq 2|f(x) - r_m| < 2\varepsilon
+\]
+We take the limit as $\varepsilon\to0$ to get
+\[
+\limsup_{r\to0^+}\frac{1}{\mu(B(x, r))}\int_{B(x, r)}|f(y) - f(x)|\,d\mu = 0
+\]
+thus
+\[
+\lim_{r\to0^+}\frac{1}{\mu(B(x, r))}\int_{B(x, r)}|f(y) - f(x)|\,d\mu =0
+\]
+
+\qed
+
+\defn 
+
+A measure $\mu$ has \underline{the doubling property} if there exists a constant $C>0$, such that
+\[
+0< \mu(B(x, 2r)) \leq C\mu(B(x, r)) < \oo
+\]
+
+\rem
+
+Note that $\mu = \lambda^n$ has the doubling property: there exists $c_1, c_2$ such that $\mu(B(x, c_1r)) \leq c_2\mu(B(x, r))$ for all $r > 0, x \in \R^n$. Simply choose $c_1 = 2, c_2 = 2^n$. Because $c_1 > 1$, there exists a $k\in\N$ such taht $c_1^k\geq2$, $\mu(B(x, 2r)) \leq \mu(B(x, c_1^kr)) \leq \cdots \leq c_1^k\mu(B(x, r))$
+
+\thm Let $\mu$ be a Radon measure on $\R^n$ with the doubling property. Choose $f \in L^1_{\loc}(\R^n,\mu)$. Then $\lim_{r\to0^+}\frac{1}{\mu(B(x, r))}\int_{B(x, r)}|f(y) - f(x)|\,d\mu = 0$ for $\mu$-almost every $x \in \R^n$. 
+
+\proof
+
+\begin{align*}
+\frac{1}{\mu(B(x, r))}\int_{B(z(r), r)}|f(y) - f(x)|\,d\mu & \leq \frac{1}{\mu(B(x, r))}\int_{B(x, 2r)}|f(y) - f(x)|\,d\mu \\
+& \leq \frac{c_1^k}{\mu(B(z(r), 2r))}|f(y) - f(x)|\,d\mu \\
+\end{align*}
+
+This goes to 0 as $r\to 0$. 
+
+\thm (Density)
+
+Let $\mu$ be a Radon measure on $\R^n$ and let $E \subseteq \R^n$ be $\mu$-measurable. Then
+\begin{enumerate}
+
+\item $\lim_{r\to0^+}\frac{\mu(E \cap B(x, r))}{\mu(B(x, r))} = 1$ for $\mu$-almost every $x \in E$
+\item $\lim_{r\to0^+}\frac{\mu(E \cap B(x, r))}{\mu(B(x, r))} = 0$ for $\mu$-almost every $x \in E^c$.
+
+\end{enumerate}
+
+\proof
+
+Apply previous theorem to $f(x) = \chi_{E}(x)$.
+
+Choose $R_1 < R_2 < \cdots < R_k < \cdots$ such that $\lim_{k\to\oo}R_k = \oo$, $\mu9\{x\mid||x| = R_i\}) = 0$. Then do the analysis for the sets $a-k = \{x\mid R_k < |x| < R_{k + 1}\}$, $A_0 = \{x\mid |x| < R\}$. Let $\nu_s = \sum\nu_s^i + \nu|_{\cupk\{x\mid |x| = R_k\}}, \nu_{ac} =\sum\nu_{ac}^i$. 
+
+\qed
+
+\lem
+
+Let $\mu$ be a Radon measure on $\R^n$. Fix $x\in\R^n$. Then $\mu(\del(B(x, r)) = 0$ for $r \in \R^\setminus\{r_1, r_2, \dots\}$. 
+
+\proof
+
+It is sufficient to prove the statement within any fixed ball $B(x, r), R> 0$. Then take $R = 1, 2, \dots, \R^n = \cup\seq{r}B(x, r)$.
+
+Define $A_k = \{r\in[0,R]\mid \mu(\del B(x, r)) \geq \frac{1}{k}\}, k = 1, 2, \dots $. Note $\{r\in[0,R]\mid \mu(\del B(x, r)) > >0 \} = \cupk A_k$. 
+
+$\oo > \mu(B(x, r)) \geq |A_k|\frac{1}{k}, |A_k| \leq k\mu(B(x, r))$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
