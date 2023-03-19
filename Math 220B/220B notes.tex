@@ -1399,29 +1399,774 @@ The $\Z$-linear map $\psi:\Z\to G$ defined by $1\mapsto g'$ extends $phi$.
 
 $\R, \Q, \Q/\Z$ are all injective $\Z$-modules since they are divisible. 
 
+\section*{Lecture 14, 2/10/23}
 
+\subsection*{\underline{Localization of modules}}
 
+Let $R$ be a commutative ring with $1$, $S \subset R$ a multiplicative subset, and $M$ an $R$-module.
 
+Define the relation $\sim$ on $M\times S$ by $(m, s) \sim (m', s') \iff t(s'm - sm') = 0$ for some $t\in S$, and let $\frac{m}{s} = $equivalence class of $(m, s)$. 
 
+Then $S^{-1}M = \{\frac{m}{s} \mid m \in M, s \in S\}$ becomes an $S^{-1}R$-module via
+\begin{align*}
+\frac{m}{s} + \frac{m'}{s'} & \eqdef \frac{s'm + sm'}{ss'}
+\\
+\frac{r}{t}\cdot\frac{m}{s} & \eqdef \frac{rm}{st}
+\end{align*}
+If $f:M\to N$ is an $R$-homomorphism, then $S^{-1}f:S^{-1}M\to S^{-1}N$ given by $\frac{m}{s}\mapsto\frac{f(m)}{s}$ is a $S^{-1}R$ homomorphism. 
 
+\prop
 
+If $\begin{tikzcd}M'\ar[r, "f"]&M\ar[r, "g"]&M'' \end{tikzcd}$ is a $R$-mod exact sequence, then 
+\[
+\begin{tikzcd} S^{-1}M' \ar[r, "S^{-1}f"] & S^{-1}M\ar[r, "S^{-1}g"] & S^{-1}M \\ \end{tikzcd}
+\]
+is an $S^{-1}R$-mod exact sequence. That is, localization is an exact functor.
 
+\proof
 
+We need to show $\Im(S^{-1}f) = \ker(S^{-1}g)$. We have $\Im(f) = \ker(g)$, so $g \circ f =0 $. So $\underbrace{S^{-1}(g\circ f)}_{=(S^{-1}g)\circ(S^{-1}f)} = 0$. So $\Im(S^{-1}f) \subseteq \ker(S^{-1}g)$. Conversely, let $\frac{m}{s}\in\ker(S^{-1}g)$. So $\frac{g(m)}{s} = 0 \in S^{-1}M''$. 
 
+So for some $t \in S, \overbrace{t\cdot g(m)}^{g(tm)} =0 \in M''$. So $tm \in \ker(g) = \im(f)$, so $tm = f(m')$ for some $m' \in M'$. 
 
+Therefore $\frac{m}{s} = \frac{tm}{ts} = \frac{f(m')}{ts}\in\Im(S^{-1}f)$.
 
+\qed
 
+\cor 
 
+If $N\subset M$ is an $R$-submodule, then $S^{-1}N\subset S^{-1}M$ is an $S^{-1}R$-submodule, and $\frac{(S^{-1}M)}{(S^{-1}N)} \cong S^{-1}(\frac{M}{N})$
 
+\proof
 
+Apply the proposition to the short exact sequence
+\[
+\exactshort{N}{}{M}{}{M/N}
+\]
+Indeed, this tells us 
+\[
+\exactshort{S^{-1}N}{}{S^{-1}M}{}{S^{-1}\frac{M}{N}}
+\]
+is exact.
 
+\qed
 
+\underline{Notation:} If $S = R\setminus\mk{p}$ with $\mk{p}\subset R$ a prime ideal, we often use $f_{\mk{p}}, M_{\mk{p}}$ to denote $S^{-1}f, S^{-1}M$. 
 
+\prop
 
+Let $M$ be an $R$-module. Then the following are equivalent:
 
+\begin{enumerate}[label=(\roman*)]
 
+\item $M = 0$. 
 
+\item $M_\mk{p} = 0$ for all prime ideals $\mk{p}\subset R$.
 
+\item $M_\mk{m} = 0$ for all maximal ideals $\mk{m} \subset R$,
+
+\end{enumerate}
+
+\proof
+
+Clearly $(i)\implies(ii),$ and $(ii)\implies(iii)$, as maximal ideals are prime. The only thing to check is $(iii)\implies(i)$.
+
+Suppose $(iii)$ holds, and for the sake of contradiction that $M\neq0$. Let $x\neq0\in M$. Then $I = \Ann_R(x) \eqdef \{r\in R \mid rx = 0\}\subset R$ is a proper ideal, so $I\subset \mk{m}$ for some maximal ideal $\mk{m}$. 
+
+Then $\frac{x}{1} = 0 \in M_{\mk{m}} \implies t\cdot x=0$ for some $t \in R\setminus\mk{m}\subset R\setminus I$. 
+
+But this means that $t \in I$!! Contradiction.
+
+\qed
+
+\cor
+
+Let $f:M\to N$ be an isomorphism. Then the following are equivalent:
+
+\begin{enumerate}[label=(\roman*)]
+
+\item $f$ is injective. 
+
+\item $f_{\mk{p}}:M_{\mk{p}}\to N_{\mk{p}}$ is injective for all prime ideals $\mk{p}\subset R$. 
+
+\item $f_{\mk{m}}:M_\mk{m}\to N_\mk{m}$ is injective for all maximal ideals $\mk{m}\subset R$. 
+
+\end{enumerate}
+
+Moreover, the same holds with ``injective" replaced by ``surjective" everywhere. 
+
+\proof
+
+\subsection*{$(i)\implies(ii)$}
+
+If $f$ is injective, then the sequence
+\[
+\begin{tikzcd}
+0\ar[r]&M\ar[r, "f"]& N 
+\end{tikzcd}
+\]
+is exact, so by the proposition, the sequence
+\[
+\begin{tikzcd}
+0\ar[r]&M_\mk{p}\ar[r, "f_\mk{p}"]&N_\mk{p}
+\end{tikzcd}
+\]
+is exact for all prime ideals $\mk{p}\subset R$. So $f_\mk{p}$ is injective. 
+
+\subsection*{$(ii)\implies(iii)$}
+
+Maximal ideals are prime. 
+
+\subsection*{$(iii)\implies(i)$}
+
+Suppose $(iii)$ holds, and let $K = \ker(f)$. So we have the exact sequence
+\[
+\begin{tikzcd}
+0\ar[r]&K\ar[r]&M\ar[r, "f"]&N 
+\end{tikzcd}
+\]
+Then by the proposition, we have an exact sequence
+\[
+\begin{tikzcd}
+0\ar[r]&K_\mk{m}\ar[r]&M_\mk{m}\ar[r, "f_\mk{m}"] & N_\mk{m} 
+\end{tikzcd}
+\]
+So $K_\mk{m} \cong \underbrace{\ker(f_\mk{m})}_{0\text{ by }(iii)}$
+
+So by a previous proposition, $K = 0$, so $f$ is injective. 
+
+\qed
+
+\subsection*{\underline{Motivation for next topic}}
+
+\underline{Recall:} An $R$-module $M$ is \underline{finitely generated} (fg) if there exist $f_1, \dots, f_r \in M$ such that
+\[
+M = (f_1, \dots, f_r) = \{\sum_{i=1}^ra_if_i\mid a_i\in R\}
+\]
+
+\underline{Note:} For general rings $R$, a submodule of a finitely generated module \underline{need not} be finitely generated itself. 
+
+For instance, let $R = \Z[x_1, x_2, x_3, \dots ]$ be the polynomial ring in countably-many variable seen as an $R$-module. This is finitely generated (e.g. by 1), but the ideal $I = (x_1, x_2, x_3, \dots )$ is not finitely generated. 
+
+\section*{Lecture 15, 2/13/23}
+
+\defn
+
+Let $R$ be a commutative ring with 1. 
+
+\begin{itemize}
+
+\item An $R$-module $M$ is a Noetherian $R$-module if every submodule $M$ is finitely generated. 
+
+\item We say $R$ is a Noetherian ring if $R$ is Noetherian as an $R$-module (iff every ideal is finitely generated). 
+
+\end{itemize}
+
+\exm
+
+\begin{enumerate}
+
+\item If $F$ is a field, then $F$ is a Noetherian ring and an $F$-module $V$ is Noetherian iff $\dim_FV < \oo$. 
+
+\item If $R$ is a PID, then $R$ is a Noetherian ring and an $R$-module $M$ is Noetherian iff it's finitely generated. 
+
+\end{enumerate}
+
+\prop
+
+If an $R$-module $M$ is Noetherian, then any submodule and any quotient of $M$ is Noetherian. 
+
+\proof
+
+For submodules, this is clear by definition. 
+
+For quotients, let $M/N$ be a quotient of $M$ and $L\subset M/N$ a submodule. 
+
+Let $\phi:M\to M/N$ by $\phi(m) = m + N$. 
+
+Since $M$ is Noetherian, we can write $\phi^{-1}(L) = (a_1, \dots, a_r)$ for some $a_1, \dots, a_r \in M$. 
+
+We claim $(\phi(a_1), \dots, \phi(a_r))$ generated $L$. 
+
+Indeed, $\phi(a_i) = a_i + N$, since $\phi(\phi^{-1}(L)) \subset L$. 
+
+Thus $\{\bar{a_1},\dots,\bar{a_r}\}\subset L$. 
+
+Conversely, let $\lambda \in L$. 
+
+Then $\lambda = \bar{a} = a + N$ for some $a \in \phi^{-1}(L)$. 
+
+Thus $a = \sum_{i=1}^rr_i\phi(a_i)$. 
+
+Thus $L \subset (\phi(a_i),\dots,\phi(a_r))$.
+
+\defn
+
+We say that an $R$-module $M$ \underline{satisfies the ascending chain condition (ACC)} if any ascending chain of submodules of $M$ $N_1 \subset N_2 \subset N_3 \subset \cdots $ stabilizes, i.e. there exists $r \geq 1$ such that $N_r = N_{r + 1} = \cdots$. 
+
+\thm
+
+$M$ is a Noetherian $R$-module iff $M$ satisfies the ACC. 
+
+\proof
+
+\subsection*{$=>$}
+
+Let $N_1 \subset N_2 \subset \cdots$ be a chain of submodules of $M$. 
+
+Let $N = \cup_{i\geq 1}N_I$, and notes that $N$ is a submodule of $M$. Then $N$ is finitely generated, i.e. $N = (a_1, \dots, a_k)$ for some $k$. Then for some $r$ sufficiently large, $a_i \in N_r$ for $1 \leq i \leq k$. This implies that $(a_1, \dots, a_k) \subset N_r \subset N$, so after the $r$th step, $N_i$ stabilizes. 
+
+\subsection*{$<=$}
+
+Let $N \subset M$ be a submodule. 
+
+Without loss of generality, assume $N$ is infinite. Choose a sequence of distinct points $(a_i) \in N$. 
+
+Note $(a_1)\subset (a_1, a_2) \subset (a_1, a_2, a_3) \subset \cdots $. 
+
+By the ACC, there exists $r$ such that $(a_1, \dots, a_r) = (a_1, \dots, a_r, a_{r + 1}) = (a_1, \dots, a_r, a_{r + 1}, a_{r + 2}) = \cdots$. So $(a_1, \dots, a_r)$ generates $N$. 
+
+\qed
+
+\prop
+
+Let $M$ be an $R$-module and $N\subset M$ a submodule. If $N$ and $M/N$ are Noetherian $R$-modules, then so is $M$. 
+
+\proof
+
+Let $L_1 \subset L_2 \subset \cdots$ be an ascending chain of submodules of $M$.
+
+Then $L_1 \cap N \subset L_2 \cap N \subset \cdots$ is an ascending chain of submodules of $N$ and $\phi(L_1) \subset \phi(L_2) \subset \cdots$ is an ascending chain of submodules of $M/N$, where $\phi$ is the canonical projection. 
+
+Since $N, M/N$ are Notherian, by previous proposition we have $r$ such that $L_1 \cap N = L_{r + 1} \cap N = \cdots$ and $\phi(L_r) = \phi(L_{r = 1}) = \cdots$. 
+
+We claim that $L_r = L_{r + 1} = \cdots$. 
+
+It is enough to show $L_{r + 1} \subset L_r$. Choose $m\in L_{r + 1}$. 
+
+Then $\phi(m) \in \phi(L_{r + 1}) = \phi(L_r)$. 
+
+So $m + N \in \phi(L_r)$. 
+
+Thus $m + N = y + N$ for some $y \in L_r = L_{r + 1}$. 
+
+This implies that $m = y + n$ for some $n \in N$. 
+
+Note $n = m - y \in N \cap L_{r + 1} = N + L_r$. 
+
+Thus $m = n + y \in L_r$. 
+
+\qed
+
+\cor 
+
+If $M$ and $N$ are Noetherian modules, then so is their direct sum $M \oplus N$. 
+
+\proof
+
+Clear from previous, since $M$ is a submodule of $M \oplus N$ and $N$ is a quotient of $M \oplus N$. 
+
+\qed
+
+\prop
+
+If $R$ is a Noetherian ring and $M$ is a finitely generated $R$-module, then $M$ is a Noetherian $R$-module. 
+
+\proof
+
+Suppose $M = (a_1, \dots, a_n)$. 
+
+Then $\phi:R^n\to M$ by $\phi(c_i) = a_i$ is a sufjective $R$-homomorphism inducing $R^n/\ker(\phi) \cong M$. Then $R^n$ is a Noetherian $R$-module by previous proposition. 
+
+\qed
+
+\section*{Lecture 16, 2/22/23}
+
+Existence and uniqueness of tensor products. 
+
+Given $R$-modules $M$ and $N$, we define their tensor produc t to be a pair $(M\otimes_RN, g)$, with $M\otimes_RN$ an $R$-module, and $g:M\times N\to M\otimes_RN$ an $R$-bilinear map, satisfying the \underline{universal property}:
+
+For any $R$-module $P$ and $R$-bilinear $f:M\times N \to P$, there exists a unique $R$-linear map $f':M\otimes_RN\to P$ such that $f = f\circ g$. That is, there is an $f'$ making the following diagram commute:
+\[
+\begin{tikzcd}
+M\times N\ar[d, "g"'] \ar[r, "f"] & P \\
+M\otimes_RN\ar[ur, dotted, "\exists!f'"']\\
+\end{tikzcd}
+\]
+Last time:
+
+We constructed $M\otimes_RN = R^{(M\times N)}/\langle A \rangle$, where $A$ is the submodule generated by all $R$-bilinear relations in $R^{(M\times N)}$.
+
+Then $q:R^{(M\times N)}\to M\otimes_RN$ is the projection.
+
+\rem
+
+$M\otimes_RN$ is generated by the elements of the form $m\otimes n$, ($m \in M, n \in N$), subject to the relations
+\begin{align*}
+(m_1 + m_2)\otimes n & = m_1\otimes n + m_2 \otimes n \\
+m\otimes(n_1 + n_2) & = m\otimes n_1 + m\otimes n_2 \\
+(rm)\otimes n & = m\otimes(rn)  = r(m\otimes n) \\
+\end{align*}
+
+It can be easily checked that indeed $g = q$ are bilinear, and indeed $(M\otimes_RN, g)$ satisfies the universal property. 
+
+\exm\,
+
+\begin{enumerate}
+
+\item $(\Z/3\Z)\otimes_\Z(\Z/2\Z) = 0$. It is enough to show $a\otimes b = 0$ for all $a \in \Z/3\Z, b \in \Z/2\Z$, and this follows from 
+\begin{align*}
+a\otimes b & = 3(a\otimes b) - 2(a\otimes b) \\
+			  & = \underbrace{(3a)}_{=0}\otimes b - a\otimes\underbrace{(2b)}_{=0} \\
+			  & = 0 \\
+\end{align*}
+
+\item Let $I, J \subset R$ be ideals. Then 
+\[
+(R/I)\otimes_R(R/J) = R/(I + J)
+\]
+In particular, $(\Z/m\Z)\otimes_\Z(\Z/n\Z) = \Z/d\Z$, where $d = \gcd(m, n)$. 
+
+We check this by showing that $R/(I + J)$ along with the map $\beta$ (given below) satisfies the same universal property as $(R/I)\otimes(R/J)$.
+
+Define the map $\beta:R/I\times R/J \to R/(I + J)$ by $(r + I, s + J) \mapsto rs + I + J$. This is certainly $R$-bilinear.
+
+Given any $R$-module $P$ and $R$-bilinear $f:R/I\times R/J \to P$, we need an $R$-linear $f':R/(I + J)\to P$ such that 
+\[
+\begin{tikzcd}
+R/I\times R/J \ar[r, "f"] \ar[d, "\beta"'] & P \\
+R/(I + J) \ar[ur, dotted, "f'"'] \\
+\end{tikzcd}
+\]
+commutes. We have $f(r + I, s + J) = rsf(1 + I, 1 + J)$ by $R$-bilinearity, and $\beta(r + I, s + J) = rs + I + J = rs(1 + I + J)$. 
+
+Any such $f'$ must send $1 + I + J$ to $f(1 + I, 1 + J)$, and thiss uniquely determines the $R$-linear map $f':R/(I + J)\to P$, $t + I + J \mapsto tf(1 + I, 1 + J)$, so $f = f'\circ\beta$. 
+
+\end{enumerate}
+
+Properties of the tensor product:
+
+\prop
+
+Let $L, M, N, M_1, M_2$ be $R$-modules. Then:
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $R\otimes_RM \cong M$  
+
+\item $M\otimes_RN \cong N\otimes_RM$ 
+
+\item $(L\otimes_RM)\otimes_RN \cong L\otimes_R(M\otimes_RN)$ 
+
+\item $(M_1\oplus M_2)\otimes_RN \cong (M_1\otimes_RN)\oplus(M_2\otimes_RN)$
+
+\end{enumerate}
+
+\proof
+
+All these are shown using the universal property. We will prove $(a)$. We want to produce an $R$-bilinear map from $R\times M\to M$. The map given by the ring action, $\beta(r, m) = r\cdot m$ is $R$-bilinear, and given any $R$-bilinear map $R\times M\to P$, 
+\[
+\begin{tikzcd}
+R\times M \ar[r, "f"] \ar[d, "\beta"'] & P \\
+M \ar[ur, "f'"]& \\
+\end{tikzcd}
+\]
+$f(r, m) = rf(1, m)$, and $\beta(r, m) = r\cdot m$. So if we define $f':M\to P$ by $m \mapsto f(1, m)$, this is the unique $R$-linear map satisfying $f = f'\circ\beta$. 
+
+So $R\otimes_RM \cong M$.
+\qed
+
+\section*{Lecture 12, 2/27/23}
+
+If $f:M\to N$ and $g:M'\to N'$ are $R$-homs, we define $f\otimes g: M\otimes M' \to N\otimes N$ by $\sum_i x_i\otimes y_i \mapsto \sum_i f(x_i)\otimes g(y_i)$. 
+
+\prop ($\otimes$ is a right exact functor)
+
+Suppose $\begin{tikzcd} M'\ar[r, "f"] & M \ar[r, "g"]& M'' \ar[r] & 0 \end{tikzcd}$ be an $R$-module exact sequence. Then for any $R$-module $N$, the sequence 
+\[
+\begin{tikzcd}
+M'\otimes N \ar[r, "f\otimes\Id_n"] & M\otimes N \ar[r, "g\otimes\Id_N"]& M''\otimes N \ar[r] & 0 \\
+\end{tikzcd}
+\]
+
+is also exact. 
+
+\claim
+
+There is a natural $R$-module isomorphism 
+\[
+\Hom_R(M\otimes_RN, P) \cong \Hom_R(M, \Hom_R(N, P))
+\]
+
+\proof
+
+Indeed, for a map $f:M\otimes_RN\to P$, consider the map defined by $m\mapsto (n\mapsto f(m, n))$. The naturality of this is a classical exercise, and I did it for 236 homework. 
+
+\qed
+
+We will now prove the proposition. 
+
+\proof
+
+Let $P$ be any $R$-module. By left-exactness of $\Hom$, if 
+\[
+\begin{tikzcd}
+M'\ar[r, "f"] & M \ar[r, "g"] & M'' \ar[r] & 0 \\
+\end{tikzcd}
+\]
+is exact, then 
+\[
+\begin{tikzcd}
+0\ar[r] & \Hom_R(M'', \Hom_R(N, P)) \ar[r, "\bar{g}"] & \Hom_R(M, \Hom_R(N, P)) \ar[r, "\bar{f}"] & \Hom_R(M', \Hom_R(N, P))
+\end{tikzcd}
+\]
+is exact. By the claim, 
+\[
+\begin{tikzcd}
+0\ar[r]&\Hom_R(M''\otimes_R, P) \ar[r, "\bar{g\otimes\Id_N}"] & \Hom_R(M\otimes N, P) \ar[r, "\bar{f\otimes\Id_N}"] &\Hom_R(M'\otimes N, P)
+\end{tikzcd}
+\]
+Note that above we really are using the fact that the correspondence between $\Hom_R(M\otimes_RN, P)$ and $\Hom_R(M, \Hom_R(N, P))$ is not just a set isomorphism, but is indeed natural.
+
+\rem\,
+
+\begin{enumerate}
+
+\item The natural iso for any $R$-modules $M, N, P$, 
+\[
+\Hom_R(M\otimes N, P) \cong \Hom_R(M,\Hom_R(N, P))
+\]
+means that $\otimes$ and $\Hom$ are \underline{adjoint functors}.
+
+\item If 
+\[
+\exactshort{M'}{f}{M}{g}{M''}
+\]
+is exact, then for an arbitrary $R$-module $N$, the sequence
+\[
+\exactshort{M'\otimes N}{f\otimes\Id_N}{M\otimes N}{g\otimes\Id_N}{M''\otimes N}
+\]
+is \underline{not} necessarily exact (the problem is $f\otimes\Id_N$ is not necessarily injective).
+
+\end{enumerate}
+
+\exm
+
+Consider the following $\Z$-module exact sequence:
+\[
+\exactshort{\Z}{f}{\Z}{}{\Z/2\Z}
+\]
+where $f$ is given by $n\mapsto 2n$, and take $N = \Z/2\Z$. Then applying $-\otimes_{\Z}\Z/2\Z$ we get 
+\[
+\exactshort{\Z\otimes_\Z\Z/2\Z}{f\otimes1}{\Z\otimes_\Z\Z/2\Z}{}{\Z/2\Z\otimes_\Z\Z/2\Z}
+\]
+But $\Z\otimes_\Z\Z/2\Z\cong\Z/2\Z$, so this is the sequence
+\[
+\exactshort{\Z/2\Z}{f\otimes1}{\Z/2\Z}{}{\Z/2\Z}
+\]
+where $f\otimes\Id$ is \underline{not} injective, as $f: \bar{n}\mapsto 2\bar{n} = \bar{2n} = 0$. 
+
+\defn
+
+We say that an $R$-module $M$ is \underline{flat} (over $R$) if for any $R$-module exact sequence
+\[
+\begin{tikzcd}
+\cdot\ar[r]&M_{i -1 }\ar[r, "f_{i - 1}"] & M_i \ar[r, "f_i"] & M_{i + 1} \ar[r] & \cdots 
+\end{tikzcd}
+\]
+the sequence 
+\[
+\begin{tikzcd}
+\cdots\ar[r]& M_{i - 1}\otimes_RN \ar[r, "f_{i -1 }\otimes\Id_N"] & M_i\otimes_RN \ar[r, "f_i\otimes\Id_n"] & M_{i + 1}\otimes_RN \ar[r] & \cdots 
+\end{tikzcd}
+\]
+is also exact. 
+
+\prop
+
+Let $N$ be an $R$-module. Then the following are equivalent:
+
+\begin{enumerate}
+
+\item $N$ is flat over $R$. 
+
+\item If $\exactshort{M'}{f}{M}{g}{M''}$ is a short exact sequence, then so is $\exactshort{M'\otimes_R N}{f\otimes_R\Id_N}{M\otimes_RN}{g\otimes_R\Id_N}{M''\otimes_R N}$.
+
+\item If $f:M'\to M$ is an injective $R$-homomorphism (with $M, M'$ arbitrary $R$-modules), then $f\otimes_R\Id_N:M'\otimes_RN\to M\otimes_RN$ is also injective.
+
+\item If $f:M'\to M$ is an injective $R$-homomorphism, with $M', M$ finitely generated, then $f\otimes_R\Id_N:M'\otimes_RN\to M\otimes_RN$ is also injective.
+
+\end{enumerate}
+
+\proof\,
+
+\subsection*{$(1)\implies(2)$}
+
+This is clear. 
+
+\subsection*{$(2)\implies(1)$}
+
+Any exact sequence can be split into short exact ones.
+
+\subsection*{$(2)\iff(3)$}
+
+Previous proposition.
+
+\subsection*{$(3)\implies(4)$}
+
+Clear.
+
+\subsection*{$(4)\implies(3)$}
+
+Suppose $f:M'\to M$ is injective $R$-homomorphism with $M, M'$ arbitrary, and let $u \in \ker(f\otimes\Id_N)$. We want to show $u = 0$. 
+
+Write $n = \sum_{i=1}^rx_i\otimes y_i,$ with $x_i \in M', y_i \in N$, and consider the restrictions
+\[
+\begin{tikzcd}
+M'\ar[r, hook, "f"] & M \\
+M'_0\ar[u, hook] \ar[r, hook, "f_0"]& M_0\ar[u, hook] \\
+\end{tikzcd}
+\]
+
+With $M'_0 \eqdef (x_1, \dots, x_r)$, $M_0 \eqdef (f(x_1), \dots, f(x_n))$. 
+
+Then $f_0$ is an injection between finitely generated $R$-modules, so by $(4)$, $f_0\otimes_R\Id:M'_0\otimes_RN\to M_0\otimes_RN$ is injective.
+
+Since $0 = (f\otimes\Id)(u) = \sum_{i=1}^rf(x_i)\otimes y_i = \sum_{i=1}^rf_0(x_i)\otimes y_i$, since $x_i \in M_0'$. So this equals $(f_0\otimes\Id)(u)$. This shows $u = 0$, so $f\otimes\Id$ is injective.
+
+\qed
+
+\section*{Lecture 13, 3/1/23}
+
+Recall: An $R$-module $N$ is \underline{flat} over $R$ if for any injective $R$-homomorphism $g:M'\hookrightarrow M$, the map $g\otimes_R\Id:M'\otimes_RN \to M\otimes_RN$ is also injective. 
+
+\exm Any free $R$-module is $R$-flat. 
+
+Indeed, if $N \cong R^n$ (the case of infinite is similar) and $g:M'\hookrightarrow M$ is an injective $R$-homomorphism, then
+\[
+g\otimes_R\Id:\underbrace{M'\otimes_RM}_{\cong \bigoplus_{i=1}^n(M'\otimes_R R) \cong M'\oplus\cdots\oplus M'} \to M\otimes_RN
+\]
+Similarly, $M\otimes_RN \cong M \oplus \cdots \oplus M$. As an exercise, verify $(g, \dots, g):M'\oplus\cdots\oplus M' \to M\oplus\cdots\oplus M$ is also injective. 
+
+\subsection*{\underline{Restriction and extension of scalars}}
+
+\defn\,
+
+Let $f:R\to R'$ be a ring homomorphism.
+
+\begin{enumerate}
+
+\item If $N$ is an $R'$-homomorphism, then $N$ becomes an $R$-module via $R\times N \to N$ given by $(r, n) \mapsto f(r)m$. This is called \underline{the restriction of scalars} of $N$ (from $R$ to $R'$). 
+
+\item If $M$ is an $R$-module, then define $M_{R'}\eqdef M\otimes_RR'$, viewing $R'$ as an $R$-module via $f$. This is an $R$-module via $R'\times M_{R'} \to M_{R'}$, defined by $(a, m\otimes r') \mapsto m\otimes(ar')$. This is called \underline{the extension of scalars} of $N$ (from $R'$ to $R$).
+
+\end{enumerate}
+
+\prop
+
+Let $f:R\to R'$ be a ring homomorphism, $M$ an $R$-module, and $N, P$ $R'$-modules. 
+
+Then $M\otimes_R(N\otimes_{R'}P) \cong (M\otimes_RN)\otimes_{R'} P$ as $R$-module, and also as $R'$-modules. 
+
+\proof
+
+Exercise (cf proof of ``associativity" of $\otimes$ in lecture 17)
+
+\qed
+
+\cor
+
+Let $f:R\to R'$ be a ring homomorphism, and $M$ an $R$-module. Then if $M$ is $R$-flat, then $M_{R'}$ is $R'$-flat. 
+
+\proof
+
+Let $g:N'\hookrightarrow N$ be an injective $R'$-homomorphism. Then it is an injective $R$-homomorphism. Because $M$ is $R$-flat, $g\otimes_R\Id:N'\otimes_RM\to N\otimes_RM$ is also injective. 
+
+Now, we write $N'\otimes_RM=(N'\otimes_{R'}R')\otimes_RM = N'\otimes_{R'}M_{R'}$, and $N\otimes_RM = (N\otimes_{R'}R')\otimes_RM = N\otimes_{R'}M_{R'}$.
+
+So $M_{R'}$ is $R'$-flat.
+
+In other words, flatness is preserved by extension of scalars. 
+
+\qed
+
+\underline{Note:} For arbitrary ring homomorphism $f:R\to R'$, $M_{R'}$ is $R'$-flat \underline{DOES NOT} imply that $M$ is $R$-flat. 
+
+\exm
+
+Take $f:\underbrace{\Z}_{=R}\to\overbrace{\Z/2\Z}^{=R'}$, $n\mapsto \bar{n}$ the projection, and $M = \Z/2\Z$ viewed as a $\Z$-module. Then $M_{R'} = (\Z/2\Z)\otimes_\Z(\Z/2\Z) \cong \Z/2\Z$, which is flat over $R'$ because it is free over $R'$. But the original module is \underline{not} flat over $\Z$, as we saw last time. 
+
+\subsection*{\underline{Flatness and localization}}
+
+\prop 
+
+Let $S \subset R$ be a multiplicative subset and $M$ an $R$-module. Then $(S^{-1}R)\otimes_RM\cong S^{-1}M$ as $S^{-1}R$-modules. 
+
+\proof
+
+Consider the following $R$-bilinear map $\beta:S^{-1}R\times M \to S^{-1}M$, $(\frac{a}{s}, m) \to \frac{am}{s}$. If $f:S^{-1}R\times M \to N$ is any $R$-bilinear map, with $N$ any $R$-module, then by bilinearity, $f(\frac{a}{s}, m) = a(\frac{1}{s}, m)$. We want to find a map $f'$ making the diagram commute:
+\[
+\begin{tikzcd}
+S^{-1}R\times M \ar[r, "f"] \ar[d,"\beta"']& N \\
+S^{-1}M \ar[ur, dotted, "\exists f' ?"'] \\
+\end{tikzcd}
+\]
+
+Indeed, $f':\frac{m}{s} \mapsto f(\frac{1}{s}, m)$ is the unique $R$-linear map making the diagram commute. 
+
+By the universal property of $S^{-1}R\otimes_RM$, this implies $(S^{-1}R)\otimes_RM \cong S^{-1}M$, $\frac{a}{s}\otimes m \mapsto \frac{am}{s}$, and the isomorphism is clearly $S^{-1}R$-linear.
+
+\qed
+
+\cor (``Localizations are flat")
+
+For any multiplicative set $S \subset R$, $S^{-1}R$ is a flat $R$-module, (viewing $S^{-1}R$ as an $R$-module via $f:R\to S^{-1}R, r \mapsto \frac{r}{1}$).
+
+\proof
+
+If $N \subset M$ is any $R$-submodule, then $S^{-1}N \subset S^{-1}M$ is an $S^{-1}R$-submodule. 
+
+By previous proposition, $S^{-1}N = (S^{-1}R)\otimes_RN$, and $S^{-1}M = (S^{-1}R)\otimes_RM$. 
+
+So $S^{-1}R$ is a flat $R$-module. 
+
+\qed
+
+\prop (``Flatness is a local property").
+
+Let $M$ be an $R$-module. Then the following are equivalent: 
+
+\begin{enumerate}
+
+\item $M$ is $R$-flat 
+
+\item $M_{\mk{p}}$ is flat for all prime ideals $\mk{p}\subset R$
+
+\item $M_{\mk{m}}$ is $R_{\mk{m}}$-flat for all maximal ideals $\mk{m}\subset R$
+
+\end{enumerate}
+
+\section*{Lecture 14, 3/8/23}
+
+Next: Structure theorem for finitely generated modules over a PID. 
+
+\begin{itemize}
+
+\item Recall that an integral domain $R$ is a principal ideal domain if every ideal in $R$ is principle, i.e. $I = (a)$ for some $a \in R$.
+
+\item An integral domain $R$ is a Euclidean domain if there is a function $N:R\setminus\{0\}\to\Z_{\geq0}$ such that for all $a, b \in R$ with $b \neq 0$, there exist $q, r \in R$ such that $q = qb + r$, with either $r = 0$ or $N(r) < N(b)$.
+
+\end{itemize}
+
+\exm
+
+$\Z, F[t]$, with $F$ a field, are PIDs, even Euclidean domains. 
+
+\lem
+
+If $R$ is a Euclidean domain, then $R$ is a PID. 
+
+\proof
+
+Exercise
+
+\qed
+
+We'll give the proof of the structure theorem only for finitely generated modules over a Euclidean domain. 
+
+\lem
+
+Let $R$ be a Noetherian ring, and $M$ a finitely generated $R$-module. Then there exists an $R$-module exact sequence
+\[
+\begin{tikzcd}
+R^n\ar[r, "f"] & R^m \ar[r, "g"] & M \ar[r] & 0
+\end{tikzcd}
+\]
+for some $m, n \geq 0$. In particular, $M \cong \frac{R^m}{f(R^n)}$
+
+\proof
+
+Let $\{v_1, \dots, v_m\}$ be a generating set for $M$, and define the $R$-linear map $g:R^m\to M$ by $\begin{pmatrix} x_1 \\ \vdots \\ x_m \end{pmatrix} \mapsto \sum_{j=1}^mx_jv_j$. 
+
+Then $\Im(g) = M$, so the sequence $\begin{tikzcd} R^m\ar[r, "g"] & M \ar[r] & 0 \end{tikzcd}$ is exact. 
+
+Let $K \eqdef \ker(g) \subset R^m$. Since $R^m$ is a Noetherian $R$-module, $K$ is finitely generated. 
+
+Let $\{w_1, \dots, w_n\}$ be a generating set for $K$, and define the $R$-linear map $f:R^n\to R^m$ $f:R^n\to K\subset R^m$ by $\begin{pmatrix} x_1 \\ \vdots \\ x_n \end{pmatrix} \mapsto \sum_{i=1}^my_iw_i$. 
+
+Them $\Im(f) = K (= \ker g)$, so 
+\[
+\begin{tikzcd}
+R^n\ar[r, "f"]& R^m \ar[r, "g"] & M \ar[r] & 0
+\end{tikzcd}
+\]
+is exact. 
+
+\rem\,
+
+\begin{enumerate}
+
+\item A description of $M$ as in Lemma 1 is called a \underline{presentation of $M$}. It corresponds to a choice of:
+\begin{enumerate}[label=(\roman*)] 
+
+\item A set of \underline{generators} $\{v_1, \dots, v_m\}$ of $M$
+\item A set of generators $\{w_1, \dots, w_n\}$ of the set of all linear \underline{relations} among the $v_j$'s.
+
+\end{enumerate}
+
+\item The map $f:R^n\to R^m$ corresponds to left multiplication by an $m\times n$ matrix $A \in M_{m\times n}(r)$, called a \underline{presentation matrix} for $M$.
+
+$A$ has: a row for every generator $v_j$, and a column for every chosen generator of the relations among the $v_j$'s. 
+
+\end{enumerate}
+
+An important fact (to be exploited) is that the same modules can have different presentation matrices. 
+
+\lem
+
+Suppose $A \in M_{m\times n}(R)$ is a presentation matrix for $M$ (so in particular $M \cong \frac{R^m}{Ar^n}$, and let $A'$ be obtained from $A$ by any of the following:
+
+\begin{enumerate}[label=(\roman*)]
+
+\item $A' = QAP^{-1}$, with $Q \in \GL_m(R)$, $P \in \GL_n(R)$. 
+
+\item $A' = (A$ with a column $\begin{pmatrix} 0 \\ \vdots \\ 0 \end{pmatrix}$ deleted)
+
+\item Suppose $A$ has a $j$th column equal to $\begin{pmatrix} 0 \\ \vdots \\ 1 \\ \vdots \\ 0 \end{pmatrix}$, with 1 in the $i$th spot. 
+
+Then $A' = (A$ with $i$th row and $j$th column deleted)
+
+\end{enumerate}
+
+Then $A'$ (of size $p\times q$, say) is also a presentation matrix for $M$, and $M \cong R^p/A'R^q$
+
+\proof\,
+
+\begin{enumerate}[label=(\roman*)]
+
+\item From Linear Algebra, we know that that $A' = QAP^{-1}$ corresponds to a change of bases, so $M \cong R^m/AR^n \cong R^m/A'R^n$
+
+\item A column $\begin{pmatrix} 0 \\ \vdots \\ 0 \end{pmatrix} \in R^m$ in $A$ corresponds to the relation $0v_1 + \cdots + 0v_m = 0$, so it can be omitted from $A$.
+
+\item A column $\begin{pmatrix} 0 \\ \vdots \\ 1 \\ \vdots \\ 0 \end{pmatrix}$ with a 1 in the $i$th row corresponds to the relation $0v_1 + \cdots + 1v_i + \cdots + 0v_n = 0$, which says $v_i = 0$, so it can be omitted from the generating set. 
+
+\end{enumerate}
+ 
+\qed
+
+\exm\,
+
+\begin{itemize}
+
+\item Suppose $M \cong \Z^2/\begin{pmatrix} 1 & 2 \\ 2 & - 1\\ \end{pmatrix}\Z^2$, so $M$ is generated by two elements, $v_1, v_2$, with relations $v_1 + 2v_2 = 0$ and $2v_1 - v_2 = 0$.
+
+Then by (1) $\dfrac{\Z}{\begin{pmatrix} 1 & 2 \\ 2 & - 1\end{pmatrix}\Z^2} \cong \dfrac{\Z^2}{\begin{pmatrix} 1 & 2 \\ 0 & - 5\end{pmatrix}\Z^2}$. This says $M$ is generated by $v_1', v_2'$, with $v_1' + 0v_2' = 0$, $2v_1' - fv_2' = 0$ So $5v_2' = 0$. 
+
+By (3), this module is isomorphic to $\dfrac{\Z}{5\Z}$
+
+\item Similarly, if $N \cong \dfrac{\Z^2}{\pmat{2}{4}{4}{8}\Z^2}$ then $\dfrac{\Z^2}{\pmat{2}{4}{4}{8}\Z^2} \cong \dfrac{\Z^2}{\pmat{2}{4}{0}{0}\Z^2} \cong \dfrac{\Z^2}{\pmat{2}{0}{0}{0}\Z^2}$, so $N$ is generated by $v_1, v_2$, with relations $2v_1 + 0v_2 = 0, 0v_1 + 0v_2 = 0$, so is isomorphic by (2) to $\dfrac{\Z^2}{\begin{pmatrix} 2 \\ 0 \end{pmatrix}\Z} \cong \Z/2\Z\oplus\Z$
+
+\end{itemize}
 
 
 
