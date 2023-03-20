@@ -37,6 +37,10 @@
 \newcommand{\loc}{loc}
 \DeclareMathOperator{\Vol}{Vol}
 \DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\BV}{BV}
+\DeclareMathOperator{\Monp}{Mon^+}
+\DeclareMathOperator{\AC}{AC}
+\DeclareMathOperator{\Lip}{Lip}
 \title{220A - Groups}
 \author{John White}
 \date{Fall 2022}
@@ -1645,7 +1649,7 @@ Choose $R_1 < R_2 < \cdots < R_k < \cdots$ such that $\lim_{k\to\oo}R_k = \oo$, 
 
 \lem
 
-Let $\mu$ be a Radon measure on $\R^n$. Fix $x\in\R^n$. Then $\mu(\del(B(x, r)) = 0$ for $r \in \R^\setminus\{r_1, r_2, \dots\}$. 
+Let $\mu$ be a Radon measure on $\R^n$. Fix $x\in\R^n$. Then $\mu(\del(B(x, r)) = 0$ for $r \in \R^n\setminus\{r_1, r_2, \dots\}$. 
 
 \proof
 
@@ -1655,26 +1659,657 @@ Define $A_k = \{r\in[0,R]\mid \mu(\del B(x, r)) \geq \frac{1}{k}\}, k = 1, 2, \d
 
 $\oo > \mu(B(x, r)) \geq |A_k|\frac{1}{k}, |A_k| \leq k\mu(B(x, r))$
 
+\section*{Lecture 14, 3/7/23}
+
+\subsection*{\underline{Increasing, BV, AV, and Lipschitz Functions}}
+
+\begin{itemize}
+
+\item BV: Bounded Variation
+
+\item AC: Absolutely Continuous 
+
+\end{itemize}
+
+Almost everywhere differentiability of nondecreasing functions. 
+
+\thm Let $f:\R\to\R$ be increasing. Then $f'(x)$ exists and is finite $\lambda$-almost everywhere. Moreover, $f':\R\to\R$ is Lebesgue-measurable $(f'(x)\geq0)$ and 
+\[
+\int_af'(x)\,dx \leq f(b) - f(a) 
+\]
+for all $-\oo<b<a<\oo$. 
+
+\lem Let $f:\R\to\R$ be increasing. Then the set of discontinuous points of $f$ is at most countable. 
+
+\proof
+
+Since $f$ is increasing, for all $x \in \R$, there exist $x+, x-$ such that $f(x+), f(x-)$ are finite, and 
+\begin{itemize}
+
+\item $f(x-) = \lim_{\varepsilon\to0^+}f(x - \varepsilon) \leq f(x)$ 
+
+\item $f(x+) = \lim_{\varepsilon\to0^+}f(x + \varepsilon) \leq f(y)$ for all $y > x$. 
+
+\item $f(x-) \leq f(x) \leq f(x+)$
+
+\end{itemize}
+
+$\lim_{y\to x}f(y)$ exists if $f(x-) = f(x+) = f(x)$. If $f(x+) > f(x-)$, then $f$ is discontinuous at $x$. The intervals $(f(x-), f(x+))$ are disjoint for all discontinuities $x$. Each contains a unique rational, giving an injection to a countable set. So there are at most countably many discontinuities. 
+
+\qed
+
+Given $f:\R\to\R$ increasing, define $g:\R\to\R$ as follows:
+\[
+g(x) = \begin{cases} f(x) & f\text{ continuous at }x \\ f(x+) & \text{otherwise} \end{cases}
+\]
+In other words, $g(x) = f(x+)$. 
+
+\lem Let $f:\R\to\R$ be increasing. Let $g(x) = f(x+)$ for all $x \in \R$. Then, if $g'(x)$ exists, then $f'(x)$ exists, and $f'(x) = g'(x)$. 
+
+\proof:
+
+Homework assignment
+
+\qed
+
+\thm Let $f:\R\to\R$ be increasing and right-continuous. Then $f'(x)$ exists and is finite $\lambda$-almost everywhere. Moreover, $f:\R\to\R$ is Lebesgue-measurable $(f'(x)\geq0)$ and 
+\[
+\int_a^bf'(x)\,dx \leq f(b) - f(a)
+\]
+for all $-\oo<b<a<\oo$.
+
+\proof
+
+$\nu(A) = \inf\{\sum\seq{i}(f(b_i) - f(a_i)): A \subseteq \cupi(a_i, b_i]\}$ is a Radon measure on $\R$. Furthermore, $\nu(a, b] = f(b) - f(a)$ for all $a < b$, so $\nu(\{a\}) = f(a) - f(a')$ for all $a \in \R$.
+
+By the Lebesgue Decomposition Theorem, $\nu = \nu_{ac} + \nu_s$, where 
+\begin{itemize}
+
+\item $\nu_{ac}<<\lambda, \nu_s\perp\lambda$ 
+
+\item $D_{\lambda}\nu_s(x) = 0$ $\lambda$-almost everywhere in $\R$. 
+
+\item $D_{\lambda}\nu_{ac}(x)$ and $D_{\lambda}\nu_s(x)$ are nonnegative, $\lambda$-measurable. 
+
+\item $\nu_{ac} = \int_AD_\lambda\nu_{ac}(x)\,d\lambda = \int_AD_\lambda\nu_{ac}(x)\,dx$ for all $\lambda$-measurable $A \subseteq \R$. 
+
+\end{itemize}
+
+I.e. there exists $B \subseteq \R$ Borel such that $\nu_{ac} = \nu|_B, \lambda(\R\setminus B) = 0, \nu_s = \nu|_{(\R\setminus B)}$
+
+Now we need a proposition (PROOF NOT COMPLETE). 
+
+\prop Let $A \subseteq \R$ be the set of all points $x \in \R$, where 
+\begin{itemize}
+
+\item $f(x+) = f(x-)$ 
+
+\item There exists $D_\lambda\nu_{ac}(x)<\oo, D_\lambda\nu_s(x) = 0$
+
+\end{itemize}
+
+Then $f'(x)$ exists and equals $D_\lambda\nu_{ac}(x)$. 
+
+\proof
+
+By definition, we have
+\begin{align*}
+f'(x+) & = \lim_{h\to0^+}\frac{f(x + h) - f(x)}{h} \\ 
+&  = \lim_{h\to0^+} \frac{\nu((x, x + h])}{h} \\ 
+& = \lim_{h\to0^+} \frac{\nu_{ac}((x, x + h]) + \nu_s((x, x + h])}{h} \\
+& = \lim_{h\to0^+}\frac{\nu_{ac}((x, x + h])}{h} + \lim_{h\to0^+}\frac{\nu_s((x, x + h])}{h} \\
+\end{align*}
+Observe 
+\[
+0\leq\lim_{h\to0^+}\frac{\nu_s((x, x + h])}{h} \leq 2\lim_{h\to0^+}\frac{\nu_s((x - h, x + h])}{h} = 2D_\lambda\nu_s(x) = 0
+\]
+So $\lim_{h\to0^+}\frac{\nu_s((x, x + h])}{h} = 0$. Further, 
+\[
+\lim_{h\to0^+}\frac{\nu_{ac}((x, x + h])}{h} = \lim_{h\to0^+}\frac{\int_{(x, x + h]}D_\lambda\nu_{ac}(t)\,dt}{h} = \lim_{h\to0^+}\frac{\int_{[x, x + h]}D_\lambda\nu_{ac}(t)\,dt}{h} = D_\lambda\nu_{ac}(x)
+\]
+So $f'(x+) = D_\lambda\nu_{ac}(x) = 0$. A similar computation shows that $f(x-) = D_\lambda\nu_{ac}(x)$.
+
+\qed
+
+We proceed to the proof of the theorem. 
+
+\proof
+
+We now need to show $\int_a^bf'(x)\,dx \leq f(b) - f(a)$. Indeed, 
+\begin{align*}
+\int_a^bf'(x)\,dx & = \int_a^bD_\lambda\nu_{ac}(x))\,dx \\ 
+& = \nu_{ac}((a, b]) \\
+& \leq \nu((a, b]) \\
+& = f(b) - f(a) \\
+\end{align*}
+
+\qed
+
+We now show the theorem from the beginning. 
+
+\proof
+
+Let $g(x) = f(x+)$. Note that $\int_a^bf'(x)\,dx = \int_a^bg'(x)$ by lemma, and by previous theorem this is less than or equal to $g(b) - g(a)$ for all $a < b$. 
+
+Furthermore, $g(a) = f(a+) \geq f(a)$. Choose $(b_n)$ such that $g(b_n) = f(b_n)$, and $b_n\uparrow b$. 
+
+$\int_a^{b_n}f'(x)\,dx = \int_a^{b_n}g'(x)\,dx \leq g(b_n) - g(a) \leq f(b_n) - f(a) \leq f(b) - f(a)$
+
+\qed
+
+\exm 
+
+Here are some examples of strict inequality: $f(x) = \begin{cases} 0 & x < 1 \\ 1 & x \geq 1 \end{cases} = \chi_{[1,\oo)}$
+$f'(x) = 0$ for all $x \in (0, 1)$, and $f(1) - f(0) = 1$. 
+
+We don't even need a jump point, cf the Devil's staircase. 
+
+\section*{Lecture 15, 3/9/23}
+
+\subsection*{\underline{BV (Bounded Variation) Functions}}
+
+\defn
+
+Let $a, b \in \R, a < b$. A \underline{partition} of $[a, b]$ is a finite sequence 
+\[
+P:a = x_0 < x_1 < \cdots < x_n = b
+\]
+For $f:[a,b]\to\R$, define 
+\[
+\vee(f, P) = \sum_{i=1}^{n - 1}|f(x_{i + 1}) - f(x_i)|
+\]
+and call it the variation of $f$ at $P$. Define
+\[
+\vee_a^b(f) = \sup_P\vee(f, P)
+\]
+and call it the total variation of $f$ over $[a, b]$. The function $f$ is said to be of bounded variation in $[a, b]$ if $\nu_a^b(f)<\oo$. The family of all such functions is denoted by $BV[a, b]$. 
+
+\thm 
+
+Assume $f, g \in BV[a, b]$. Then 
+\begin{enumerate}
+
+\item $f\pm g \in BV[a, b]$ and $\vee_a^b(f\pm g) = \vee_a^bf\pm\vee_a^bg$
+
+\item For all $c \in \R$, $cf \in BV[a,b]$ and $\vee_a^b(cf) = |c|\vee_a^b(f)$
+
+\item $f$ is bounded in $[a, b]$ 
+
+\item If $|f(x)|, |g(x)| < M$ for all $x\in[a, b]$, then $\vee_a^b(fg) \leq M(\vee_a^b(f) + \vee_a^b(g))$ 
+
+\item $\vee_a^b(f) \geq |f(b) - f(a)|$
+
+\item $f \in BV[a, b] \iff f \in BV[a,c], f \in BV[c, b]$ with $\vee_a^c(f) + \vee_c^b(f) = \vee_a^b(f)$ for all $c\in[a, b]$. 
+
+\item The function $v(x) = \vee_a^x(f):[a, b]\to \R$ is increasing and $v(x) \geq |f(x) - f(a)|$
+
+\end{enumerate}
+
+\proof
+
+\begin{enumerate}
+
+\item Triangle inequality
+
+\item By definition 
+
+\item For all $x \in [a, b]$, $|f(x) - f(a)| + |f(x) - f(b)| \leq \vee_a^b(f)$ so $|f(x)| \leq |f(a)| + \vee_a^b(f)<\oo$
+
+\item For all $P:a=x_0 < x_1 < \cdots < x_n = b$, 
+\begin{align*}
+\vee_a^b(fg) & = \sum_{i=0}^{n - 1}|f(x_{i + 1})g(x_{i + 1}) - f(x_i)g(x_i)| \\ 
+& = \sum_{i=0}^{n - 1}|g(x_{i + 1})(f(x_{i + 1}) - f(x_i)) + f(x_i)(g(x_{i + 1}) - g(x_i))| \\
+& \leq \sum_{i=0}^{n - 1}|g(x_{i + 1})(f(x_{i + 1}) - f(x_i))| + \sum_{i=0}^{n - 1}|f(x_i)(g(x_{i + 1}) - g(x_i))| \\
+& \leq M\sum_{i=0}^{n - 1}|f(x_{i + 1}) - f(x_i)| + M \sum_{i=0}^{n - 1}|g(x_{i + 1}) - g(x_i)| \\
+& = M\vee_a^b(f) + M\vee_a^b(g)
+\end{align*}
+
+\item Triangle Inequality
+
+\item Given a partition $P$ of $[a, b]$, by adding one (thus finitely many) points to $P$, the variational sum $\vee(f, P)$ may only increase. 
+
+So, assume $f\in BV[a, b]$. We prove that $\vee_a^c(f) + \vee_c^b(f) = \vee_a^b(f)$ for all $c \in (a, b)$. 
+
+First, observe that $f\in BV[a, c]$ and $f \in BV[c, b]$. $\vee_a^c(f) + \vee_c^b(f) \leq \vee_a^b(f)$. 
+
+Fix $\varepsilon>0$. There exist $P:a = x_0 < x_1 < \cdots < x_n = b$ such that $\vee(f, p) > \vee_a^b(f)-\varepsilon$. 
+
+$\vee_a^c(f) + \vee_c^b(f) \geq \vee(f, P_1) + \vee(f, P_2) \geq \vee_a^b(f, P) > \vee_a^b(f)-\varepsilon$
+
+We take the limit as $\varepsilon\to0$ to get the desired result. 
+
+For the opposite inequality, choose $P_1$ for $[a, c]$ and $P_2$ for $[c, b]$ such that 
+\[
+\vee(f, P_1) > \vee_a^c(f)-\varepsilon, \vee(f, P_2) > \vee_a^b(f)-\varepsilon
+\]
+Then $\vee_a^b(f) \geq \vee(f, P_1 \cup P_2) = \vee(f, P_1) + \vee(f, P_2) > \vee_a^c(f) + \vee_c^b(f) - 2\varepsilon$. 
+
+\item If $x < y$, $x, y \in [a, b]$, $v(y) = \vee_a^y(f) = \vee_a^x(f) + \vee_x^y(f) \geq \vee_a^x(f) = v(x)$. $v(y) - f(x) = \vee_x^y(f) \geq |f(y) - f(x)|$.
+
+\end{enumerate}
+
+\thm 
+
+For any $f \in\BV[a, b]$, there exists $f_1, f_2:[a,b]\to\R$ increasing such that $f = f_1 - f_2$
+
+\rem
+
+Denote $\Monp[a, b] = \{f:[a,b]\to\R\mid f$ increasing in $[a, b]\}$. 
+
+$\BV[a,b]\subseteq\Monp[a,b]-\Monp[a, b]$
+If $f \in \Monp[a,b]$, then $\vee_a^b(f) = f(b) - f(a)$.
+
+So $\Monp[a,b]\subseteq\BV[a,b]$. 
+
+On the other hand, we have $\Monp[a,b]-\Monp[a,b]\subseteq\BV[a,b]$. In sum, we have $\BV[a,b] = \Monp[a,b] - \Monp[a, b]$
+
+\proof
+
+$f(x) = v(x) - (v(x) - f(x))$ for all $x \in [a, b]$. 
+
+Define $f_1 = v, f_2 = v - f$. If $x < y$, $v(y) - f(y) \geq v(x) - f(x), v(y) - v(x) \geq f(y) - f(x)$.
+
+\qed
+
+\thm For any $f \in \BV[a,b]$, $f'(x)$ exists and is finite almost everywhere in $[a,b]$. Moreover, $f'(x)$ is Lebesgue-measurable.
+
+\proof
+
+$f = f_1 - f_2$, both increasing on $[a,b]$. We have $f_1'(x)$ and $f_2'(x)$ exists and are finite almost everywhere in $[a,b]$ and are Lebesgue-measurable. Thsu $f'(x) = f_1'(x) - f_2'(x)$ almost everywhere on $[a,b]$.
+
+\qed
+
+\subsection*{\underline{Absolutely Continuous Functions: AC[a,b]}}
+
+\defn
+
+Let $f:[a,b]\to\R$. Then $f$ is \underline{absolutely continuous} on $[a, b]$ if, for all $\varepsilon>0$, there exists $\delta>0$ such that for all $\{(a_i, b_i)\}\seq{i} \subseteq [a, b]$ disjoint with $\lambda(\cupi(a_i,b_i))<\delta$, $\sum\seq{i}|f(b_i) - f(a_i)| < \varepsilon$. 
+
+We write $f \in \AC[a,b]$
+
+\exm
+
+\begin{enumerate}
+
+\item $f(x) = cx$
+
+\item $f(x) \in C^1[a,b]$
+
+\item $\Lip[a,b] = \{f:[a,b]\to\R \mid \exists M$ such that $|f(x) - f(y)| \leq M|x - y|$ for all $x, y \in [a, b]\}$. 
+
+\end{enumerate}
+
+If $f\in C^1[a,b]$ then $|f'(x)|\leq M$ for all $x \in [a, b]$. 
+
+By MVT, $|\frac{f(y) - f(x)}{y - x}| = |f'(z)| \leq M$
+
+\section*{Lecture 16, 3/14/23}
+
+\rem If we take just one interval in the definition of absolute continuity, then we reproduce uniform continuity. 
+
+Class 1: Lipschitz functions on $[a, b]$ are absolutely continuous  on $[a, b]$. 
+
+Class 2: Continuously differentiable functions on $[a, b]$, called $C^1[a,b]$. 
+
+\prop 
+
+$C^1[a, b]\subseteq \Lip[a,b]\subseteq \AC[a,b]$
+
+\proof\,
+
+\subsection*{$C^1[a,b]\subseteq\Lip[a,b]$}
+
+Choose $f \in C^1[a,b]$. Since $f'(x)\in C[a,b]$, $f'(x)$ is bounded by Weierstrass Theorem. 
+
+By MVT, for all $x, y \in [a, b]$, $\frac{f(x) - f(y)}{x - y} = f'(z)$, for some $z \in [x, y]$. 
+
+Because $|f'(z)| \leq M$, $|f(x) - f(y)| \leq M|y - x|$
+
+So $f$ is Lipschitz on $[a, b]$.
+
+\subsection*{$\Lip[a,b]\subseteq\AC[a,b]$}
+
+Choose $f \in \Lip[a,b]$. Then there exists $M$ such that for all $x, y \in[a, b]$, $|f(x) - f(y)| \leq M|x - y|$ for all $x, y \in [a,b]$. 
+
+Let $\{(a_i, b_i)\}\seq{i} \subseteq[a,b]$ be disjoint intervals. 
+
+Then $\sum\seq{i}|f(b_i) - f(a_i)| \leq \sum\seq{i}M|b_i - a_i| = M \sum\seq{i}|b_i - a_i|$
+
+So we can choose in the definition of absolutely continuous $\delta = \frac{\varepsilon}{M}$. 
+
+So $\sum\seq{i}(b_i - a_i) < \delta = \frac{\varepsilon}{M} \implies \sum\seq{i}|f(b_i) - f(a_i)| < \varepsilon$. 
+
+\qed
+
+Our goal is to prove the following theorem:
+\thm
+
+Absolutely continuous functions are almost everywhere differentiable. Namely, if $f \in \AC[a,b]$, then $f'(x)$ and is finite almost everywhere in $[a, b]$. Moreover, 
+\[
+\int_a^bf'(x)\,dx = f(b) - f(a)
+\]
+where $f'(x)$ is Lebesgue-integrable in $[a, b]$.
+
+\rem The fundamental theorem of calculus therefore holds for absolutely continuous functions. 
+
+\proof 
+
+\prop $\AC[a,b]\subseteq\BV[a,b]$
+
+\proof
+
+Chose $f \in \AC[a,b]$.
+
+Then, choosing $\varepsilon = 1$ in the definition, there exists $\delta>0$ such that for all $\{(a_i,b_i)\}\seq{i}$ disjoint, $\sum\seq{i}(b_i - a_i) < \delta$, then $\sum\seq{i}|f(b_i) - f(a_i)| < 1$. 
+
+We divide $[a, b]$ into $N$ equal parts, where $N$ is an integer large enough that $\frac{b - a}{N} < \delta$. Let the dividing points be $y_1, \dots, y_n$.
+
+Let $P:a = x_0 < x_1 \cdots < x_n = b$ be any partitions. Then
+\begin{align*}
+\vee(f, P) & \leq \vee(f, P \cup \{y_1, \dots, y_n\}) \\
+			  & = \vee_a^{y_1}(f, P_1) + \vee_{y_1}^{y_2}(f, P_1) + \cdots + \vee_{y_{N - 1}}^{y_N}(f, P_N) \\ 
+			  & < 1 + 1 + \cdots + 1 \\
+			  & = N \\
+\end{align*}
+
+So $\vee_a^b(f) = \sup_{P}\vee(f, P) \leq N < \oo$. Thus $f \in \BV[a, b]$. 
+
+This completes the proof of the claim. 
+
+\cor $f \in \AC[a,b]$ implies $f'(x)$ exists and is finite almost everywhere in $[a, b]$. 
+
+\qed
+
+Question: Why do we have $\int_a^bf'(x)\,dx = f(b) - f(a)$? 
+
+\prop If $f \in \AC[a,b]$, then the function $v(x) = \vee_a^x(f)$ is continuous in $[a, b]$. 
+
+\proof
+
+We evaluate $|v(x) - v(y)|$.
+
+Assume $a \leq x \leq y \leq b$. 
+
+Then $|v(x) - v(y)| = v(y) - v(x) = \vee_a^y(f) - \vee_a^x(f) = \vee_x^y(f) = \sup_{P}\vee_x^y(f, P)$. 
+
+Because $f \in \AC[a,b]$, let $\varepsilon>0$ be fixed and $\delta>0$ the corresponding $\delta$. If $|x - y| = y - x < \delta$, then $\vee_x^y(f, P) = \sum_{i=1}^n|f(x_i) - f(x_{i + 1})|<\varepsilon$
+
+Thus $\vee_x^y(f) = \sup_P\vee_x^y(f, P) < \varepsilon$
+
+Thus $v(x) = \vee_a^x(f)$ is continuous. 
+
+Now suppose $\{(a_i, b_i)\}\seq{i} \subseteq[a,b]$ such that $\sum\seq{i}(b_i - a_i) < \delta$, then 
+\[
+\sum\seq{i}|v(b_i) - v(a_i)| = \sum\seq{i}\vee_{a_i}^{b_i}(f) < \varepsilon
+\]
+(follow the same proof)
+
+\prop\,
+\begin{enumerate}
+
+\item $\AC[a,b]\pm\AC[a,b] \subseteq \AC[a,b]$
+
+\item $c\AC[a,b] = \AC[a, b], c \neq 0$ 
+
+\item $\AC[a,b] \cdot \AC[a,b] \subseteq \AC[a,b]$
+
+\end{enumerate}
+
+\proof
+
+David skipped it
+
+\rem If $f \in \AC[a,b]$, then $f \in C[a, b]$. 
+
+Assume now that $f$ is absolutely continuous. Then $f \in \BV[a,b]$, $f(x) = f(x) - (v(x) - f(x)), x \in [a, b]$ where $v(x) = \vee_a^x(f)$ for all $x \in [a,b]$.
+
+We know that $v(x)$ and $v(x) - f(x)$ are monotone increasing on $[a, b]$. 
+
+By previous proposition, we know that $v \in \AC[a,b]$.
+
+Because $f \in \AC[a,b]$, $v - f \in \AC[a,b]$. 
+
+Let $f = f_1 - f_2$, where $f_1$ and $f_2$ are absolutely continuous and increasing. So it remains to prove the FTOC for increasing $\AC$ functions.
+
+\section*{Lecture 17, 3/16/23}
+
+\thm
+
+Increasing absolutely continuous functions are almost everywhere differentiable. Namely, if $f \in \AC[a,b]$, then $f'(x)$ exists and is finite almost everyhwere in $[a, b]$. Moreover, 
+\[
+\int_a^bf'(x)\,dx = f(b) - f(a)
+\]
+where $f'(x)$ is Lebesgue-integrable in $[a, b]$. 
+
+\proof
+
+Assume $f:[a,b]\to\R$ is increasing and absolutely continuous. So $f \in \BV[a,b]$ and thus $f'(x)$ exists and is finite $\mu$-almost everywhere. We need to show $\int_a^bf'(x)\,dx = f(b) - f(a)$.
+
+Claim: The Radon measure $\nu$ generated by $f$ is absolutely continuous with respect to the Lebesgue Measure.
+
+Recall:
+
+We extend $f$ to $\R$ as
+\[
+f(x) = \begin{cases} f(x) & x\in[a,b] \\ f(a) & x < a \\ f(b) & x > b \\ \end{cases}
+\]
+
+Of course, since $f$ is absolutely continuous, it is right continuous. Thus $\nu$ is a Radon measure, where
+\[
+\nu(A) = \inf\{\sum\seq{i}(f(b_i) - f(a_i)) \mid A \subseteq \bigcup\seq{i}[a_i,b_i), [a_i, b_i)\text{ disjoint}\}
+\]
 
 
+For all $[c, d]\subseteq\R$, $\nu([c, d]) = f(d) - f(c)$.
 
+Assume $A \subseteq \R$ has zero Lebesgue measure. 
 
+We want to show $\nu(A) = 0$. 
 
+We have $\lambda(a)= \inf\{\sum\seq{i}(b_i - a_i) \mid A\subseteq \cup\seq{i}[a_i, b_i), [a_i, b_i)$ disjoint $\}$
 
+Because $f$ is absolutely continuous in $[a, b]$, and we extended it as constant to the left and right of $[a,b]$, then $f$ is also in $\AC$ in $\R$. 
 
+For all $\varepsilon>0$, there exists $\delta>0$ such that if $\sum\seq{i}(b_i - a_i)<\delta$, then $\sum\seq{i}|f(b_i) - f(a_i)| < \varepsilon$, where $[a_i, b_i)\subseteq\R$ are disjoint. 
 
+Fix $\varepsilon>0$, and choose $\delta$ as above. 
 
+Since $\lambda(A) = 0$, there exists a cover of $A$, $\{[a_i, b_i)\}$ such that $\sum\seq{i}(b_i - a_i)<\delta$. Then by choice of $\delta$, we have $\nu(A)\leq\sum\seq{i}(f(b_i) - f(a_i)) < \varepsilon$.
 
+We take the limit as $\varepsilon\to0$ to conclude that $\nu(A) = $. So $\nu<<\lambda$
 
+By the Radon-Nikodyn theorem, $\nu[a, b] = \int_a^bD_{\lambda}\nu(x)\,dx = \int_a^bf'(x)\,dx$, since $f'(x) = D_{\lambda}\nu_{ac}(x) = D_{\lambda}\nu(x)$ for almost every $x \in [a, b]$. 
 
+However, $\nu[a,b] = nu[a,b) + \nu\{b\} = f(b) - f(a) + 0 \implies f(b) - f(a) = \int_a^bf'(x)\,dx$
 
+Summary:
 
+Let $f \in \AC[a,b]$. Then $f \in \BV[a,b]$. So $f = f_1 - f_2$, where $f_1, f_2 \in \BV[a,b]$, and are increasing in $[a,b]$. Morevoer, $f_1 - f_2 \in \AC[a,b]$. We proved that
+\[
+\int_a^bf_1'(x)\,dx = f_1(b) - f_1(a), \int_a^b f_2'(x)\,dx = f_2(b) - f_2(a)
+\]
+where $f_1', f_2'$ exist and are finite for almost every $x\in[a,b]$. 
 
+Thus 
+\[
+\int_a^bf'(x)\,dx = \int_a^bf_1'(x)\,dx - \int_a^bf_2'(x)\,dx = f_1(b) - f_1(a) - (f_2(b) - f_2(a)) = f(b) - f(a)
+\]
 
+\qed
 
+\thm
 
+Let $f \in \AC[a,b]$. Then $f'(x)$ exists and is finite almost everywhere in $[a, b]$. Moreover, $f'(x)$ is summable in $[a, b]$ (not only integrable) and the FTOC holds, i.e. $\int_a^bf'(x)\,dx = f(b) - f(a)$.
 
+\thm (Characterization/integral representation of $\AC$ functions): A function $f:[a,b]\to\R$ is absolutely continuous in $[a,b]$ iff there exists $g(x) \in L^1[a,b]$ such that $f(x) = f(a) + \int_a^xg(t)\,dt$ for all $x \in [a, b]$
 
+\rem
+
+In that case, we have $g(t) = f'(t)$ for almost every $t \in [a,b]$.
+
+\proof
+
+\subsection*{$=>$}
+
+Assume $f \in \AC[a,b]$. Then we know $f'(x)\in L^1[a,b]. $
+
+As $f \in \AC[a,x]$ for all $x\in[a,b[$, by  Newton-Leibniz we have $int_a^xf'(t)\,dt = f(x) - f(a)$ for all $x \in [a, b]$. 
+
+Chose $g(t) = f'(t) \in L^1[a, b]$. 
+
+\subsection*{$<=$}
+
+Now assume there exists $g(t) \in L^1[a,b]$ and that $f(x) = f(a) + \int+a^xg(t)\,dt$. 
+
+We need to show that $f \in \AC[a,b]$, and $f'(t) = g(t)$ for almost every $x \in [a, b]$.
+
+$f \in [a, b]$: Follows from absolute continuity of the integral. 
+
+Choose $\varepsilon>0$. There exists $\delta>0$ such that if $A \subseteq [a, b]$ is Lebesgue-measurable, $\lambda(A)<\delta$, then $\int_A|g(t)|\,dt < \varepsilon$. 
+
+If now $\{[a_i, b_i)\} \subseteq [a, b]$ are disjoint with $\sum\seq{i}(b_i-a_i)<\delta$, then 
+\begin{align*}
+\sum\seq{i}|f(b_i) - f(a_i)| & = \sum\seq{i}|\int_a^{b_i}g(t)\,dt - \int_a^{a_i}g(t)\,dt| \\
+& = \sum\seq{i}|\int_{a_i}^{b_i}g(t)\,dt| \\
+& \leq \sum\seq{i}\int_{a_i}^{b_i}|g(t)\,dt \\
+& = \int_{{\cupi\,[a_i,b_i)}}|g(t)\,dt < \varepsilon \\
+\end{align*}
+Thus $f \in \AC[a,b]$. 
+
+$f'(x) = g(x)$ for almost every $x \in [a,b]$: Because $g\in L^1[a,b]$, then $x$ is a Lebesgue point of $g$ for almost every $x \in [a, b]$. 
+
+\defn
+
+A \underline{Lebesgue point} is a point $x$ such that 
+\[
+\lim_{r\to0^+}\frac{1}{r}\int_x^{x + r}g(t)\,dt = g(x), \,\lim_{r\to0^+}\frac{1}{r}\int_{x - r}^xg(t)\,dt = g(x)
+\]
+Thus $\lim_{r\to0^+}\frac{1}{r}\int_x^{x + r}g(t)|,dt = \lim_{r\to0^+}\frac{1}{r}((f(x + r)) - f(x)) = f'(x+) = g(x)$
+
+Similarly, $\lim_{r\to0^+}\frac{1}{r}\int_{x-r}^xg(t)\,dt = f'(x-) = g(x)$. 
+
+Thus $f'(x+) = f'(x-) = g(x)$ for almost every $x \in [a,b]$. So $f'(x) = g(x)$ for almost every $x \in [a, b]$. 
+
+\qed
+
+\exm A function that is increasing, BV, but not AC
+
+Cantor's function.
+
+The classical "middle thirds" Cantor set is constructed as follows: 
+\begin{enumerate}
+
+\item Divide $[0,1]$ into 3 equal parts, remove middle open interval. 
+
+\item Divide remaining intervals into 3 equal parts, remove middle open intervals, 
+\item Continue infinitely many times.
+
+\end{enumerate}
+
+The remaining part of $[0,1]$ is the Cantor set. This set has the following properties:
+
+\begin{enumerate}
+
+\item $\lambda(C) = 0$
+
+\item $C \subseteq [0, 1]$ is compact, because $C = [0,1]\setminus\cupi(a_i, b_i)$, where $(a_i,b_i) \subseteq [0, 1]$ are disjoint open intervals. 
+
+\item $C$ is nonempty. In particular, $\frac{1}{3}\in C$.
+
+\end{enumerate}
+
+Cantor function: From the construction of the cantor set for all $x \in C$, $x$ has the form $x = \sum\seq{n}\frac{2a_n}{3^n}$, where $a_n \in \{0,1\}$. Every number $x \in [0, 1]$ can be written in base 3 as $x = \sum\seq{k}\frac{b_k}{3^k}, b_k \in \{0,1,2\}.$
+
+This representation in base 3 is unique. 
+
+The points $x$ that belong to the Cantor set have representation in base 3 coefficients 1 or 2.
+
+\[
+C(x) = \begin{cases} \sum\seq{n} \frac{a_n}{2^n}, & x = \sum\seq{n}\frac{2a_n}{3^n} \in C \\ \sup_{y\leq x, y \in C}C(y) & x \not\in C \\ \end{cases}
+\]
+
+\thm (Properties of the Cantor function): The Cantor function has the following properties:
+
+\begin{enumerate}
+
+\item Continuous on $[0,1]$
+
+\item Increasing on $[0,1]$
+
+\item $C'(x) = 0$ for almost every $x \in [0, 1]$
+
+\item $C(x)$ is not absolutely continuous in $[0,1]$.
+
+\end{enumerate}
+
+\proof\,
+
+\begin{enumerate}
+
+\item By definition, if we have a sequence $y_k = \sum\seq{n}\frac{2a_n^{(k)}}{3^n}$ converges to $x = \sum\seq{n}\frac{2b_n}{3^n}$, then we should have for all $N \in \N$, there exists $K_0 \in \N$ such that $a_n^{(k)} = b_n$ if $k \geq K_0$, $n = 1, \dots, N$. 
+
+Thus 
+\[
+|C(y_k) - C(x)|=|\sum\seq{n}\frac{2a_n^{(k)}}{3^n} - \sum\seq{n}\frac{2b_n}{3^n}| = |\sum\seq{n}\frac{2(a_n^{(k)} - b_n)}{3^n} \leq \sum_{n = N + 1}^\oo \frac{4}{3^n} < \frac{4}{3^{N + 1}}
+\]
+
+We take the limit as $N \to \oo$ to get $|C(y_k) - C(x)| \to 0$
+
+So the Cantor function is continuous on the Cantor set. 
+
+\item By definition, $C(x)$ increases on the Cantor set. Now we show $C(x)$ increases on all of $[0, 1]$. 
+
+Choose $x < y$. If $x, y \in C$, we are done. 
+
+If $x \in C, C(y) = \sup_{z\leq y, z \in C}C(z) \geq C(x)$, because $x \in C, x \leq y$. 
+
+If $x \not\in C$ and $y \in C,$ $C(x) = \sup_{z\leq x, z \in C}C(z) \leq \sup_{z\leq y, z \in C}C(z) \leq C(y)$, because $C(x)$ increases on $C$
+
+If $x\not\in C$, $y\not\in C$, $C(x) = \sup_{z\leq x, z \in C}C(z) \leq \sup_{z\leq y, z \in C}C(z) = C(y)$
+
+\item[1] Continued.
+
+We want to show $C(x)$ is continuous on $[0,1]$. Assume $x_0 \in [0,1]$, need to prove $\lim_{x\to x_0}C(x) = C(x_0)$
+
+\paragraph{Case 1:} Suppose $x_0\not\in C$. Thus $x_0 \in (a_k, b_k)$, where $(a_k, b_k)$ is an interval removed at some step in the construction of $C$. 
+
+$C(x)$ is constant on any removed interval, so it is continuous on these (open) removed intervals. 
+
+\paragraph{Case 2:} Suppose $x_0 \in C$. Assume $x_n \to x_0$, $x_n\not\in C$. Because $C(x)$ is increaseing, without loss of generality we can assume $x_n$ is increasing. If there exists $y_n \in C$ such that $x_n < y_n < x_0$, then we havec $C(x_0) = \lim_{n\to\oo}C(y_n)$. 
+
+For all $n \in \N$, there exists $N_n\in\N$ such that $x_0 > x_{N_n} > y_n$. 
+
+Thus $C(x_0) > C(x_{N_n}) \geq C(y_n) \to C(x_0)$
+
+Thus $C(x_n)\to C(x_0)$ as $n\to\oo$.
+
+If no such sequence $y_n$ exists, then there exists $N \in \N$ such that $(x_N, x_0) \subseteq [0,1]\setminus C$. Since $x_0 \in C$, $x_0$ iss the right endpoint of a removed interval. 
+
+Thus $C(x)$ is left-continuous at $x_0$. 
+
+In the same way, we prove that $C(x)$ is right-continuous. 
+
+Therefore $C(x)$ is continuous on $[0, 1]$. 
+
+\item $C'(x) = 0$ for almost every $x \in [0, 1]$. 
+
+For every removed interval $(a_k, b_k) \subset [0, 1], C(x)$ is constant on $(a_k, b_k)$. 
+
+Thus $C'(x) = 0$ for all $x \in [0, 1]\setminus C$. 
+
+Since $\lambda([0,1]\setminus C_ = 1, C'(x) = 0$ for almost every $x \in [0, 1]$. 
+
+\item $C(x)\not\in\AC[0,1]$. 
+
+This follows from the fact that $0, 1 \in C$. 
+
+It is easy to show $C(0) = 0, C(1) = 1$. 
+
+Thus $\int_0^1C'(x)\,dx = 0 < C(1) - C(0),$ therefore $C\not\in\AC[0,1]$
+
+\end{enumerate}
+
+\qed
 
 
 
