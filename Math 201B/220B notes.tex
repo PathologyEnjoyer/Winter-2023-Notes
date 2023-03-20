@@ -1,0 +1,2178 @@
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\usepackage[document]{ragged2e}
+\usepackage{epsfig}
+
+\pagestyle{fancy}{
+	\fancyhead[L]{Winter 2023}
+	\fancyhead[C]{220B - Rings}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+\newcommand{\pmat}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}}
+\newcommand{\mk}[1]{\mathfrak{#1}}
+\DeclareMathOperator{\Perm}{Perm}
+
+\title{220B - Rings}
+\author{John White}
+\date{Winter 2023}
+
+
+\begin{document}
+
+\section*{Lecture 1}
+
+\subsection*{\underline{Rings:}}
+
+\defn
+
+A \underline{ring} $R$ is an abelian group $(R, +)$ together with multiplication
+
+\begin{align*}
+R\times R & \mapsto R \\
+(r, s) & \mapsto r\cdot s \\ 
+\end{align*}
+such that
+\begin{enumerate}
+\item $r_1\cdot(r_2\cdot r_3) = (r_1\cdot r_2)\cdot r_3$ for all $r_1, r_2, r_3 \in R$. In other words, multiplication is \textit{associative}.
+\item $r_1 \cdot(r_2 + r_3) = r_1\cdot r_2 + r_1\cdot r_3$ for all $r_1, r_2, r_3 \in R$. That is, $\cdot$ \textit{distributes} over $+$. 
+\item There is an element $1 \in R$ such that $1\cdot r = r \cdot 1 = r$ for all $r \in R$. This is \textit{multiplicative identity}. 
+\end{enumerate}
+
+\rem
+\begin{itemize}
+\item The multiplication is \textit{not} assumed to be commutative. If it is, we say $R$ is a \textit{commutative ring}. 
+\item The above definition (including 3) is sometimes called \textit{ring with identity}. An object which satisfies all of these except 3 is sometimes called a \textit{rng} (pronounced ``rung"). 
+\end{itemize}
+
+\exm
+
+\begin{enumerate}
+\item The integers $\Z$ with the usual addition and multiplication.
+ 
+\item For any $n \in \N, n \geq 1$, $\Z/n\Z$ is a ring under the operations 
+\begin{align*}
++:& \Z/n\Z\times\Z/n\Z \mapsto\Z/n\Z \\
+& (\bar{a}, \bar{b})\mapsto\bar{a + b} \\
+\times:&\Z/n\Z\times\Z/n\Z\mapsto\Z/n\Z \\
+& (\bar{a}, \bar{b}) \mapsto\bar{ab} \\
+\end{align*}
+
+\item $\Q, \R, \C$ are all rings (in fact they are fields). 
+
+\item The set of $n\times n$ matrices with entries in a ring $R$. 
+
+\item $R[x]$, the ring of all polynomials with coefficients in a ring $R$ 
+\item Let $G$ be an abelian group, and let 
+\[
+R = \{\text{all group homomorphisms }G\to G\}
+\]
+Define, for all $\phi,\psi\in R$, for all $g \in G$, 
+\begin{align*}
+(\phi + \psi)(g) & = \phi(g) + \psi(g) \\
+(\phi\cdot\psi(g) & = \phi(\psi(g)) \\
+\end{align*}
+$1 = \Id_G$. 
+
+Exercise: Check that $R$ is a ring. 
+
+\item Let $X$ be any set, and let $R = \mc{P}(X)$, the power set of $X$. Define, for all $E, F \in R$, 
+\begin{align*}
+E + F & = E\bigtriangleup F \\
+E \cdot F & = E \cap F \\
+\end{align*}
+$1 = X$
+Exercise: Check $R$ is a (commutative) ring.
+
+\end{enumerate}
+
+\defn
+
+Let $R$ and $S$ be rings. A \underline{ring homomorphism} is a map $f:R\to S$ such that for all $r_1, r_2 \in R$, 
+\begin{align*}
+f(r + s) & = f(r) + f(s) \\
+f(r\cdot s) & = f(r)\cdot f(s) \\
+f(1_R) & = 1_S \\
+\end{align*}
+
+\exm The quotient map $\phi:\Z\to\Z/n\Z$ given by $a\mapsto\bar{a}$ is a ring homomorphism. 
+
+Let $R$ be a ring. 
+
+\defn A subset $S\subseteq R$ is a \underline{subring} if $S$ is an additive subgroup of $R$, is closed under multiplication, and contains $1$. 
+
+\defn
+
+\begin{enumerate}
+
+\item
+
+A subset $I \subseteq R$ is a \underline{left ideal} of $R$ if $I$ is an additive subgroup of $R$ such that $R \cdot I \subseteq I$, i.e. for all $r \in R, s \in I$, $rs \in I$. 
+
+A subset $I \subseteq R$ is a \underline{right ideal} of $R$ if $I$ is an additive subgroup of $R$ such that $I \cdot R \subseteq I$, i.e. for all $s \in I, r \in R$, $sr \in I$. 
+
+An \underline{ideal} is both a left and right ideal (a ``two-sided" ideal). 
+
+\item Suppose $I$ is an ideal. Then the \underline{quotient} 
+\[
+R/I \eqdef \{\bar{r} = r + I: r \in R\}
+\]
+inherits an addition and multiplication from $R:$ 
+
+\begin{align*}
+(r + I) + (r' + I) & = (r + r' + I) \\
+(r + I)\cdot(r' + I) & = (r\cdot r' + I)\\
+\end{align*}
+making it a ring with identity $1 + I$. This is called the \underline{quotient ring} or \underline{residue class}. Note that the quotient map
+\begin{align*}
+\pi:R\to R/I \\
+r\mapsto\bar{r} = r + I \\
+\end{align*}
+is a ring homomorphism. 
+
+
+\end{enumerate}
+
+Two Exercises: 
+
+\begin{enumerate}
+\item (``Correspondence Theorem")
+
+Let $R$ be a ring, $I\subseteq R$ an ideal, and $\phi:R\to R/I$ the quotient map. Then there is a bijective orderpreserving correspondence between $\{J \subset R, J$ is an ideal, $I \subseteq J \subseteq R\}$ and ideals of $R/I$, which sends $J$ to $\bar{J} = \phi(J) = (I + J)/I$. 
+
+\item (``First Isomorphism Theorem")
+
+Let $\phi:R\to S$ be a ring homomorphism. Then 
+\begin{itemize}
+\item $\ker(\phi) = \{r\in R: \phi(R) = 1_S\}\subset R$ is an ideal of $R$.
+\item $\Im(\phi) = \{s \in S: \exists r \in R s.t. s = \phi(r)\}$ is an ideal of $S$.
+\item $\phi$ induces a ring isomorphism (i.e. a bijective ring homomorphism whose inverse is also a ring homomorphism) 
+\[
+R/\ker(\phi) \to \Im(\phi)
+\]
+given by
+\[
+\bar{r}\mapsto\phi(r)
+\]
+
+\end{itemize}
+
+\end{enumerate}
+
+\section*{Lecture 2, 1/11/23} 
+
+\defn 
+\begin{enumerate}
+
+\item
+
+A \underline{zero divisor} in a ring $R$ is an element $x \in R$ such that there exists a $y \in R, y\neq0$, such that $xy = yx = 0$. 
+
+\underline{Examples:}
+
+$\bar{2} \in \Z/6\Z$ is a zero divisor. 0 is \underline{always} a zero divisor unless $R = \{0\}$. 
+
+\item A nonzero commutative ring $R$ without nonzero zero divisors is called an \underline{integral domain}. 
+
+\underline{Examples:} $\Z$, all polynomial rings, $\Z/p\Z$ where $p$ is prime are all integral domains. 
+
+\item An element $r \in R$ is \underline{nilpotent} if $r^n = 0$ for some $n > 0$. 
+
+\underline{Note:} $r$ nilpotent $\implies r$ a zero divisor. The converse is false (e.g. $\bar{2}\in\Z/6\Z$)
+
+\item An element $R \in R$ is \underline{a unit} (or \underline{invertible}) if there exists an $s \in R$ such that $rs = sr = 1$. 
+
+\underline{Examples:} $\bar{5} \in \Z/6\Z$. A matrix $A \in M_{n\times n}(R)$ with entries in a ring $R$ is a unit in the matrix ring if and only if $\det(A)$ is a unit in $R$.
+
+Note that $R^\times$, denoting the units, is a multiplicative group. 
+
+\item Let $x \in R$ The multiples $r\cdot x$ (or $x \cdot r$) form a left (or right) ideal, denoted \underline{$Rx$} (or \underline{$xR$}). If $R$ is commutative, we write \underline{$(x)$} for $Rx = xR$. 
+
+\item A \underline{field} is a nonzero commutative ring $R$ in which every nonzero element is a unit. 
+
+Note: Since being a unit implies \underline{not} being a zero divisor, all fields are integral domains. The converse does not hold, and $\Z$ is a witness to its failure. 
+
+\end{enumerate}
+
+\prop
+
+Let $R$ be a nonzero commutative ring. Then the following are equivalent: 
+
+\begin{enumerate}
+\item $R$ is a field. 
+\item The only ideals are $\{0\}$ and $R$.
+\item Every ring homomorphism $R\to S$ with $S \neq\{0\}$ is injective
+\end{enumerate}
+
+\proof
+
+\begin{itemize}
+\item[$1\to2$] Suppose $R$ is a field. Let $I$ be a nonzero ideal. Then there exists $x \in I$ nonzero. Since $R$ is a field, $x$ is a unit. Thus $R = (x) \subseteq I$. So $I = R$. 
+
+\item[$2\to3$]For $S \neq\{0\}$, let $\phi:R\to S$ be a ring homomorphism. Then $\ker(\phi)\subseteq R$ is a proper ideal (since $\phi(1)=1\neq0$). By 2, $\ker(\phi) = \{0\}$, so $\phi$ is injective. 
+
+\item[$3\to1$] Let $x \in R$ be nonzero. We want to show that $X$ is a unit. Consider the quotient map $\phi:R\to R/(x)$. Notice $\ker(\phi) = (x) \neq\{0\}$, i.e. $\phi$ is not injective. By 3, $R/(x) \cong \{0\}$, so $(x) = R$, i.e. $x \in R^\times$. 
+\end{itemize}
+
+\defn
+
+Let $R$ be a commutative ring. 
+
+\begin{enumerate}
+\item An ideal $I$ is a \underline{prime ideal} if it is a proper ideal and for all $r, s \in R$, $rs \in I$ if and only if $r \in I, s \in I$, or both.
+
+Note $p \in \N$ is prime if and only if for all $a, b \in \Z$, $p\mid ab$ implies $p \mid a$, $p \mid b$, or both. 
+
+Equivalently, $ab \in (p)$ implies $a \in (p), b\in(p)$, or both.  
+
+\item An ideal $I\subset R$ is a \underline{maximal ideal} if $I$ is proper and, if $J$ is an ideal such that $I \subset J \subset R$, then $J = I$ or $J = R$. 
+\end{enumerate}
+
+\prop Let $R$ be a commutatie ring and $I$ a proper ideal. Then $R/I$ is an integral domin if and only if $I$ is a prime ideal. 
+
+\proof
+
+\subsection*{$=>$} Let $r, s \in R$ such that $rs \in I$. We want to show that $r \in I$ or $s \in I$. Then the elements $\bar{r},\bar{s} \in R/I$ are such that $\bar{r}\cdot\bar{s} = \bar{rs} = \bar{0}$. Since $R/I$ is an integral domain, either $\bar{r} = \bar{0}$ or $\bar{s} = \bar{0}$, or both. In other words, either $r \in I$, or $s \in I$. 
+
+\subsection*{$<=$} Since $I\neq R$, the ring $R/I$ is nonzero. Choose $\bar{r},\bar{s} \in R/I$ such that $\bar{r}\cdot\bar{s} =\bar{0}$. We want to show that either $\bar{r} = \bar{0}, \bar{s} = \bar{0}$, or both . Since $\bar{rs} = \bar{r}\cdot\bar{s}=\bar{0}$, $rs \in I$. Since $I$ is a prime ideal, either $r \in I$ or $s \in I$, or both. So $\bar{r} = \bar{0}, \bar{s} = \bar{0}$, or both. Thus, $R/I$ is an integral domain. 
+
+\qed
+
+\section*{Lecture 3, 1/13/23}
+
+\prop
+
+Let $R$ be a nonzero commutative ring, and $I\subset R$ a proper ideal. Then $R/I$ is a field if and only if $I$ is a maximal ideal.
+
+\proof
+
+\subsection*{$=>$}
+
+Suppose that $J\subset R$ is an ideal with $I \subset J \subset R$. Suppose that these inclusions are strict i.e. $I\subsetneq J \subsetneq R$. Let $X \in J\setminus I$, so $\underbrace{\bar{x}}_{\eqdef x + I} \neq\bar{0}\in R/I$. Then by assumption there exists $\bar{y} \in R/I$ such that $\underbrace{\bar{x}\cdot\bar{y}}_{=\bar{xy}} = \bar{1}\in R/I$. So, $1 - xy \in I \subset J$. But $x \in J$ and $J$ is an ideal, so $xy \in J$. So, $1 \in J$, so $J = R$.
+
+\subsection*{$<=$}
+
+Let $\bar{x} \neq \bar{0}\in R/I$ for some $x \not\in I$. Consider $J = \underbrace{\{a + rx \mid a \in I, r \in R\}}_{I + (x)}$. Then we see that $J$ is an ideal of $R$ containing $I$, i.e. $I \subset J$. Further, $X\neq J$ because $x \in J\setminus I$. By maximality, we must conclude that $J = R$. 
+
+In particular, $1 = a + rx$ for some elements $a \in I, r \in R$. So in $R/I$, $\bar{1} = \bar{a + rx} = \bar{a} + \bar{rx}$. $a \in I$ though, so $\bar{1} = \bar{rx}$, so $\bar{x}$ is indeed a unit of $R/I$. 
+
+\qed
+
+\cor
+
+In a nonzero commutative ring $R$, all maximal ideals are prime ideals. 
+
+\proof
+
+Fields are integral domains
+
+\qed
+
+\rem The converse is \underline{not} true. $\Z$ is an integral domain with prime ideal $(0)$, but this ideal is not maximal, as $\Z/(0) \cong \Z$ is not a field!
+
+For another counterexample, let $R = \Z[x]$, and consider the ideal $I = \{$ all polynomials with constant term equal to $ 0\} = (x)$.  This ideal is prime, since $R/I \cong \Z$ via $\bar{f(x)} \mapsto f(0)$ is an integral domain. But this ideal is not maximal, because $\Z$ is not a field. 
+
+Note: $I$ is strictly contained in the ideal of polynomials with even constant term, which is a strict subset of $R = \Z[x]$.
+
+\subsection*{\underline{The existence of maximal ideals}}
+
+\defn
+
+A \underline{partial ordering} on a set $A$ is a relation $\leq$ satisfying 
+\begin{enumerate}
+\item $x \leq x$ for all $x \in A$
+\item $x \leq y, y \leq x \implies x = y$ for all $x, y \in A$
+\item If $x \leq y$ and $y \leq z$, then $x \leq z$. 
+\end{enumerate}
+
+\rem This definition does \underline{not} necessitate that all elements $x, y$ are comparable. 
+
+\defn 
+
+Let $(A, \leq)$ be a partially ordered set. 
+\begin{itemize}
+\item Let $B \subset A$ and $x \in A$. We say $x$ is an \underline{upper bound} for $B$ if $y \leq x$ for all $y \in B$. 
+\item A subset $B\subset A$ is called a \underline{chain} if $\leq$ is a \underline{total ordering} on $B$ (that is, all elements of $B$ are comparable to all other elements of $B$)
+\end{itemize}
+
+\lem (Zorn's Lemma)
+
+Let $A$ be a nonempty partially ordered set in which every chain has an upper bound. Then $A$ has a \underline{maximal element}, i.e. an element $x \in A$ such that for all $y \in A$, $y$ cannot be compared to $x$, or $y \leq x$. 
+
+\proof
+
+This is actually equivalent to the axiom of choice!
+
+\qed
+
+\thm 
+
+Let $R$ be a nonzero commutative ring, and let $I\subset R$ be a proper ideal. Then there exists a maximal ideal $J \subset R$ containing $I$. 
+
+\proof
+
+Consider the \underline{poset} (Partially Ordered SET) $A$ consisting of all proper ideals containing $I$, partially ordered by inclusion. 
+
+Then: 
+\begin{itemize}
+\item $A\neq\varnothing$, since $I \in A$
+\item If ${a_{\lambda}}_{\lambda\in\Lambda}$ is a chain in $A$, then $\cup_{\lambda\in\Lambda}a_{\lambda} \in A$ gives an upper bound for the chain. 
+
+Note: In general, the union of ideals is \underline{not} an ideal. However, this is an increasing union of ideals, which does give an ideal. 
+
+\end{itemize}
+
+By Zorn's lemma, there exists a maximal element of $A$, which will be a maximal ideal containing $I$. 
+
+\qed
+
+\cor
+
+Let $R$ be a nonzero commutative ring. Then $R$ contains some maximal ideal. 
+
+\proof
+
+Take $I = (0)$ in the previous proposition. 
+
+\qed
+
+\section*{Lecture 4, 1/18/23}
+
+\underline{From now on:}
+
+All rings $R$ will be assumed to be commutative with 1.
+
+\defn
+\begin{itemize}
+\item Let $A_1, \dots, A_t\subset R$ be ideals, then their \underline{sum} is the ideal 
+\[
+A_1 + \cdots + A_t \eqdef \{a_1 + \cdots + a_t \mid a_i \in A_i\}
+\]
+This is the smallest ideal containing $A_i$ for all $i$. 
+
+\item If $x_1, \dots, x_t \in R$, the \underline{ideal generated by} them
+\begin{align*}
+(x_1,\dots, x_t)  & \eqdef \{\sum_{i=1}^tr_ix_i \mid r_i \in R\}\\
+						 & = (x_1) + \cdots + (x_t) \\
+\end{align*}
+
+\item More generally, if $\{x_i\}_{i\in I}\subset R$ is some collection of elements of $R$, the ideal they generate is
+\begin{align*}
+\sum_{i\in I}(x_i)\eqdef \{\text{all finite linear combinations of elements of }\{x_i\}_{i\in I}\} 
+\end{align*}
+
+\item If $A, B \subset R$ are ideals, then their \underline{product} is the ideal
+\[
+AB \eqdef \{\sum_i^n a_ib_i \mid a_i\in A, b_i \in B, n < \oo\}
+\]
+this is the ideal generated by $\{ab\mid a\in A, b \in B\}$. Note $A\cap B \subseteq AB$, with equality if $A + B = R$
+
+\exm Let $R = \Z$. Then $(a) + (b) = (\gcd(a,b))$, $(a)\cap (b) = (\lcm(a, b))$. When $a, b$ are coprime, then $(a) + (b) = (1) = \Z$, and $(a) \cap (b) = (ab)$.
+
+\defn A ring $R$ with exactly 1 maximal ideal $\mathfrak{M}$ is called a \underline{local ring} (often denoted $(R, \mathfrak{M})$).
+
+\end{itemize}
+
+
+\exm 
+
+\begin{itemize}
+\item $(\R, \{0\})$ is a local ring (in fact any field is) with maximal ideal $\{0\}$ 
+\item $(\Z/(p^n), p\Z/(p^n))$ is a local ring for any prime $p$ and $n > 0$
+\end{itemize}
+
+\lem
+
+Let $R$ be a ring and $\mathfrak{M}\subsetneq R$ a proper ideal such that every $x \in R\setminus\mathfrak{M}$ is a unit. Then $R$ $(R, \mathfrak{M})$ is a local ring. 
+
+\proof
+
+We want to show that $\mathfrak{M}$ is a maximal ideal of $R$, and is the unique such maximal ideal. 
+
+Let $I \subsetneq R$ be a proper ideal. If it contained a unit, then $I = R$, which by hypothesis is not true. So, $I$ contains no units. So, it must exist entirely within $\mathfrak{M}$. So, $\mathfrak{M}$ is a unique maximal ideal. 
+
+\qed
+
+\prop Let $R$ be a ring and $\mathfrak{M}\subset R$ a maximal ideal. Then $(R, \mathfrak{M})$ is a local ring if and only if every $x \in 1 + \mathfrak{M}$ is a unit in $R$.
+
+Note: $1 + \mathfrak{M} = \{1 + y \mid y \in \mathfrak{M}\}\subset R$ is closed under multiplication. 
+
+\proof
+
+\subsection*{$=>$}
+
+Suppose $(R, \mk{M})$ is a local ring, and suppose for the sake of contradiction that $x \in 1 + \mk{M}$ is NOT a unit. Note $x = 1 + y, y \in \mk{M}$. By hypothesis, $(1 + y)$ is a proper ideal in $R$, because $1 + y$ is not a unit. 
+
+So $(1 + y) \subset\mk{M}$. In particular, $1 + y \in \mk{M}$. But $y \in \mk{M}$, so $1 \in \mk{M}$. Oopsy! Contradiction. So, we have proven one direction. 
+
+\subsection*{$<=$}
+
+Let $x \in R\setminus\mk{M}$. Since $\mc{M}$ is maximal, $\mk{M} + (x) = R$. So, $1 = y + rx$ for some $y \in \mk{M}, r \in R$. Thus $rx = 1 - y \in \mk{M}$, so $rx$ is a unit by hypothesis, meaning there is a $z$ such that $(rx)z = 1 = x(rz)$, so $x$ is a unit. 
+
+By the lemma, this shows $(R, \mk{M})$ is a local ring. 
+
+\qed
+
+\defn
+
+Let $R$ be a ring. Then the \underline{nilradical} is defined as
+\[
+\mc{N}\eqdef\{\text{all nilpotent elements of }R\}
+\]
+
+\prop
+
+The nilradical is an ideal, and the quotient ring $R/\mc{N}$ has no nonzero nilpotent elements. 
+
+\proof
+
+If $x \in \mc{N}$, then clearly $rx \in \mc{N}$ for any $r \in R$. Suppose $x, y \in \mc{N}$. Then for some $n, m$, $x^n = y^m = 0$. Then, by the binomial theorem, 
+\[
+(x - y)^{n + m} = \sum_{i=0}^{n + m}x^i(-y)^{n + m - i}{n + m\choose i}
+\]
+for all $i$, at least one of $x^i, y^{n + m - i}$ is zero. So, this sum is zero, so $(x - y) \in \mc{N}$. 
+
+Now, suppose $\bar{x}\in R/\mc{M}$. We want to show that $\bar{x} = 0$. Then $\bar{x}^n = 0$ for some $n$, so $x^n \in \mc{N}$ for some $n$. But then $x^n$ is nilpotent, so $x$ is nilpotent. So, $\bar{x} = 0$. 
+
+\qed
+
+\prop
+
+The nilradical of $R$ is the intersection of all prime ideals of $R$. 
+
+\proof
+
+Let $x \in \mc{N}$. Then $x^n = 0 \in \ms{P}$ for any prime ideal $\ms{P} \subset R$. So, $x \in \ms{P}$, so $\mc{N}$ is contained in the intersection. We will do the other inclusion next time. 
+
+\qed
+
+\section*{Lecture 5, 1/20/23}
+
+We will continue the proof. Suppose $f\not\in \ms{N}$. We wish to show that $f\not\in\ms{P}$ for some prime ideal $\ms{P}$. 
+
+Let $\Sigma = \{$ideals $I \subset R \mid f^n\not\in I$ for all $n > 0 \}$.
+
+Then $\Sigma\neq\varnothing$, as it contains $0$ by hypothesis. Further, we can check that any chain has an upper bound (exercise). 
+
+By Zorn's Lemma, there exists a maximal $\ms{P}\in\Sigma$. 
+
+It remains to show $\ms{P}$ is a prime ideal. 
+
+Suppose that $x, y \not\in\ms{P}$. Then $\ms{P}\subsetneq\ms{P}+(x)$ and $\ms{P}\subsetneq\ms{P} + (y)$. But by maximality of $\ms{P}$, $\ms{P} + (x), \ms{P} + (y) \not\in\Sigma$. So, for some $n, m$, $f^n\in\ms{P}+(x), f^m \in \ms{P}+(y)$. 
+
+So, 
+\[
+f^{n + m} \in(\ms{P}+(x))(\ms{P}+(y))\subset \ms{P}+(xy)
+\]
+Thus $\ms{P}+(xy)\not\in\Sigma$. But $\ms{P}\in\Sigma$, so we are forced to conclude $(xy)\not\in\Sigma$, so $xy\not\in\ms{P}$. 
+
+\qed
+
+\defn We say that the ideals $I, J \subset R$ are \underline{coprime} if $I + J = R$. 
+
+\exm
+
+$(m), (n) \in \Z$ are coprime iff $\gcd(m, n) = 1$, since $(m) + (n) = (d)$, where $d = \gcd(m, n)$. 
+
+\defn
+
+Let $R_1, \dots, R_m$ be rings. Their \underline{direct product} is defined as
+\[
+R_1\times\cdots\times R_n = \{(x_1, \dots, x_n)\mid x_i \in R\}
+\]
+forms a ring with addition and multiplication defined component-wise. 
+
+\thm (Chinese Remainder Theorem) 
+
+Let $I_1, \dots, I_n$ be ideals in a ring $R$, which are pairwise coprime. 
+
+Then
+\begin{enumerate}[label=(\roman*)]
+\item $I_1\cdots I_n = I_1 \cap \cdots \cap I_n$
+\item The map $\phi:R\to R/I_n\times\cdots R/I_n$ given by 
+\[
+x\mapsto(x\mod I_1, \dots, x\mod I_n)
+\]
+induces a ring isomorphism
+\[
+\frac{R}{I_1\cdots I_m} \cong \frac{R}{I_1}\times\cdots\times\frac{R}{I_n}
+\]
+
+\end{enumerate}
+
+\proof
+
+\begin{enumerate}[label=(\roman*)]
+\item We will use induction on $n \geq 2$. For the base case, we know that $I_1\cdot I_2 \subseteq I_1\cap I_2$. Conversely, suppose $y \in I_1 \cap I_2$. Since $I_1 + I_2 = R$, we can write $1 = x_1 + x_2$, with $x_i\in I_i$. So
+\begin{align*}
+y & = y \cdot 1 \\
+  & = y \cdot(x_1 + x_2) \\
+  & = \underbrace{y}_{\in I_2}\cdot\underbrace{x_1}_{\in I_1} + \underbrace{y}_{\in I_1}\cdot\underbrace{x_2}_{\in I_2} \\
+  & \in I_1\cdot I_2 \\
+\end{align*}
+Now suppose $n > 2$ and we have $I_1\cdots I_{n - 1} = I_1 \cap \cdots \cap I_{n - 1}$. 
+
+Let $J = I_1\cdots I_n$. By hypothesis, for $i =1, \dots, n - 1$, we have $I_i + I_n = R$, so $1 = \underbrace{x_i}_{\in I_i} + \underbrace{y_i}_{\in I_n}$
+
+So $J \ni x_1\cdots x_{n - 1} = (1 - y_1)\cdots(1 - y_{n - 1}) = (1 - $some element in $I_n) \equiv 1 \mod I_n$
+
+\underline{Notation:} We write $x \equiv y \mod I$ if $x - y \in I$ for some $x, y \in R$, $I \subset R$.
+
+Thus we have $1 = ($ element of $J) + ($ element of $I_m)$, so $R = J + I_n$, so $J$ and $I_n$ are coprime. 
+
+By the base case, we have 
+\[
+\underbrace{J\cdot I_n}_{= I_1\cdots I_{n - 1}\cdot I_n} = \underbrace{J\cap I_n}_{=(I_1 \cap \cdots \cap I_{n - 1})\cap _n}
+\] 
+
+We have thus proven part (i). 
+
+\item $\phi:R\to \frac{R}{I_1}\times\cdots\times\frac{R}{I_m}$ is clearly a ring homomorphism, since every component of $\phi$ is. 
+
+To show $\phi$ is surjective, we will show that there exists some $x \in R$ such that $\phi(x) = (1, 0,\dots, 0)$. 
+
+A similar argument would show that there exists $x_i \in R$ such that $\phi(x_i) = \overbrace{(0, \dots, \underbrace{1}_{i\text{th slot}}, \dots, 0)}^{\eqdef e_i}$ and then given any $r = (\bar{r}_1, \dots, \bar{r}_m) \in \frac{R}{I_1}\times\cdots\times\frac{R}{I_n}$, we have
+\[
+\phi\left(\sum_{i=1}^nr_ix_i\right) = \sum_{i=1}^n\bar{r}_i\phi(x_i) = \sum_{i=1}^n\bar{r}_ie_i = (\bar{r}_1,\dots,\bar{r}_m) = r
+\]
+
+So we will now show surjectivity. For $i = 2, \dots, n$, we have $I_1 + I_i = R$, so $1 = \underbrace{u_i}_{\in I_1} + \underbrace{v_i}_{\in I_i}$. 
+
+Then 
+\[
+x \eqdef v_2\cdots v_n = (1 - u_2)\cdots(1 - u_n)\equiv \begin{cases}
+1 & \mod I_1 \\0 & \mod I_i, i \geq 2 \\
+\end{cases}
+\]
+So $\phi(x) = (1, 0, \dots, 0) \in \frac{R}{I_1}\times\cdots\times\frac{R}{I_n}$. Thus we have shown surjectivity of $\phi$. 
+
+Finally,
+\begin{align*}
+\ker(\phi) & = \{x\in R \mid x \mod I_i \equiv 0 \forall i\} \\
+			  & = \{x \in R \mid x \in I_i \forall i \} \\
+			  & = \cap_{i=1}^nI_i = I_1\cdots I_n \\
+\end{align*}
+So by the first isomorphism theorem for rings (exercise), $\phi$ induces the claimed isomorphism.  
+
+
+\end{enumerate}
+
+This completes the proof. 
+
+\qed
+
+\section*{Lecture 6, 1/23/23}
+
+\subsection*{\underline{Extension and contraction of ideals}}
+
+\defn
+
+Let $f:R\to S$ be a ring homomorphism, and $I\subset R$ and $J \subset S$ be ideals. 
+
+\begin{itemize}
+
+\item The \underline{contraction of $J$} is the ideal 
+\[
+J^c = f^{-1}(J)\subset R.
+\]
+\item The \underline{extension of $I$} is the ideal generated by $f(I)$:
+\[
+I^e = (f(I)) = \{\sum_{i=1}^ns_if(x_i) \mid n \in \N, s_i \in S, x_i \in I\} \subset S
+\]
+
+\end{itemize}
+
+\rem
+
+\begin{enumerate}
+
+\item If $I \subset R$ is an ideal, then $f(I)\subset S$ is not necessarily an ideal. For example, consider the inclusion $f:\Z\hookrightarrow\Q$, then $f(\underbrace{(n)}_{\neq0}) = (n) = n\Z\subset\Q$ is not an ideal. 
+
+\item If $J \subset S$ is a prime ideal, then so is $J^c\subset R$: indeed, the composition 
+\[
+\begin{tikzcd}
+R\ar[r, "f"]&S\ar[r, "\phi"]& S/J
+\end{tikzcd}
+\]
+has the kernel $f^{-1}(J) = J^c$, so it induces an injection 
+\[
+R/J^c\hookrightarrow S/J
+\]
+$S/J$ is an integral domain, so $R/J^c$ must be as well 
+
+\item If $I\subset R$ is a prime ideal, then $I^e\subset J$ is \underline{not} necessarily a prime ideal. For example, consider $f:\Z\hookrightarrow\Q$ and $I = (\underbrace{p}_{\text{prime}})$, we have $I^e = (p\Z) = \Q$, so is not prime. 
+
+\item Any ring homomorphism $f:R\to S$ can be factored as 
+\[
+\begin{tikzcd}
+R\ar[r, "\phi"] & f(R) \ar[r, hook, "\iota"] & S \\
+\end{tikzcd}
+\]
+Note that by first isomorphism theorem, $f(R) \cong R/\ker(f)$. 
+
+\begin{itemize}
+\item For $\phi$, we know that there is a bijection between the prime ideals in $R$ containing $\ker(f)$ and the prime ideals in $f(R)$ by the correspondence theorem. 
+
+\item For the inclusion map, the situation is more complicated. 
+
+\exm Consider $\Z\hookrightarrow\Z[i] = \{a + bi \mid a, b \in \Z\}$. Then a prime ideal $(p)\subset\Z$ may or may not stay prime in $\Z[i]$.
+\begin{enumerate}[label=(\roman*)] 
+\item If $p \equiv 1 \mod 4$, then $(p)^e$ is the product of two prime ideals in $\Z[i]$ (e.g $(5)^e = (2 + i)(2 - i)$).
+
+\item If $p \equiv 3 \mod 4$, then $(p)^e$ is a prime ideal in $\Z[i]$. 
+
+\item $(2)^e = (1 + i)^2$, the square of a prime ideal in $\Z[i]$.
+\end{enumerate}
+\end{itemize}
+
+
+
+\end{enumerate}
+
+\prop
+
+Let $f:R\to S$ be a ring homomorphism, and $I \subset R, J \subset S$ ideals. Then:
+
+\begin{enumerate}
+
+\item $I \subset (I^e)^c$ and $J \supset (J^c)^e$.
+
+\item $I^e = I^{ece}$ and similarly $J = J^{cec}$.
+
+\item Let $C = \{$contracted ideals (from $S$) in $R\}$ and $E = \{$extended ideals (from $R$) in $S\}$. Then we have
+\begin{align*}
+C = \{I\subset R \mid I^{ec} = I \} \\
+E = \{J\subset S \mid J^{ce} = J \} \\
+|C| = |E| \\
+\end{align*}
+The last line says that $C, E$ are in bijection, with $C\to E$ acting by $I\mapsto I^e$, and $E\to C$ acting by $J\mapsto J^c$. 
+
+
+\end{enumerate}
+
+\proof
+
+\begin{enumerate}
+
+\item We have $I \ni x \in f^{-1}(\overbrace{f(x)}^{\in I^e})$ so $I \subset I^{ec}$. On the other hand, let $y \in J^{ce}$. We can write $y = \sum_is_if(x_i)$, $s_i \in S, x_i \in J^c = f^{-1}(J)$.  So $J^{ce} \subset J$.
+
+\item Immediate from part (1): $I \subset I^{ec} \implies I^e\subset I^{ece} = (I^e)^{ce} \subset I^e$, so $I^e = I^{ece}$. A similar argument gives $J^c = J^{cec}$. 
+
+\item Suppose $I \in C$ is a contracted ideal. Then $I = J^c$ for some ideal $J \subset S$. Then $I^{ec} = J^{cec} = J^c = I$, so $C \subset \{I \subset R \mid I^{ec} = I \}$. Conversely, every ideal in $\{I \subset R \mid I^{ec} = I\}$ is a contracted ideal, so we get equality. 
+
+Similarly, we see that $E = \{J \subset S \mid J^{ec} = J\}$
+
+\end{enumerate}
+
+\qed
+
+\section*{Lecture 7, 1/25/23}
+
+\subsection*{\underline{Ring of fractions and localization}}
+
+\underline{Motivation:} Recall how we construct $\Q$ from $\Z$. We take all ordered pairs $(a, s), a, s \in \Z, s \neq 0$, and set up the equivalence relation $(a, s) \sim (b, t)$ if $at = sb$. Then $\Q \eqdef \{$ all such equivalence classes$\}$
+
+\defn
+
+Let $R$ be a commutative ring with 1. A \underline{multiplicative set $S \subseteq R$} is a subset of $R$ which contains 1 and is closed under multiplication. That is, $1 \in S$, and $s, t \in S \implies st \in S$. 
+
+\exm
+\,
+
+\begin{enumerate}
+
+\item If $\mk{p} \subset R$ is a prime ideal, then $S = R\setminus\mk{p}$ is a multiplicative sets. 
+
+\item If $R$ is an integral domain then $S = R\setminus\{0\}$ is a multiplicative set. 
+
+\item For any $f \in R$, $S = \{1, f, f^2, \dots\}$ is a multiplicative set. 
+
+\end{enumerate}
+
+Let $S \subset R$ be a multiplicative set, and define the relation
+\[
+(a, s) \sim (\ell, t) \iff (at - sb)u = 0
+\]
+for some $u \in S$. 
+
+\underline{Exercise:} Show that this is indeed an equivalence relation. 
+
+\defn
+
+Let $\frac{a}{s}$ denote the equivalence class of $(a, s) \in R\times S$. Then
+\[
+S^{-1}R\eqdef\{\frac{a}{s}\mid(a, b)\in R\times S \}
+\]
+with addition and multiplication defined by 
+\begin{align*}
+\frac{a}{s} + \frac{\ell}{t} & \eqdef \frac{at + s\ell}{st} \\
+\frac{a}{s}\cdot\frac{\ell}{t} & \eqdef \frac{a\ell}{st} \\
+\end{align*}
+
+We say that $S^{-1}R$ is \underline{the ring of fractions of $R$ with respect to $S$}, or alternatively the \underline{localization of $R$ at $S$}.
+
+\underline{Note:} We have a ring homomorphism $f:R\to S^{-1}R$ acting by 
+\[
+r\mapsto\frac{r}{1}
+\]
+such that $f(s)$ is a unit in $S^{-1}R$ for all $s \in S$, since $\frac{1}{s} \in S^{-1}R$, and $\frac{1}{s}\frac{s}{1} = 1$.
+
+\prop (Universal property of $S^{-1}R$)
+
+Let $g:R\to R'$ be a ring homomorphism such that $g(s)$ is a unit in $R'$ for all $s \in S$. Then there exists a unique ring homomorphism $h:S^{-1}R\to R'$ such that the diagram
+\[
+\begin{tikzcd}
+R\ar[d, "f"'] \ar[r, "g"] & R' \\
+S^{-1}R\ar[ur, "\exists!h"', dotted] \\
+\end{tikzcd}
+\] 
+commutes. 
+
+\proof
+
+Suppose first that such $h$ exists. Then for any $r \in R$, 
+
+\[
+h(\frac{r}{1}) = h(f(r)) = g(r)
+\]
+so for any $s \in S,$
+
+\[
+h(\frac{1}{s}) = h((\frac{s}{1})^{-1}) = h(\frac{s}{1})^{-1} = h(f(s))^{-1} = g(s)^{-1}
+\]
+So for $\frac{r}{s} \in S^{-1}R$, we must have
+\[
+h(\frac{r}{s}) = h)(\frac{r}{1})h(\frac{1}{s}) = g(r)g(s)^{-1}
+\]
+To prove the existence of $h$, set $h(\frac{r}{s}) \eqdef g(r)g(s)^{-1}$. Then $h$ will be a ring homomorphism satisfying $g = h \circ f$, so long as $h$ is well-defined, so we will check that now. 
+
+Suppose $\frac{r}{s} = \frac{r'}{s'}$. Then by definition $(rs' - r's)u = 0$ for some $u \in S$. So $(g(r)g(s') - g(r')g(s))g(u) = g(0) = 0$. $g(u) \in (R')^\times$, so is not a zero divisor, so $g(r)g(s') - g(r')g(s) = 0$, so $g(r)g(s)^{-1} = g(r')g(s')^{-1}$.
+
+\qed
+
+\exm
+
+Let $\mk{p}\subset R$ be a prime ideal, and $S = R\setminus\mk{p}$ (a multiplicative set). Then we write $R_{\mk{p}}$ for $S^{-1}R$, and call it the localization of $R$ at $\mk{p}$. 
+
+\underline{Note:} The set $_{\mk{p}}R_{\mk{p}}\eqdef\{\frac{a}{s}\mid a\in\mk{p}, s \in S\} \subset R_\mk{p}$ is a proper ideal in $R_\mk{p}$, and
+\[
+\frac{a}{s}\not\in _\mk{p}R_{\mk{p}} \implies a\not\in\mk{p}
+\]
+So $\frac{s}{a} \in R_\mk{p}$, so $\frac{a}{s}$ is a unit in $R_{\mk{p}}$. 
+
+So $R_\mk{p}$ is a local ring, with $_\mk{p}R_\mk{p}$ the unique maximal ideal by a lemma from lecture 4. 
+
+\exm
+
+If $R = \Z,$ $\mk{p} = (p)$ with $p$ a prime, then $\Z_{(p)} = \{\frac{a}{s}\mid p\nmid s\}\subset\Q$ 
+
+\section*{8, 1/27/23}
+
+\prop
+
+Let $S \subset R$ be a multiplicative subset of a ring $R$, and $f:R\to S^{-1}R$ the corresponding localization, sending $r$ to $\frac{1}{r}$. Then
+\begin{enumerate}[label=(\roman*)]
+
+\item Every ideal in $S^{-1}R$ is extended. 
+
+\item An ideal $I \subset R$ is contracted iff for all $s \in S$, $\bar{s}\in \frac{R}{I}$ is NOT a zero divisor. 
+
+\item We have a bijection between the prime ideals in $S^{-1}R$ and the prime ideals of $R$ which are disjoint from $S$. This bijection is given by extension and contraction. 
+
+\end{enumerate}
+
+
+\proof
+
+\begin{enumerate}[label=(\roman*)]
+
+\item Let $J \subset S^{-1}R$ be an ideal. We want to show that $J$ is extended, so it is enough to show $J \subset J^{ce}$.
+
+Pick $\frac{r}{s} \in J$. Then $\frac{r}{1} = \frac{s}{1}\cdot\frac{r}{s}\in J$, so $r \in f^{-1}(J) = J^c$. We can then write $\frac{r}{s} = \frac{1}{s}\cdot\frac{r}{1} \in J^{ce}$.
+
+\item Let $I \subset R$ be an ideal. It is enough to show 
+\[
+(I^{ec} \subset I) \iff \forall s \in S, \bar{s}\in\frac{R}{I}\text{ is not a zero divisor}
+\]
+Let $x \in I^{ec} = f^{-1}(I^e)$. Then 
+\begin{align*}
+f(x) \in I^e & = \{\text{all finite linear combinations }\sum_i\frac{r_i}{s_i}\overbrace{f(x_i)}^{=\frac{x_i}{1}} \mid r_i \in R, s_i \in S, x_i \in I \} \\
+				 & = \{\frac{r}{s} \mid r \in I, s \in S \} \\
+				 & \eqdef S^{-1}I \\
+\end{align*}
+So $\frac{x}{1} = \frac{r}{s}$ for some $r \in I, s \in S$, so $(xs - r)u = 0$ for some $u \in S$, so $x\underbrace{su}_{\in S} = \underbrace{ru}_{\in I}$. So $\bar{x}\cdot\bar{su} = \bar{0}\in \frac{R}{I}$.
+
+\underline{Note:} If $su \in I$, then $\frac{su}{1}$ is a unit in $I^e$. So $I^e = S^{-1}R$, so $I^{ec} = R$.  
+
+If $\bar{su}\neq\bar{0} \in \frac{R}{I}$ (i.e. $su \not\in I$) then by hypothesis on elements in $S$, $\bar{x} = 0 \in \frac{R}{I}$, i.e. $x \in I$, so $I^{ec} \subset I$. 
+
+Now for the converse.
+
+Suppose there exists $s \in S$ such that $\bar{s}\in\frac{R}{I}$ is a zero divisor. We want to show that $I$ is not contracted, i.e. there exists an $x \in I^{ec}\setminus I$. 
+
+By hypothesis, there exists $\bar{x}\neq\bar{0}\in \frac{R}{I}$ (i.e. $x\not\in I$) such that $\bar{x}\cdot\bar{s} = \bar{0}\in\frac{R}{I}$. So $xs = y$ for some $y \in I$, so $\frac{x}{1} = \frac{y}{s}\in S^{-1}I = I^e$. So $x \in f^{-1}(I^e) = I^{ec}$.   
+
+\item Suppose $\mk{q} \subset S^{-1}R$ is a prime ideal. Then, by part (i), $\mk{q} = S^{-1}\mk{p} = \mk{p}^e$ for some ideal $\mk{p}\subset R$. So $\mk{q}^c = \mk{p}^{ec} \supset \mk{p}$. 
+
+\claim 
+
+$\mk{p}^{ec} \subset \mk{p}$. 
+
+\proof
+
+Indeed, we have $\mk{p} \cap S = \varnothing$, since $s \in \mk{p} \cap S$ implies $1 = \frac{s}{s} \in S^{-1}\mk{p} = \mk{q}$, so $s\not\in\mk{p}$ for all $s \in S$. So, $\bar{s}\neq\bar{0}\in\frac{R}{\mk{p}}$ for all $s \in S$. 
+
+So $\bar{s}$ is not a zero divisor in $\frac{R}{\mk{p}}$ (because it's an integral domain), so $\mk{p}^{ec} \subset \mk{p}$, as shown in proof of part (ii). 
+
+\qed
+
+Thus $\mk{q} = S^{-1}\mk{p}, \mk{p} = \mk{q}^c$, and $\mk{p} \cap S = \varnothing$, so we get an injection 
+\[
+\{\text{prime ideals }\mk{p}\subset R\text{ with }\mk{p} \cap S = \varnothing\} \hookleftarrow \{\text{prime ideals in }S^{-1}R \}
+\]
+given by 
+\[
+\mk{q} = S^{-1}\mk{p} \mapsto \mk{q}^c = \mk{p}
+\]
+Conversely, let $\mk{p} \subset R$ be a prime ideal with $\mk{p} \cap S = \varnothing$ (we want to show that $\mk{p}^e = S^{-1}\mk{p}$ is a prime ideal in $S^{-1}R$). 
+
+Let $\bar{S} = \{\bar{s}\in\frac{R}{\mk{p}} \mid s \in S\} \subset \frac{R}{\mk{p}}$. This is a multiplicative subset. Then the ring homomorphism $S^{-1}R\to \bar{S}^{-1}(\frac{R}{\mk{P}})$ given by $\frac{r}{s} \mapsto \frac{\bar{r}}{\bar{s}}$ induces an isomorphism
+\[
+\frac{S^{-1}R}{S^{-1}\mk{p}} \to \bar{S}^{-1}(\frac{R}{\mk{p}})
+\]
+So we are done if we can show that $\bar{S}^{-1}(\frac{R}{\mk{p}})$ is an integral domain. 
+
+But this follows from
+
+\begin{itemize}
+
+\item $\mk{p} \cap S = \varnothing$, so $S^{-1}\mk{p}\subsetneq S^{-1}R$, so $\bar{S}^{-1}(\frac{R}{\mk{p}})\neq(0)$
+
+\item $\bar{S}^{-1}(\frac{R}{\mk{p}})\hookrightarrow$ field of fractions of the integral domain $\frac{R}{\mk{p}}$ (see next remark). 
+
+\end{itemize}
+
+This concludes the proof.
+
+\end{enumerate}
+
+\qed
+
+\rem
+
+Suppose $R$ is an integral domain. Then $S = R\setminus\{0\}$ is a multiplicative set. We call $S^{-1}R$ the \underline{field of fractions of $R$}. 
+
+\begin{enumerate}
+
+\item $S^{-1}R$ is a field, since $\frac{r}{s}\neq0 \in S^{-1}R$, so $r\neq0$, i.e. $r \in S$, so $\frac{s}{r} \in S^{-1}R$,so $\frac{r}{s}$ is a unit in $S^{-1}R$. 
+
+\item The map $f:R\to S^{-1}R$, $r \mapsto \frac{r}{1}$, is injective. 
+
+\end{enumerate}
+
+\section*{Lecture 9, 1/30/23}
+
+\defn
+
+Let $R$ be a commutative ring with identity. An Abelian group $M$ is called an $R$-module if there is a function $R:M\times M\to M$, with $(r, m)\mapsto r\cdot m$, such that, for all $r_1, r_2, r \in R, m_1, m_2, m \in M$, 
+\begin{enumerate}
+
+\item $r\cdot(m_1 + m_2) = r\cdot m_1 + r\cdot m_2$ 
+
+\item $(r_1 + r_2)\cdot m = r_1\cdot m + r_2 \cdot m$ 
+
+\item $(r_1r_2)\cdot m = r_1\cdot(r_2\cdot m)$
+
+\item $1\cdot m = m$. 
+
+\end{enumerate}
+
+\exm
+
+Let $R$ be as above. 
+
+\begin{enumerate}
+
+\item $R$ is an $R$-module via the map given by multiplication. 
+
+\item Let $I$ be an ideal. $I$ is an $R$-module, again via multiplication. 
+
+\item If $V$ is a vector space over a field $F$, then $V$ is an $F$-module. 
+
+\item Let $G$ be an Abelian group. Then $G$ is a $\Z$-module via the multiplication 
+\[
+n\cdot g = \begin{cases} g + \cdots + g \,(\text{$n$ times}) & n > 0 \\ e & n = 0 \\ (-g) + \cdots + (-g) \,(\text{$|n|$ times}) & n < 0 \\ \end{cases}
+\]
+
+\item let $V$ be a vector space over a field $F$ and let $\theta:V\to V$ be an $F$-linear map. Then we can regard $V$ as an $F[x]$-module via $F[x]\times V\to V$, where
+\[
+(\sum a_ix_i, v) \mapsto \sum_i a_i\theta^i(v)
+\]
+
+\end{enumerate}
+
+\prop 
+
+Let $M$ be an $R$-module. Then
+\begin{enumerate}
+
+\item $0\cdot m = 0 = r\cdot 0$
+
+\item $-r\cdot m = r\cdot(-m) = -(r\cdot m)$. 
+
+\end{enumerate}
+
+\proof
+
+Immediate
+
+\qed
+
+\rem If $M$ is an $R$-module, then $\Ann_R(M) = \{r\in R\mid r \cdot m = 0 \forall m \in M\}\subset R$ is an ideal of $R$, called the annihilator of $M$, and $M$ is naturall an $R/\Ann_R(M)$-module via $R/\Ann_R(M)\times M\to M$ by $(\bar{r},m)\mapsto r\cdot m$. 
+
+\defn
+
+Let $M$ be an $R$-module. A subgroup $N$ of the additive group of $M$ is called a submodule if for all $r \in R, n \in N$, we have $r\cdot n \in N$.
+
+\prop
+
+A subset $N \subseteq M$ is a submodule if it satisfies
+
+\begin{enumerate}
+
+\item $N\neq \varnothing$
+
+\item $n_1, n_2 \in N \implies n_1 + n_2 \in N$
+
+\item For all $r \in R, n \in N, r\cdot n \in N$
+
+\end{enumerate}
+
+\proof
+
+Exercise
+
+\qed
+
+\exm
+
+\begin{enumerate}
+
+\item If $R$ is a commutatie ringr egarded as an $R$-module, then $\{R$-submodules of $R\} = \{$ideals of $R\}$. 
+
+\item If $V$ is a vector space over a field $F$, then $\{$ submodules of  $V\} = \{$subspaces of $V\}$.
+
+\item If $G$ is an Abelian group regarded as a $\Z$-module, then $\{\Z$-submodules of $G\} = \{$subgroups of $G\}$. 
+
+\item If $V$ is a vector space over a field $F$ with endomorphism $\theta:V\to V$ (i.e. $V$ is an $F[x]$-module), then $\{F[x]$-submodule of $V = \{\theta$-invariant subspace $W\subseteq V\}$
+
+\end{enumerate}
+
+\defn
+
+Let $M, N$ be $R$-modules. A group homomorphism $\theta:M\to N$ is called a module homomorphism (or $R$-homomorphism) if $\theta(r\cdot m) = r\cdot\theta(m)$ for all $r \in R, m \in M$. 
+
+Notation: $\Hom_R(M, N) = \{$ All $R$-homomorphisms $\theta:M\to N\}$. 
+
+$\Hom_R(M, N)$ is an $R$-module, where $R\times\Hom_R(M, N)\to \Hom_R(M, N)$ is defined by 
+\[
+(r, \theta) \mapsto \{r\cdot \theta:m\to r[\theta(m)]\}
+\]
+
+\exm\,
+
+\begin{enumerate}
+
+\item If $V, W$ are $F$-vector spaces, then $\{F$-homomorphisms $\theta:V\to W\} = \{F$-linear maps $V\to W\}$. 
+
+\item If $G, H$ are groups, then $\{\Z$-homomorphisms $\theta:G\to H\} = \{$group homomorphisms $\theta:G\to H\}$. 
+
+\end{enumerate}
+
+\prop 
+
+If $\theta:M\to N$ is an $R$-homomorphism, then 
+
+\begin{enumerate}
+
+\item $\Im(\theta) = \theta(M)\subseteq N$ is an $R$-module. 
+
+\item $\ker(\theta) = \theta^{-1}(\{0\})\subseteq M$ is an $R$-module
+
+\end{enumerate}
+
+\proof
+
+Immediate. 
+
+\qed
+
+\defn If $N \subseteq M$ is a submodule, then the quotient Abelian group $M/N = \{\bar{m} = m + N\mid m \in M\}$ can be made into an $R$-module via $R\times M/N\to M/N$ defined by $(r, \bar{m}) \to \bar{r\cdot m}$. We say $M/N$ is a \underline{quotient module}. The quotient map $\theta:M\to M/N$ where $\theta(m) = \bar{m}$ is then an $R$-homomorphism. 
+
+\thm (1st isomorphism theorem)
+
+If $\theta:M\to N$ is an $R$-module homomorphism, then $\theta$ induces an $R$-module isomorphism $M/\ker(\theta) \cong \Im(\theta)$. 
+
+\proof
+
+Exercise
+
+\qed
+
+\section*{Lecture 10, 2/1/23}
+
+\defn Let $M$ be an $R$-module an $A \subseteq M$ then the smallest submodule of $M$ generated by $A$ is $\langle A \rangle = \cap_{A\subseteq N \subseteq M}N\underline{=}_{\text{exercise}}\{$all finite linear combinations $\sum_i\lambda_ia_i\mid \lambda_i\in R, a_i \in A\}$. 
+
+\defn An $R$-module $M$ is \underline{finitely generated} if it's of the forem $M = \langle A \rangle$ for some finite $A \subseteq M$. 
+
+\defn
+
+An $R$-module $M$ is \underline{free with basis $A\subseteq M$} is 
+\begin{enumerate}
+
+\item $M = \langle A \rangle$ 
+
+\item $\sum_i\lambda_ia_i = 0$ with distinct $\lambda_i\in R, a_i \in A \implies \lambda_i=0$ for all $i$ (linearly independent). In other words, every $m \in N$ can be uniquely written in the form $m = \sum_i\lambda_ia_i$ with $\lambda_i\in R, a_i \in A$ distinct. 
+
+\end{enumerate}
+
+\exm\,
+
+\begin{enumerate}
+
+\item $R$ is a free $R$-module with basis $\{1\}$. 
+
+\item Similarly, $R^n$ is a free $R$-module with basis $\{e_i \mid 1 \leq i \leq n\}$, where $e_i$ is the standard vector with a 1 in the $i$th spot. 
+
+\item More generally, for any set $A$, the module $R^{(A)} = \{$all functions $f:A\to R$ with $f(a) = 0$ for all but finitely many $a\}$ is free with basis $\{\delta_a\}_{a\in A}$, where $\delta_a:A\to R$ is defined by $\delta_a(m) = \begin{cases} 1 & m = a \\ 0 &\text{ otherwise} \\ \end{cases}$
+
+\end{enumerate}
+
+\rem
+
+An $R$-module $M$ is free with basis $A$ if aned only if $M \cong R^{(A)}$. 
+
+\exm\,
+\begin{enumerate}
+
+\item If $F$ is a field, then every finitely generated $F$-module is free. 
+
+\item $\Z_2$ is \underline{not} a free $\Z$-modulek since $\Z_2$ is generated by 1, but we have $1 = 1\cdot 1 = 3\cdot 1 \in \Z_2$. 
+
+\end{enumerate}
+
+\rem 
+
+Suppose $M$ is a free $R$-module with basis $A\subseteq M$. Let $N$ be another $R$-module. Then any function $f:A\to N$ extends uniquely to an $R$-homomorphism $\varphi:M\to N$ where $f\varphi(\sum_i\lambda_ia_i) = \sum_i\lambda_if(a_i)$. Note $\varphi(a) = f(a)$ for all $a \in A$. 
+
+\prop
+
+Suppose we have the diagram of $R$-modules and $R$-homomorphisms $\theta,\phi$, where free $R$-module and $\phi$ is surjective. Then there exists an $R$-homomorphism $\psi:L\to N$ such that $\theta = \phi\circ \psi$. In other words, there is a $\psi$ making this diagram commute:
+\[
+\begin{tikzcd}
+& L\ar[dl, dotted, "\exists \psi"']\ar[d, "\theta"] \\
+N \ar[r, "\phi"] & N\\ 
+\end{tikzcd}
+\]
+\proof
+
+Let $A$ be a basis for $L$. Since $\phi$ is injective, for $a \in A$, there exists $n_a \in N$ such that $\phi(n_a) = \theta(a)$. Then by the preceeding remark, $f:A\to N$ defined by $f(a) = n_a$ can be extended uniquely to an $R$-homomorphism $\psi:L\to N$ by $\sum_i\lambda_ia_i\mapsto \sum_i\lambda_in_{a_i}$.
+
+By construction, for any $m = \sum_i\lambda_ia_i\in L$,
+\begin{align*}
+\theta(m) & = \theta(\sum_i\lambda_ia_i) \\
+			 & = \sum_i\lambda_i\theta(a_i) \\
+			 & = \sum_i\lambda_i\phi(n_{a_i}) \\
+			 & = \sum_i\lambda_i(\phi\circ\psi)(a_i) \\
+			 & = (\phi\circ\psi)(\sum_i\lambda_ia_i) \\
+			 & = (\phi\circ\psi(m)) \\
+\end{align*}
+Thus $\phi\circ\psi = \theta$. 
+
+\qed
+
+\rem
+
+The result of prop 1 doesn't necessarily hold if $L$ is not free, e.g. consider the following $\Z$-modules
+\[
+\begin{tikzcd}
+& \Z_2\ar[ld, "\exists\psi?"'] \ar[d, "\theta = \Id"] \\
+\Z\ar[r, "n\to\bar{n}"'] & \Z_2 \\
+\end{tikzcd}
+\]
+Suppose $\psi:\Z_2\to\Z$ is a $\Z$-linear map. Let $n = \psi(1) \in \Z$. Then $2n = 2\psi(1) = \psi(2\cdot 1) = \psi(\bar{0}) = 0\in\Z\implies n = 0$. Thus $\psi = 0$, so $\phi\circ\psi\neq\Id$. 
+
+\prop
+
+Let $M$ be an $R$-module. Then there exists a free $L$-module $L$ such that $M \cong L/K$ for some submodule $K \subseteq L$. In other words, every module is a quotient of a free module. 
+
+\proof
+
+Take $A \subseteq M$ to be a generating set for $M$, i.e. $M = \langle A \rangle$. Consider the free $R$-module $R^{(A)}$ and let $\theta:L\to M$ be the unique $R$-linear extension of the inclusion $A\hookrightarrow M$. Then $\theta$ is surjective, since $A$ generates $M$. By the 1st isomorphism theorem, $L/\ker(\theta)\cong M$. 
+
+\qed
+
+\section*{Lecture 11, 2/3/23}
+
+\defn
+
+A sequence of $R$-modules and $R$-homomorphisms 
+\[
+\begin{tikzcd}
+\cdots\ar[r]&M_{i - 1}\ar[r, "f_{i - 1}"]& M_i\ar[r, "f_i"] & M_{i + 1} \ar[r] &\cdots 
+\end{tikzcd}
+\]
+is called \underline{exact at $M_i$} if $\Im(f_{i - 1}) = \ker(f_i)$, and called exact if it's exact at $M_i$ for all $i$. In particular, 
+\begin{enumerate}
+
+\item $\begin{tikzcd} (0)\ar[r]&M'\ar[r, "f"]&M\end{tikzcd}$ is exact $\iff f$ injective.
+
+\item $\begin{tikzcd} M\ar[r, "g"]&M'\ar[r]&0\end{tikzcd}$ is exact $\iff g$ surjective. 
+
+\item $\exactshort{M'}{f}{M}{g}{M''}$ is exact iff
+\begin{enumerate}[label=(\roman*)]
+
+\item $f$ injective
+
+\item $g$ surjective
+
+\item $\Im(f) = \ker(g)$
+
+\end{enumerate}
+Such an exact sequence is called a short exact sequence. 
+
+\end{enumerate}
+
+\exm
+
+If $f:M\to N$ is an $R$-homomorphism, then 
+\[
+\begin{tikzcd}
+0\ar[r]&\ker(f)\ar[r, hook, "\iota"]&M\ar[r, "f"] &\Im(f)\ar[r]&0 \end{tikzcd}
+\]
+is a short exact sequence. 
+
+\rem 
+
+Any exact sequence $\begin{tikzcd} \cdots\ar[r]&M_{i - 1}\ar[r, "f_{i - 1}"]&M_i\ar[r, "f_i"]&M_{i + 1} \ar[r]&\cdots \end{tikzcd}$
+can be decomposed into short exact sequences
+\[
+\begin{tikzcd}[column sep = tiny]
+& &\color{red}{(\Im(f_i) = \ker(f_{i + 1}))} \ar[rd, red]  \\
+ \cdots\ar[r] & M_{i - 1}\ar[ru, red]\ar[rr, "f_{i - 1}"] && M_i\ar[rr, "f_i"]\ar[dr, red] && M_{i + 1} \ar[r] & \cdots \\
+\color{red}{0\to\ker(f_i)}\ar[ru, red] & & & & \color{red}{\Im(f_{i + 1} = \ker(f_{i + 2}))}\ar[r, red]& 0 \\
+\end{tikzcd}
+\]
+
+\prop
+
+Let $\Hom$ be a left-exact functor. 
+
+\begin{enumerate}
+
+\item Let $\exactshort{N'}{f}{N}{g}{N''}$ be an exact sequence. Then for any $R$-module $M$, the sequence
+\[
+\begin{tikzcd}
+0\ar[r]&N'\ar[r, "f"]&N\ar[r, "g"]&N''
+\end{tikzcd}
+\]
+is exact, with $\bar{f}(\phi) = f\circ\phi, \bar{g}(\psi) = g\circ\psi$.
+
+\item Let $\begin{tikzcd} M'\ar[r, "f"]&M\ar[r, "g"]&M''\ar[r]&0 \end{tikzcd}$ be an exact sequence. Then for any $R$-module $N$, the sequence
+\[
+\begin{tikzcd}
+0\ar[r]&\Hom_R(M'', N) \ar[r, "\bar{g}"]&\Hom_R(M, N)\ar[r, "\bar{f}"]&\Hom_R(M, N'')
+\end{tikzcd}
+\]
+is also exact.
+\end{enumerate}
+
+\proof
+
+We will prove 1. 
+
+Suppose $\begin{tikzcd}0\ar[r]&N'\ar[r, "f"]&N\ar[r, "g"] & N'' \end{tikzcd}$ is exact. 
+
+We first show $\bar{f}$ is injective. Suppose $\phi\in\Hom)R(M, N')$ such that $f \circ \phi = \bar{f}(\phi) = 0$. Then $\Im(\phi)\subseteq\ker(f) = 0$, so $\theta=0$. 
+
+We now show $\Im(f) = \ker(g)$. Let $\phi\in\Hom_R(M, N')$. Then $(\bar{f}\circ\bar{g})(\phi) = g\circ f \circ \phi = 0 \circ \phi = 0$ (because $\ker(g) \subseteq \Im(f)$, so $\bar{g}\circ\bar{f} = 0$, i.e. $\Im(\bar{f})\subseteq\ker(\bar{g})$. 
+
+Conversely, let $\psi\in\ker(\bar{g})$. Then $g\circ\psi=0$, so $\Im(\psi)\subseteq\ker(g) = \Im(f)$ by exactness. 
+\[
+\begin{tikzcd}
+& \ar[dl, dotted, "\exists \phi"']\ar[d, "\psi"]M\ni m \\
+N'\ar[r, "f"]&N \ni \psi(m) = f(n')\\
+\end{tikzcd}
+\]
+There exists a unique $n'$ such that $f(n') = \psi(m)$ by exactness. 
+
+Now define $\phi:M\to N'$ by $\phi(m) = n'$. Then 
+\begin{itemize}
+\item $\phi$ is well-defined
+\item $\phi$ is $R$-linear, since so are $\psi$ and $f$
+\item $\phi$ satisfies $f\circ\phi = \psi$ by construction
+\end{itemize}
+Thus $\psi = \bar{f}(\phi)$, i.e. $\psi\in\Im(\bar{f})$. This concludes the proof of 1. The proof of 2 is similar. 
+
+\qed
+
+\rem In the context of part 1 of the proposition, suppose $\exactshort{N'}{f}{N}{g}{N''}$ is exact, as well as that $g$ is surjective. Then for general $R$-modules $M$ we (obviously) have
+\[
+\begin{tikzcd}
+0\ar[r]&\Hom_R(M, N')\ar[r, "\bar{f}"] & N\ar[r, "g"] & N''\ar[r] & 0 
+\end{tikzcd}
+\]
+is exact, but $\bar{g}$ is not necessarily surjective.
+
+\exm
+
+For $M = \Z_2$ and $(\begin{tikzcd}N\ar[r, "g"]&N''\end{tikzcd}) = \left({{\Z\to\Z_2}\atop{n\mapsto\bar{n}}}\right)$, last time we say that $(\Id:\Z_2\to\Z_2)\not\in\Im(\bar{g})$. 
+\[
+\begin{tikzcd}
+&\Z_2\ar[d, "\Id"] \\
+\Z\ar[r, "g"]&\Z_2
+\end{tikzcd}
+\]
+Similarly, in the context of part 2 of the proposition, 
+
+$\exactshort{M'}{f}{M}{g}{M''}$ exact does not imply $\bar{f}:\Hom_R(M, N)\to\Hom_R(M', N)$ surjective for general $R$-modules. 
+
+\section*{Lecture 12, 2/6/23}
+
+\section*{Lecture 13, 2/8/23}
+
+\subsection*{\underline{On $\Hom_R(-, N)$}}
+
+\underline{Recall:} If $N$ is an $R$-module and 
+\[
+\begin{tikzcd} M'\ar[r, "f"]&M\ar[r, "g"]&M''\ar[r]&0\end{tikzcd}
+\]
+is an exact sequence, then the sequence 
+\[
+\begin{tikzcd}\Hom_R(M'', N)\ar[r, "\bar{g}"]&\Hom_R(M, N) \ar[r, "\bar{f}"]& \Hom_R(M', N)\end{tikzcd}
+\]
+is exact. However, $f$ injective does \underline{not} imply $\bar{f}$ is surjective for general $N$. 
+
+\defn
+
+An $R$-module is called \underline{injective} if it satisfies any of the three equivalent (we prove they are equivalent next) conditions:
+
+\begin{enumerate}[label=(\roman*)]
+
+\item For every such diagram of $R$-modules and $R$-homs, 
+\[
+\begin{tikzcd}
+0\ar[r] & M'\ar[r, "f"]\ar[d, "\phi"] &M \\
+& Q& 
+\end{tikzcd}
+\]
+with $f$ injective, there is a $\psi:M\to Q$, that makes the following diagram commute
+\[
+\begin{tikzcd}
+0\ar[r]&M'\ar[d, "\phi"]\ar[r, "f"]&M\ar[dl, dotted, "\exists\psi
+"] \\
+&Q& \\
+\end{tikzcd}
+\]
+
+\item For every injective $R$-homomorphism $f:M'\to M$, the induced map $\bar{f}:\Hom_R(M, Q)\to\Hom_R(M', Q)$, $\psi\mapsto\psi\circ f$ is surjective. 
+
+\item Every short exact sequence
+\[
+\exactshort{Q}{\alpha}{M}{}{N}
+\]
+splits on the left. That is, there is a $\beta:M\to A$ such that $\beta\circ\alpha=\Id_Q$ (So $M\cong Q\oplus N$)
+
+\end{enumerate}
+
+
+\thm 
+
+These three conditions are indeed equivalent.
+
+\proof
+
+Exercise
+
+\qed
+
+\lem (Baer's Criterion)
+
+Let $Q$ be an $R$-module. If for all ideals $I\subset R$ every $R$-homomorphism $\phi:I\to Q$ extends to an $R$-homomorphism $\psi:R\to Q$,
+\[
+\begin{tikzcd}
+I\ar[r, hook, "\iota"] \ar[d, "\phi"']& R\ar[dl, dotted, "\psi"] \\
+Q & \\
+\end{tikzcd}
+\]
+Then $Q$ is an injective $R$-module. 
+
+\proof
+
+Consider a diagram of $R$-modules and $R$-homomorphisms 
+\[
+\begin{tikzcd}
+0\ar[r]&M'\ar[d, "\phi"']\ar[r, "f"]&M \\
+& Q& \\
+\end{tikzcd}
+\]
+If $f$ is an injection, then $M'\cong f(M')$. We want to show that there exists $\psi:M\to Q$ such that $\phi = \psi\circ f$. Without loss of generality, assume $M'\subseteq M$ and $f=\iota$. 
+
+Consider the set $\mc{A} = \{$all $R$-submodules $N$ of $M$ with $M'\subset N \subset M$, such that there exists an $R$-homomorphism $\phi_N:N\to Q$ with $\phi_N|_{M'}=\phi\}$. 
+
+We order the set as follows. We say $N_1\leq N_2$ if $N_1 \subset N_2$ and $\phi_{N_2}|_{N_1} = \phi_{N_1}$. Because $M'\in\mc{A}, \mc{A}\neq\varnothing$. Further, it is clear that every chain in $\mc{A}$ has an upper bound. 
+
+By Zorn's lemma, there exists some maximal element $N$ in $\mc{A}$. If $N = M$, we're done. 
+
+So for the sake of contradiction, suppose $N\subsetneq M$ is a proper submodule. Let $m \in M\setminus N$, and consider the ideal  $I = \{r\in R \mid rm\in N\}\subset R$. 
+
+By hypothesis, the $R$-homomorphism $\phi_M:I\to Q$, $r\mapsto \phi_N(rm)$ extends to an $R$-homomorphism $\psi_m:R\to Q$:
+\[
+\begin{tikzcd}
+I\ar[d, "\phi_m"'] \ar[r, hook, "\iota"] & R \ar[dl, dotted, "\exists \psi_m"] \\
+Q& \\
+\end{tikzcd}
+\]
+Note that $\Ann_R(m) = \{r\in R\mid rm = 0\} \subset \ker\phi_m\subset\ker\psi_m$. So $\psi_m$ factors as 
+\[
+\begin{tikzcd}
+& R\ar[ld, "\psi_m"']\ar[r, twoheadrightarrow] & R/\Ann_R(m)&\cong Rm\ar[dlll, dotted, "\psi'_m"]\\
+Q & & & \\
+\end{tikzcd}
+\]
+and we have $\psi'_m|_{Rm\cap N} = \phi_N|_{Rm\cap N}$ by definition. 
+
+So we can extend $\phi_N$ to 
+\begin{align*}
+\phi_{N'}:N' \eqdef N + Rm &\to Q \\
+n + r& \mapsto \phi_N(n) + \psi'_m(rm) \\
+\end{align*}
+but $N' \supsetneq N$, contradicting maximality of $N$. 
+
+\qed
+
+\defn
+
+Let $G$ be an Abelian group. $G$ is said to be \underline{divisible} if for any $n\in \Z\setminus\{0\}$, the map $g\mapsto ng$ is surjective. 
+
+\prop
+
+Let $G$ be an Abelian group ($=\Z$-module). Then $G$ is an injective $\Z$-module if and only if $G$ is divisible.
+
+\proof
+
+Suppose $G$ is an injective $\Z$-module. Let $n\in\Z\setminus\{0\}, g \in G$, and consider 
+\[
+\begin{tikzcd}
+\Z\ar[d, "1\mapsto g"'] \ar[r, "g\mapsto n\cdot g "]& \Z \ar[dl, dotted, "\psi"]\\
+G & \\
+\end{tikzcd}
+\]
+Then there exists $\psi:\Z\to G$ such that $\phi = \psi \circ f$. So
+\begin{align*}
+g & = \phi(1) \\ & = \psi(f(1)) \\ & = \psi(n) \\ & = n\cdot\underbrace{\psi(1)}_{\in G} \\
+\end{align*}
+
+Now suppose $G$ is divisible. By Baer's lemma, to check $G$ is injective in $\Z$-mod, it is enough to show that for all ideals $I = (n)\subset\Z$ and $\phi:I\to G$, the map $\phi$ extends to $\Z$:
+\[
+\begin{tikzcd}
+I = (n)\ar[r, hook, "\iota"] \ar[d, "\phi"']& \Z \ar[dl, dotted]\\
+G & \\
+\end{tikzcd}
+\]
+The case $n = 0$ is trivial. So suppose $n  \neq0$. Let $g=\phi(n)$. Then $g = n\cdot g'$ for some $g' \in G$. 
+
+The $\Z$-linear map $\psi:\Z\to G$ defined by $1\mapsto g'$ extends $phi$. 
+
+\qed
+
+\exm
+
+$\R, \Q, \Q/\Z$ are all injective $\Z$-modules since they are divisible. 
+
+\section*{Lecture 14, 2/10/23}
+
+\subsection*{\underline{Localization of modules}}
+
+Let $R$ be a commutative ring with $1$, $S \subset R$ a multiplicative subset, and $M$ an $R$-module.
+
+Define the relation $\sim$ on $M\times S$ by $(m, s) \sim (m', s') \iff t(s'm - sm') = 0$ for some $t\in S$, and let $\frac{m}{s} = $equivalence class of $(m, s)$. 
+
+Then $S^{-1}M = \{\frac{m}{s} \mid m \in M, s \in S\}$ becomes an $S^{-1}R$-module via
+\begin{align*}
+\frac{m}{s} + \frac{m'}{s'} & \eqdef \frac{s'm + sm'}{ss'}
+\\
+\frac{r}{t}\cdot\frac{m}{s} & \eqdef \frac{rm}{st}
+\end{align*}
+If $f:M\to N$ is an $R$-homomorphism, then $S^{-1}f:S^{-1}M\to S^{-1}N$ given by $\frac{m}{s}\mapsto\frac{f(m)}{s}$ is a $S^{-1}R$ homomorphism. 
+
+\prop
+
+If $\begin{tikzcd}M'\ar[r, "f"]&M\ar[r, "g"]&M'' \end{tikzcd}$ is a $R$-mod exact sequence, then 
+\[
+\begin{tikzcd} S^{-1}M' \ar[r, "S^{-1}f"] & S^{-1}M\ar[r, "S^{-1}g"] & S^{-1}M \\ \end{tikzcd}
+\]
+is an $S^{-1}R$-mod exact sequence. That is, localization is an exact functor.
+
+\proof
+
+We need to show $\Im(S^{-1}f) = \ker(S^{-1}g)$. We have $\Im(f) = \ker(g)$, so $g \circ f =0 $. So $\underbrace{S^{-1}(g\circ f)}_{=(S^{-1}g)\circ(S^{-1}f)} = 0$. So $\Im(S^{-1}f) \subseteq \ker(S^{-1}g)$. Conversely, let $\frac{m}{s}\in\ker(S^{-1}g)$. So $\frac{g(m)}{s} = 0 \in S^{-1}M''$. 
+
+So for some $t \in S, \overbrace{t\cdot g(m)}^{g(tm)} =0 \in M''$. So $tm \in \ker(g) = \im(f)$, so $tm = f(m')$ for some $m' \in M'$. 
+
+Therefore $\frac{m}{s} = \frac{tm}{ts} = \frac{f(m')}{ts}\in\Im(S^{-1}f)$.
+
+\qed
+
+\cor 
+
+If $N\subset M$ is an $R$-submodule, then $S^{-1}N\subset S^{-1}M$ is an $S^{-1}R$-submodule, and $\frac{(S^{-1}M)}{(S^{-1}N)} \cong S^{-1}(\frac{M}{N})$
+
+\proof
+
+Apply the proposition to the short exact sequence
+\[
+\exactshort{N}{}{M}{}{M/N}
+\]
+Indeed, this tells us 
+\[
+\exactshort{S^{-1}N}{}{S^{-1}M}{}{S^{-1}\frac{M}{N}}
+\]
+is exact.
+
+\qed
+
+\underline{Notation:} If $S = R\setminus\mk{p}$ with $\mk{p}\subset R$ a prime ideal, we often use $f_{\mk{p}}, M_{\mk{p}}$ to denote $S^{-1}f, S^{-1}M$. 
+
+\prop
+
+Let $M$ be an $R$-module. Then the following are equivalent:
+
+\begin{enumerate}[label=(\roman*)]
+
+\item $M = 0$. 
+
+\item $M_\mk{p} = 0$ for all prime ideals $\mk{p}\subset R$.
+
+\item $M_\mk{m} = 0$ for all maximal ideals $\mk{m} \subset R$,
+
+\end{enumerate}
+
+\proof
+
+Clearly $(i)\implies(ii),$ and $(ii)\implies(iii)$, as maximal ideals are prime. The only thing to check is $(iii)\implies(i)$.
+
+Suppose $(iii)$ holds, and for the sake of contradiction that $M\neq0$. Let $x\neq0\in M$. Then $I = \Ann_R(x) \eqdef \{r\in R \mid rx = 0\}\subset R$ is a proper ideal, so $I\subset \mk{m}$ for some maximal ideal $\mk{m}$. 
+
+Then $\frac{x}{1} = 0 \in M_{\mk{m}} \implies t\cdot x=0$ for some $t \in R\setminus\mk{m}\subset R\setminus I$. 
+
+But this means that $t \in I$!! Contradiction.
+
+\qed
+
+\cor
+
+Let $f:M\to N$ be an isomorphism. Then the following are equivalent:
+
+\begin{enumerate}[label=(\roman*)]
+
+\item $f$ is injective. 
+
+\item $f_{\mk{p}}:M_{\mk{p}}\to N_{\mk{p}}$ is injective for all prime ideals $\mk{p}\subset R$. 
+
+\item $f_{\mk{m}}:M_\mk{m}\to N_\mk{m}$ is injective for all maximal ideals $\mk{m}\subset R$. 
+
+\end{enumerate}
+
+Moreover, the same holds with ``injective" replaced by ``surjective" everywhere. 
+
+\proof
+
+\subsection*{$(i)\implies(ii)$}
+
+If $f$ is injective, then the sequence
+\[
+\begin{tikzcd}
+0\ar[r]&M\ar[r, "f"]& N 
+\end{tikzcd}
+\]
+is exact, so by the proposition, the sequence
+\[
+\begin{tikzcd}
+0\ar[r]&M_\mk{p}\ar[r, "f_\mk{p}"]&N_\mk{p}
+\end{tikzcd}
+\]
+is exact for all prime ideals $\mk{p}\subset R$. So $f_\mk{p}$ is injective. 
+
+\subsection*{$(ii)\implies(iii)$}
+
+Maximal ideals are prime. 
+
+\subsection*{$(iii)\implies(i)$}
+
+Suppose $(iii)$ holds, and let $K = \ker(f)$. So we have the exact sequence
+\[
+\begin{tikzcd}
+0\ar[r]&K\ar[r]&M\ar[r, "f"]&N 
+\end{tikzcd}
+\]
+Then by the proposition, we have an exact sequence
+\[
+\begin{tikzcd}
+0\ar[r]&K_\mk{m}\ar[r]&M_\mk{m}\ar[r, "f_\mk{m}"] & N_\mk{m} 
+\end{tikzcd}
+\]
+So $K_\mk{m} \cong \underbrace{\ker(f_\mk{m})}_{0\text{ by }(iii)}$
+
+So by a previous proposition, $K = 0$, so $f$ is injective. 
+
+\qed
+
+\subsection*{\underline{Motivation for next topic}}
+
+\underline{Recall:} An $R$-module $M$ is \underline{finitely generated} (fg) if there exist $f_1, \dots, f_r \in M$ such that
+\[
+M = (f_1, \dots, f_r) = \{\sum_{i=1}^ra_if_i\mid a_i\in R\}
+\]
+
+\underline{Note:} For general rings $R$, a submodule of a finitely generated module \underline{need not} be finitely generated itself. 
+
+For instance, let $R = \Z[x_1, x_2, x_3, \dots ]$ be the polynomial ring in countably-many variable seen as an $R$-module. This is finitely generated (e.g. by 1), but the ideal $I = (x_1, x_2, x_3, \dots )$ is not finitely generated. 
+
+\section*{Lecture 15, 2/13/23}
+
+\defn
+
+Let $R$ be a commutative ring with 1. 
+
+\begin{itemize}
+
+\item An $R$-module $M$ is a Noetherian $R$-module if every submodule $M$ is finitely generated. 
+
+\item We say $R$ is a Noetherian ring if $R$ is Noetherian as an $R$-module (iff every ideal is finitely generated). 
+
+\end{itemize}
+
+\exm
+
+\begin{enumerate}
+
+\item If $F$ is a field, then $F$ is a Noetherian ring and an $F$-module $V$ is Noetherian iff $\dim_FV < \oo$. 
+
+\item If $R$ is a PID, then $R$ is a Noetherian ring and an $R$-module $M$ is Noetherian iff it's finitely generated. 
+
+\end{enumerate}
+
+\prop
+
+If an $R$-module $M$ is Noetherian, then any submodule and any quotient of $M$ is Noetherian. 
+
+\proof
+
+For submodules, this is clear by definition. 
+
+For quotients, let $M/N$ be a quotient of $M$ and $L\subset M/N$ a submodule. 
+
+Let $\phi:M\to M/N$ by $\phi(m) = m + N$. 
+
+Since $M$ is Noetherian, we can write $\phi^{-1}(L) = (a_1, \dots, a_r)$ for some $a_1, \dots, a_r \in M$. 
+
+We claim $(\phi(a_1), \dots, \phi(a_r))$ generated $L$. 
+
+Indeed, $\phi(a_i) = a_i + N$, since $\phi(\phi^{-1}(L)) \subset L$. 
+
+Thus $\{\bar{a_1},\dots,\bar{a_r}\}\subset L$. 
+
+Conversely, let $\lambda \in L$. 
+
+Then $\lambda = \bar{a} = a + N$ for some $a \in \phi^{-1}(L)$. 
+
+Thus $a = \sum_{i=1}^rr_i\phi(a_i)$. 
+
+Thus $L \subset (\phi(a_i),\dots,\phi(a_r))$.
+
+\defn
+
+We say that an $R$-module $M$ \underline{satisfies the ascending chain condition (ACC)} if any ascending chain of submodules of $M$ $N_1 \subset N_2 \subset N_3 \subset \cdots $ stabilizes, i.e. there exists $r \geq 1$ such that $N_r = N_{r + 1} = \cdots$. 
+
+\thm
+
+$M$ is a Noetherian $R$-module iff $M$ satisfies the ACC. 
+
+\proof
+
+\subsection*{$=>$}
+
+Let $N_1 \subset N_2 \subset \cdots$ be a chain of submodules of $M$. 
+
+Let $N = \cup_{i\geq 1}N_I$, and notes that $N$ is a submodule of $M$. Then $N$ is finitely generated, i.e. $N = (a_1, \dots, a_k)$ for some $k$. Then for some $r$ sufficiently large, $a_i \in N_r$ for $1 \leq i \leq k$. This implies that $(a_1, \dots, a_k) \subset N_r \subset N$, so after the $r$th step, $N_i$ stabilizes. 
+
+\subsection*{$<=$}
+
+Let $N \subset M$ be a submodule. 
+
+Without loss of generality, assume $N$ is infinite. Choose a sequence of distinct points $(a_i) \in N$. 
+
+Note $(a_1)\subset (a_1, a_2) \subset (a_1, a_2, a_3) \subset \cdots $. 
+
+By the ACC, there exists $r$ such that $(a_1, \dots, a_r) = (a_1, \dots, a_r, a_{r + 1}) = (a_1, \dots, a_r, a_{r + 1}, a_{r + 2}) = \cdots$. So $(a_1, \dots, a_r)$ generates $N$. 
+
+\qed
+
+\prop
+
+Let $M$ be an $R$-module and $N\subset M$ a submodule. If $N$ and $M/N$ are Noetherian $R$-modules, then so is $M$. 
+
+\proof
+
+Let $L_1 \subset L_2 \subset \cdots$ be an ascending chain of submodules of $M$.
+
+Then $L_1 \cap N \subset L_2 \cap N \subset \cdots$ is an ascending chain of submodules of $N$ and $\phi(L_1) \subset \phi(L_2) \subset \cdots$ is an ascending chain of submodules of $M/N$, where $\phi$ is the canonical projection. 
+
+Since $N, M/N$ are Notherian, by previous proposition we have $r$ such that $L_1 \cap N = L_{r + 1} \cap N = \cdots$ and $\phi(L_r) = \phi(L_{r = 1}) = \cdots$. 
+
+We claim that $L_r = L_{r + 1} = \cdots$. 
+
+It is enough to show $L_{r + 1} \subset L_r$. Choose $m\in L_{r + 1}$. 
+
+Then $\phi(m) \in \phi(L_{r + 1}) = \phi(L_r)$. 
+
+So $m + N \in \phi(L_r)$. 
+
+Thus $m + N = y + N$ for some $y \in L_r = L_{r + 1}$. 
+
+This implies that $m = y + n$ for some $n \in N$. 
+
+Note $n = m - y \in N \cap L_{r + 1} = N + L_r$. 
+
+Thus $m = n + y \in L_r$. 
+
+\qed
+
+\cor 
+
+If $M$ and $N$ are Noetherian modules, then so is their direct sum $M \oplus N$. 
+
+\proof
+
+Clear from previous, since $M$ is a submodule of $M \oplus N$ and $N$ is a quotient of $M \oplus N$. 
+
+\qed
+
+\prop
+
+If $R$ is a Noetherian ring and $M$ is a finitely generated $R$-module, then $M$ is a Noetherian $R$-module. 
+
+\proof
+
+Suppose $M = (a_1, \dots, a_n)$. 
+
+Then $\phi:R^n\to M$ by $\phi(c_i) = a_i$ is a sufjective $R$-homomorphism inducing $R^n/\ker(\phi) \cong M$. Then $R^n$ is a Noetherian $R$-module by previous proposition. 
+
+\qed
+
+\section*{Lecture 16, 2/22/23}
+
+Existence and uniqueness of tensor products. 
+
+Given $R$-modules $M$ and $N$, we define their tensor produc t to be a pair $(M\otimes_RN, g)$, with $M\otimes_RN$ an $R$-module, and $g:M\times N\to M\otimes_RN$ an $R$-bilinear map, satisfying the \underline{universal property}:
+
+For any $R$-module $P$ and $R$-bilinear $f:M\times N \to P$, there exists a unique $R$-linear map $f':M\otimes_RN\to P$ such that $f = f\circ g$. That is, there is an $f'$ making the following diagram commute:
+\[
+\begin{tikzcd}
+M\times N\ar[d, "g"'] \ar[r, "f"] & P \\
+M\otimes_RN\ar[ur, dotted, "\exists!f'"']\\
+\end{tikzcd}
+\]
+Last time:
+
+We constructed $M\otimes_RN = R^{(M\times N)}/\langle A \rangle$, where $A$ is the submodule generated by all $R$-bilinear relations in $R^{(M\times N)}$.
+
+Then $q:R^{(M\times N)}\to M\otimes_RN$ is the projection.
+
+\rem
+
+$M\otimes_RN$ is generated by the elements of the form $m\otimes n$, ($m \in M, n \in N$), subject to the relations
+\begin{align*}
+(m_1 + m_2)\otimes n & = m_1\otimes n + m_2 \otimes n \\
+m\otimes(n_1 + n_2) & = m\otimes n_1 + m\otimes n_2 \\
+(rm)\otimes n & = m\otimes(rn)  = r(m\otimes n) \\
+\end{align*}
+
+It can be easily checked that indeed $g = q$ are bilinear, and indeed $(M\otimes_RN, g)$ satisfies the universal property. 
+
+\exm\,
+
+\begin{enumerate}
+
+\item $(\Z/3\Z)\otimes_\Z(\Z/2\Z) = 0$. It is enough to show $a\otimes b = 0$ for all $a \in \Z/3\Z, b \in \Z/2\Z$, and this follows from 
+\begin{align*}
+a\otimes b & = 3(a\otimes b) - 2(a\otimes b) \\
+			  & = \underbrace{(3a)}_{=0}\otimes b - a\otimes\underbrace{(2b)}_{=0} \\
+			  & = 0 \\
+\end{align*}
+
+\item Let $I, J \subset R$ be ideals. Then 
+\[
+(R/I)\otimes_R(R/J) = R/(I + J)
+\]
+In particular, $(\Z/m\Z)\otimes_\Z(\Z/n\Z) = \Z/d\Z$, where $d = \gcd(m, n)$. 
+
+We check this by showing that $R/(I + J)$ along with the map $\beta$ (given below) satisfies the same universal property as $(R/I)\otimes(R/J)$.
+
+Define the map $\beta:R/I\times R/J \to R/(I + J)$ by $(r + I, s + J) \mapsto rs + I + J$. This is certainly $R$-bilinear.
+
+Given any $R$-module $P$ and $R$-bilinear $f:R/I\times R/J \to P$, we need an $R$-linear $f':R/(I + J)\to P$ such that 
+\[
+\begin{tikzcd}
+R/I\times R/J \ar[r, "f"] \ar[d, "\beta"'] & P \\
+R/(I + J) \ar[ur, dotted, "f'"'] \\
+\end{tikzcd}
+\]
+commutes. We have $f(r + I, s + J) = rsf(1 + I, 1 + J)$ by $R$-bilinearity, and $\beta(r + I, s + J) = rs + I + J = rs(1 + I + J)$. 
+
+Any such $f'$ must send $1 + I + J$ to $f(1 + I, 1 + J)$, and thiss uniquely determines the $R$-linear map $f':R/(I + J)\to P$, $t + I + J \mapsto tf(1 + I, 1 + J)$, so $f = f'\circ\beta$. 
+
+\end{enumerate}
+
+Properties of the tensor product:
+
+\prop
+
+Let $L, M, N, M_1, M_2$ be $R$-modules. Then:
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $R\otimes_RM \cong M$  
+
+\item $M\otimes_RN \cong N\otimes_RM$ 
+
+\item $(L\otimes_RM)\otimes_RN \cong L\otimes_R(M\otimes_RN)$ 
+
+\item $(M_1\oplus M_2)\otimes_RN \cong (M_1\otimes_RN)\oplus(M_2\otimes_RN)$
+
+\end{enumerate}
+
+\proof
+
+All these are shown using the universal property. We will prove $(a)$. We want to produce an $R$-bilinear map from $R\times M\to M$. The map given by the ring action, $\beta(r, m) = r\cdot m$ is $R$-bilinear, and given any $R$-bilinear map $R\times M\to P$, 
+\[
+\begin{tikzcd}
+R\times M \ar[r, "f"] \ar[d, "\beta"'] & P \\
+M \ar[ur, "f'"]& \\
+\end{tikzcd}
+\]
+$f(r, m) = rf(1, m)$, and $\beta(r, m) = r\cdot m$. So if we define $f':M\to P$ by $m \mapsto f(1, m)$, this is the unique $R$-linear map satisfying $f = f'\circ\beta$. 
+
+So $R\otimes_RM \cong M$.
+\qed
+
+\section*{Lecture 12, 2/27/23}
+
+If $f:M\to N$ and $g:M'\to N'$ are $R$-homs, we define $f\otimes g: M\otimes M' \to N\otimes N$ by $\sum_i x_i\otimes y_i \mapsto \sum_i f(x_i)\otimes g(y_i)$. 
+
+\prop ($\otimes$ is a right exact functor)
+
+Suppose $\begin{tikzcd} M'\ar[r, "f"] & M \ar[r, "g"]& M'' \ar[r] & 0 \end{tikzcd}$ be an $R$-module exact sequence. Then for any $R$-module $N$, the sequence 
+\[
+\begin{tikzcd}
+M'\otimes N \ar[r, "f\otimes\Id_n"] & M\otimes N \ar[r, "g\otimes\Id_N"]& M''\otimes N \ar[r] & 0 \\
+\end{tikzcd}
+\]
+
+is also exact. 
+
+\claim
+
+There is a natural $R$-module isomorphism 
+\[
+\Hom_R(M\otimes_RN, P) \cong \Hom_R(M, \Hom_R(N, P))
+\]
+
+\proof
+
+Indeed, for a map $f:M\otimes_RN\to P$, consider the map defined by $m\mapsto (n\mapsto f(m, n))$. The naturality of this is a classical exercise, and I did it for 236 homework. 
+
+\qed
+
+We will now prove the proposition. 
+
+\proof
+
+Let $P$ be any $R$-module. By left-exactness of $\Hom$, if 
+\[
+\begin{tikzcd}
+M'\ar[r, "f"] & M \ar[r, "g"] & M'' \ar[r] & 0 \\
+\end{tikzcd}
+\]
+is exact, then 
+\[
+\begin{tikzcd}
+0\ar[r] & \Hom_R(M'', \Hom_R(N, P)) \ar[r, "\bar{g}"] & \Hom_R(M, \Hom_R(N, P)) \ar[r, "\bar{f}"] & \Hom_R(M', \Hom_R(N, P))
+\end{tikzcd}
+\]
+is exact. By the claim, 
+\[
+\begin{tikzcd}
+0\ar[r]&\Hom_R(M''\otimes_R, P) \ar[r, "\bar{g\otimes\Id_N}"] & \Hom_R(M\otimes N, P) \ar[r, "\bar{f\otimes\Id_N}"] &\Hom_R(M'\otimes N, P)
+\end{tikzcd}
+\]
+Note that above we really are using the fact that the correspondence between $\Hom_R(M\otimes_RN, P)$ and $\Hom_R(M, \Hom_R(N, P))$ is not just a set isomorphism, but is indeed natural.
+
+\rem\,
+
+\begin{enumerate}
+
+\item The natural iso for any $R$-modules $M, N, P$, 
+\[
+\Hom_R(M\otimes N, P) \cong \Hom_R(M,\Hom_R(N, P))
+\]
+means that $\otimes$ and $\Hom$ are \underline{adjoint functors}.
+
+\item If 
+\[
+\exactshort{M'}{f}{M}{g}{M''}
+\]
+is exact, then for an arbitrary $R$-module $N$, the sequence
+\[
+\exactshort{M'\otimes N}{f\otimes\Id_N}{M\otimes N}{g\otimes\Id_N}{M''\otimes N}
+\]
+is \underline{not} necessarily exact (the problem is $f\otimes\Id_N$ is not necessarily injective).
+
+\end{enumerate}
+
+\exm
+
+Consider the following $\Z$-module exact sequence:
+\[
+\exactshort{\Z}{f}{\Z}{}{\Z/2\Z}
+\]
+where $f$ is given by $n\mapsto 2n$, and take $N = \Z/2\Z$. Then applying $-\otimes_{\Z}\Z/2\Z$ we get 
+\[
+\exactshort{\Z\otimes_\Z\Z/2\Z}{f\otimes1}{\Z\otimes_\Z\Z/2\Z}{}{\Z/2\Z\otimes_\Z\Z/2\Z}
+\]
+But $\Z\otimes_\Z\Z/2\Z\cong\Z/2\Z$, so this is the sequence
+\[
+\exactshort{\Z/2\Z}{f\otimes1}{\Z/2\Z}{}{\Z/2\Z}
+\]
+where $f\otimes\Id$ is \underline{not} injective, as $f: \bar{n}\mapsto 2\bar{n} = \bar{2n} = 0$. 
+
+\defn
+
+We say that an $R$-module $M$ is \underline{flat} (over $R$) if for any $R$-module exact sequence
+\[
+\begin{tikzcd}
+\cdot\ar[r]&M_{i -1 }\ar[r, "f_{i - 1}"] & M_i \ar[r, "f_i"] & M_{i + 1} \ar[r] & \cdots 
+\end{tikzcd}
+\]
+the sequence 
+\[
+\begin{tikzcd}
+\cdots\ar[r]& M_{i - 1}\otimes_RN \ar[r, "f_{i -1 }\otimes\Id_N"] & M_i\otimes_RN \ar[r, "f_i\otimes\Id_n"] & M_{i + 1}\otimes_RN \ar[r] & \cdots 
+\end{tikzcd}
+\]
+is also exact. 
+
+\prop
+
+Let $N$ be an $R$-module. Then the following are equivalent:
+
+\begin{enumerate}
+
+\item $N$ is flat over $R$. 
+
+\item If $\exactshort{M'}{f}{M}{g}{M''}$ is a short exact sequence, then so is $\exactshort{M'\otimes_R N}{f\otimes_R\Id_N}{M\otimes_RN}{g\otimes_R\Id_N}{M''\otimes_R N}$.
+
+\item If $f:M'\to M$ is an injective $R$-homomorphism (with $M, M'$ arbitrary $R$-modules), then $f\otimes_R\Id_N:M'\otimes_RN\to M\otimes_RN$ is also injective.
+
+\item If $f:M'\to M$ is an injective $R$-homomorphism, with $M', M$ finitely generated, then $f\otimes_R\Id_N:M'\otimes_RN\to M\otimes_RN$ is also injective.
+
+\end{enumerate}
+
+\proof\,
+
+\subsection*{$(1)\implies(2)$}
+
+This is clear. 
+
+\subsection*{$(2)\implies(1)$}
+
+Any exact sequence can be split into short exact ones.
+
+\subsection*{$(2)\iff(3)$}
+
+Previous proposition.
+
+\subsection*{$(3)\implies(4)$}
+
+Clear.
+
+\subsection*{$(4)\implies(3)$}
+
+Suppose $f:M'\to M$ is injective $R$-homomorphism with $M, M'$ arbitrary, and let $u \in \ker(f\otimes\Id_N)$. We want to show $u = 0$. 
+
+Write $n = \sum_{i=1}^rx_i\otimes y_i,$ with $x_i \in M', y_i \in N$, and consider the restrictions
+\[
+\begin{tikzcd}
+M'\ar[r, hook, "f"] & M \\
+M'_0\ar[u, hook] \ar[r, hook, "f_0"]& M_0\ar[u, hook] \\
+\end{tikzcd}
+\]
+
+With $M'_0 \eqdef (x_1, \dots, x_r)$, $M_0 \eqdef (f(x_1), \dots, f(x_n))$. 
+
+Then $f_0$ is an injection between finitely generated $R$-modules, so by $(4)$, $f_0\otimes_R\Id:M'_0\otimes_RN\to M_0\otimes_RN$ is injective.
+
+Since $0 = (f\otimes\Id)(u) = \sum_{i=1}^rf(x_i)\otimes y_i = \sum_{i=1}^rf_0(x_i)\otimes y_i$, since $x_i \in M_0'$. So this equals $(f_0\otimes\Id)(u)$. This shows $u = 0$, so $f\otimes\Id$ is injective.
+
+\qed
+
+\section*{Lecture 13, 3/1/23}
+
+Recall: An $R$-module $N$ is \underline{flat} over $R$ if for any injective $R$-homomorphism $g:M'\hookrightarrow M$, the map $g\otimes_R\Id:M'\otimes_RN \to M\otimes_RN$ is also injective. 
+
+\exm Any free $R$-module is $R$-flat. 
+
+Indeed, if $N \cong R^n$ (the case of infinite is similar) and $g:M'\hookrightarrow M$ is an injective $R$-homomorphism, then
+\[
+g\otimes_R\Id:\underbrace{M'\otimes_RM}_{\cong \bigoplus_{i=1}^n(M'\otimes_R R) \cong M'\oplus\cdots\oplus M'} \to M\otimes_RN
+\]
+Similarly, $M\otimes_RN \cong M \oplus \cdots \oplus M$. As an exercise, verify $(g, \dots, g):M'\oplus\cdots\oplus M' \to M\oplus\cdots\oplus M$ is also injective. 
+
+\subsection*{\underline{Restriction and extension of scalars}}
+
+\defn\,
+
+Let $f:R\to R'$ be a ring homomorphism.
+
+\begin{enumerate}
+
+\item If $N$ is an $R'$-homomorphism, then $N$ becomes an $R$-module via $R\times N \to N$ given by $(r, n) \mapsto f(r)m$. This is called \underline{the restriction of scalars} of $N$ (from $R$ to $R'$). 
+
+\item If $M$ is an $R$-module, then define $M_{R'}\eqdef M\otimes_RR'$, viewing $R'$ as an $R$-module via $f$. This is an $R$-module via $R'\times M_{R'} \to M_{R'}$, defined by $(a, m\otimes r') \mapsto m\otimes(ar')$. This is called \underline{the extension of scalars} of $N$ (from $R'$ to $R$).
+
+\end{enumerate}
+
+\prop
+
+Let $f:R\to R'$ be a ring homomorphism, $M$ an $R$-module, and $N, P$ $R'$-modules. 
+
+Then $M\otimes_R(N\otimes_{R'}P) \cong (M\otimes_RN)\otimes_{R'} P$ as $R$-module, and also as $R'$-modules. 
+
+\proof
+
+Exercise (cf proof of ``associativity" of $\otimes$ in lecture 17)
+
+\qed
+
+\cor
+
+Let $f:R\to R'$ be a ring homomorphism, and $M$ an $R$-module. Then if $M$ is $R$-flat, then $M_{R'}$ is $R'$-flat. 
+
+\proof
+
+Let $g:N'\hookrightarrow N$ be an injective $R'$-homomorphism. Then it is an injective $R$-homomorphism. Because $M$ is $R$-flat, $g\otimes_R\Id:N'\otimes_RM\to N\otimes_RM$ is also injective. 
+
+Now, we write $N'\otimes_RM=(N'\otimes_{R'}R')\otimes_RM = N'\otimes_{R'}M_{R'}$, and $N\otimes_RM = (N\otimes_{R'}R')\otimes_RM = N\otimes_{R'}M_{R'}$.
+
+So $M_{R'}$ is $R'$-flat.
+
+In other words, flatness is preserved by extension of scalars. 
+
+\qed
+
+\underline{Note:} For arbitrary ring homomorphism $f:R\to R'$, $M_{R'}$ is $R'$-flat \underline{DOES NOT} imply that $M$ is $R$-flat. 
+
+\exm
+
+Take $f:\underbrace{\Z}_{=R}\to\overbrace{\Z/2\Z}^{=R'}$, $n\mapsto \bar{n}$ the projection, and $M = \Z/2\Z$ viewed as a $\Z$-module. Then $M_{R'} = (\Z/2\Z)\otimes_\Z(\Z/2\Z) \cong \Z/2\Z$, which is flat over $R'$ because it is free over $R'$. But the original module is \underline{not} flat over $\Z$, as we saw last time. 
+
+\subsection*{\underline{Flatness and localization}}
+
+\prop 
+
+Let $S \subset R$ be a multiplicative subset and $M$ an $R$-module. Then $(S^{-1}R)\otimes_RM\cong S^{-1}M$ as $S^{-1}R$-modules. 
+
+\proof
+
+Consider the following $R$-bilinear map $\beta:S^{-1}R\times M \to S^{-1}M$, $(\frac{a}{s}, m) \to \frac{am}{s}$. If $f:S^{-1}R\times M \to N$ is any $R$-bilinear map, with $N$ any $R$-module, then by bilinearity, $f(\frac{a}{s}, m) = a(\frac{1}{s}, m)$. We want to find a map $f'$ making the diagram commute:
+\[
+\begin{tikzcd}
+S^{-1}R\times M \ar[r, "f"] \ar[d,"\beta"']& N \\
+S^{-1}M \ar[ur, dotted, "\exists f' ?"'] \\
+\end{tikzcd}
+\]
+
+Indeed, $f':\frac{m}{s} \mapsto f(\frac{1}{s}, m)$ is the unique $R$-linear map making the diagram commute. 
+
+By the universal property of $S^{-1}R\otimes_RM$, this implies $(S^{-1}R)\otimes_RM \cong S^{-1}M$, $\frac{a}{s}\otimes m \mapsto \frac{am}{s}$, and the isomorphism is clearly $S^{-1}R$-linear.
+
+\qed
+
+\cor (``Localizations are flat")
+
+For any multiplicative set $S \subset R$, $S^{-1}R$ is a flat $R$-module, (viewing $S^{-1}R$ as an $R$-module via $f:R\to S^{-1}R, r \mapsto \frac{r}{1}$).
+
+\proof
+
+If $N \subset M$ is any $R$-submodule, then $S^{-1}N \subset S^{-1}M$ is an $S^{-1}R$-submodule. 
+
+By previous proposition, $S^{-1}N = (S^{-1}R)\otimes_RN$, and $S^{-1}M = (S^{-1}R)\otimes_RM$. 
+
+So $S^{-1}R$ is a flat $R$-module. 
+
+\qed
+
+\prop (``Flatness is a local property").
+
+Let $M$ be an $R$-module. Then the following are equivalent: 
+
+\begin{enumerate}
+
+\item $M$ is $R$-flat 
+
+\item $M_{\mk{p}}$ is flat for all prime ideals $\mk{p}\subset R$
+
+\item $M_{\mk{m}}$ is $R_{\mk{m}}$-flat for all maximal ideals $\mk{m}\subset R$
+
+\end{enumerate}
+
+\section*{Lecture 14, 3/8/23}
+
+Next: Structure theorem for finitely generated modules over a PID. 
+
+\begin{itemize}
+
+\item Recall that an integral domain $R$ is a principal ideal domain if every ideal in $R$ is principle, i.e. $I = (a)$ for some $a \in R$.
+
+\item An integral domain $R$ is a Euclidean domain if there is a function $N:R\setminus\{0\}\to\Z_{\geq0}$ such that for all $a, b \in R$ with $b \neq 0$, there exist $q, r \in R$ such that $q = qb + r$, with either $r = 0$ or $N(r) < N(b)$.
+
+\end{itemize}
+
+\exm
+
+$\Z, F[t]$, with $F$ a field, are PIDs, even Euclidean domains. 
+
+\lem
+
+If $R$ is a Euclidean domain, then $R$ is a PID. 
+
+\proof
+
+Exercise
+
+\qed
+
+We'll give the proof of the structure theorem only for finitely generated modules over a Euclidean domain. 
+
+\lem
+
+Let $R$ be a Noetherian ring, and $M$ a finitely generated $R$-module. Then there exists an $R$-module exact sequence
+\[
+\begin{tikzcd}
+R^n\ar[r, "f"] & R^m \ar[r, "g"] & M \ar[r] & 0
+\end{tikzcd}
+\]
+for some $m, n \geq 0$. In particular, $M \cong \frac{R^m}{f(R^n)}$
+
+\proof
+
+Let $\{v_1, \dots, v_m\}$ be a generating set for $M$, and define the $R$-linear map $g:R^m\to M$ by $\begin{pmatrix} x_1 \\ \vdots \\ x_m \end{pmatrix} \mapsto \sum_{j=1}^mx_jv_j$. 
+
+Then $\Im(g) = M$, so the sequence $\begin{tikzcd} R^m\ar[r, "g"] & M \ar[r] & 0 \end{tikzcd}$ is exact. 
+
+Let $K \eqdef \ker(g) \subset R^m$. Since $R^m$ is a Noetherian $R$-module, $K$ is finitely generated. 
+
+Let $\{w_1, \dots, w_n\}$ be a generating set for $K$, and define the $R$-linear map $f:R^n\to R^m$ $f:R^n\to K\subset R^m$ by $\begin{pmatrix} x_1 \\ \vdots \\ x_n \end{pmatrix} \mapsto \sum_{i=1}^my_iw_i$. 
+
+Them $\Im(f) = K (= \ker g)$, so 
+\[
+\begin{tikzcd}
+R^n\ar[r, "f"]& R^m \ar[r, "g"] & M \ar[r] & 0
+\end{tikzcd}
+\]
+is exact. 
+
+\rem\,
+
+\begin{enumerate}
+
+\item A description of $M$ as in Lemma 1 is called a \underline{presentation of $M$}. It corresponds to a choice of:
+\begin{enumerate}[label=(\roman*)] 
+
+\item A set of \underline{generators} $\{v_1, \dots, v_m\}$ of $M$
+\item A set of generators $\{w_1, \dots, w_n\}$ of the set of all linear \underline{relations} among the $v_j$'s.
+
+\end{enumerate}
+
+\item The map $f:R^n\to R^m$ corresponds to left multiplication by an $m\times n$ matrix $A \in M_{m\times n}(r)$, called a \underline{presentation matrix} for $M$.
+
+$A$ has: a row for every generator $v_j$, and a column for every chosen generator of the relations among the $v_j$'s. 
+
+\end{enumerate}
+
+An important fact (to be exploited) is that the same modules can have different presentation matrices. 
+
+\lem
+
+Suppose $A \in M_{m\times n}(R)$ is a presentation matrix for $M$ (so in particular $M \cong \frac{R^m}{Ar^n}$, and let $A'$ be obtained from $A$ by any of the following:
+
+\begin{enumerate}[label=(\roman*)]
+
+\item $A' = QAP^{-1}$, with $Q \in \GL_m(R)$, $P \in \GL_n(R)$. 
+
+\item $A' = (A$ with a column $\begin{pmatrix} 0 \\ \vdots \\ 0 \end{pmatrix}$ deleted)
+
+\item Suppose $A$ has a $j$th column equal to $\begin{pmatrix} 0 \\ \vdots \\ 1 \\ \vdots \\ 0 \end{pmatrix}$, with 1 in the $i$th spot. 
+
+Then $A' = (A$ with $i$th row and $j$th column deleted)
+
+\end{enumerate}
+
+Then $A'$ (of size $p\times q$, say) is also a presentation matrix for $M$, and $M \cong R^p/A'R^q$
+
+\proof\,
+
+\begin{enumerate}[label=(\roman*)]
+
+\item From Linear Algebra, we know that that $A' = QAP^{-1}$ corresponds to a change of bases, so $M \cong R^m/AR^n \cong R^m/A'R^n$
+
+\item A column $\begin{pmatrix} 0 \\ \vdots \\ 0 \end{pmatrix} \in R^m$ in $A$ corresponds to the relation $0v_1 + \cdots + 0v_m = 0$, so it can be omitted from $A$.
+
+\item A column $\begin{pmatrix} 0 \\ \vdots \\ 1 \\ \vdots \\ 0 \end{pmatrix}$ with a 1 in the $i$th row corresponds to the relation $0v_1 + \cdots + 1v_i + \cdots + 0v_n = 0$, which says $v_i = 0$, so it can be omitted from the generating set. 
+
+\end{enumerate}
+ 
+\qed
+
+\exm\,
+
+\begin{itemize}
+
+\item Suppose $M \cong \Z^2/\begin{pmatrix} 1 & 2 \\ 2 & - 1\\ \end{pmatrix}\Z^2$, so $M$ is generated by two elements, $v_1, v_2$, with relations $v_1 + 2v_2 = 0$ and $2v_1 - v_2 = 0$.
+
+Then by (1) $\dfrac{\Z}{\begin{pmatrix} 1 & 2 \\ 2 & - 1\end{pmatrix}\Z^2} \cong \dfrac{\Z^2}{\begin{pmatrix} 1 & 2 \\ 0 & - 5\end{pmatrix}\Z^2}$. This says $M$ is generated by $v_1', v_2'$, with $v_1' + 0v_2' = 0$, $2v_1' - fv_2' = 0$ So $5v_2' = 0$. 
+
+By (3), this module is isomorphic to $\dfrac{\Z}{5\Z}$
+
+\item Similarly, if $N \cong \dfrac{\Z^2}{\pmat{2}{4}{4}{8}\Z^2}$ then $\dfrac{\Z^2}{\pmat{2}{4}{4}{8}\Z^2} \cong \dfrac{\Z^2}{\pmat{2}{4}{0}{0}\Z^2} \cong \dfrac{\Z^2}{\pmat{2}{0}{0}{0}\Z^2}$, so $N$ is generated by $v_1, v_2$, with relations $2v_1 + 0v_2 = 0, 0v_1 + 0v_2 = 0$, so is isomorphic by (2) to $\dfrac{\Z^2}{\begin{pmatrix} 2 \\ 0 \end{pmatrix}\Z} \cong \Z/2\Z\oplus\Z$
+
+\end{itemize}
+
+
+
+
+
+
+
+
+\end{document}
